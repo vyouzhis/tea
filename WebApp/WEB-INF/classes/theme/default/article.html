@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+${about}
+${post_data!0}
+${post_data1!0}
+<form action="/tea/article?fn=${fn!0}" method="post"  >
+  <p>First name: <input type="text" name="fname[0]" /></p>
+  <p>First2 name: <input type="text" name="fname[1]" /></p>
+  <p>Last name: <input type="text" name="lname" /></p>
+  <input type="file" name="files" id="files" /> <br/>
+  <input type="text" value="tmp" name="destination"/>
+  <input type="submit" value="Submit" />
+</form>
+${fn!0}
+<span>语言测试</span>
+${tlang!null}
+<br />
+<span>描述</span>
+${tdesc!null}
+<br />
+<span>全局</span>
+${welcome!null}
+<br />
+<span>找不到</span>
+${wels!null}
+</body>
+</html>
