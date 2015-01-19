@@ -42,11 +42,11 @@ public abstract class BaseLang extends ACLInit implements BaseLangInterface {
 		return find(key, StdName);
 	}
 	
-	private String find(String key, String stdName) {
+	private String find(String key, String stdsName) {
 		//System.out.println("name:"+stdName+" key:"+key);
 		Injector injector = Guice.createInjector(new ModuleBind());
 		LibLang libLan = (LibLang) injector.getInstance(Key.get(
-				LibLang.class, Names.named(stdName)));
+				LibLang.class, Names.named(stdsName)));
 		
 		return libLan._Lang(key);
 	}

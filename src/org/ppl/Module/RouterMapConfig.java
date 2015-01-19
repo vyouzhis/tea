@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseTheme;
 import org.ppl.BaseClass.Permission;
+import org.ppl.core.PObject;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
@@ -18,7 +19,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
-public class RouterMapConfig {
+public class RouterMapConfig extends PObject {
 	List<String> RMC = null;
 	private String servletPath = null;
 	private String mehtod = null;
@@ -209,33 +210,7 @@ public class RouterMapConfig {
 		}
 		
 	}
-	
-	private List<String> PermFileList(String directoryName) {
-		List<String> fl = new ArrayList<String>();	    
-	    File directory = new File(directoryName);
-
-	    // get all the files from a directory
-	    File[] fList = directory.listFiles();
-
-	    for (File file : fList) {
-	        if (file.isFile()) {
-	        	fl.add("Permission_"+file.getName().split("\\.")[0]);	     
-	        } else if (file.isDirectory()) {
-	            fl.addAll(PermFileList(file.getAbsolutePath()));
-	        }
-	    }	    
-	    return fl;
-	}
-	
-	private List<String> PermUrlMap() {
-		Config mConfig = new Config(globale_config.Config);
-		String path = this.getClass().getResource("/").getPath()+mConfig.GetValue("perm_class_path");				
-		
-		List<String> pum = PermFileList(path);
-		
-		return pum;			
-	}
-	
+			
 	private String GetMapMethod(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String method = mConfig.GetValue(key + ".method");

@@ -72,6 +72,13 @@ public class Permission extends BaseTheme implements BasePerminterface {
 		
 	}
 	
+	public String GetName() {
+		return _MLang(stdClass);
+	}
+	
+	public String GetDesc() {
+		return _MLang(stdClass+"_desc");
+	}
 	
 	public String navbar() {
 		Navbar nb = new Navbar();		
