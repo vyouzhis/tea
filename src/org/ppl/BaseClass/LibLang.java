@@ -5,7 +5,7 @@ import org.ppl.etc.Config;
 
 public class LibLang extends PObject implements BaseLangInterface {
 	public Config CLang = null;
-	
+	private String selfPath = "";
 	public LibLang() {
 		// TODO Auto-generated constructor stub
 	}
@@ -19,8 +19,12 @@ public class LibLang extends PObject implements BaseLangInterface {
 	
 	public void LangConfig() {
 		String LibName = SliceName(stdClass);
-		String path = "properties/lang/zh_cn/"+LibName.substring(1)+".properties";
+		String path = "properties/lang/zh_cn/"+selfPath+"/"+LibName.substring(1)+".properties";
+		echo(path);
 		CLang = new Config(path);	
 	}
 	
+	public void SelfPath(String path) {
+		selfPath = path.replace("\\.", "/");
+	}
 }

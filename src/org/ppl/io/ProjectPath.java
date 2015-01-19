@@ -27,6 +27,7 @@ public class ProjectPath {
 	private URI getPath(String baseName) {
 		
 		URL path = ProjectPath.class.getClassLoader().getResource(baseName);
+		
 		URI p = null;
 		try {
 			p = path.toURI();

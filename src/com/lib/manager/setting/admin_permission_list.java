@@ -33,6 +33,8 @@ public class admin_permission_list extends Permission implements
 		root.put("navbar", navbar());
 
 		root.put("menu", menu());
+		
+		root.put("name", _MLang("name"));
 
 		super.View(root);
 	}

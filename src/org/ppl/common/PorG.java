@@ -50,66 +50,66 @@ public class PorG {
 		ParserParame();
 	}
 
-//	public void getFile() {
-//		System.out.println("getFile");
-//		ProjectPath pp = ProjectPath.getInstance();
-//
-//		URI path = pp.DataDir();
-//		System.out.println("getFile:" + path);
-//		Part filePart;
-//		try {
-//			
-//			PrintWriter writer = response.getWriter();
-//			filePart = request.getPart("files");
-//			if (filePart != null) {
-//				final String fileName = getFileName(filePart);
-//				OutputStream out = null;
-//				InputStream filecontent = null;
-//
-//				try {
-//					out = new FileOutputStream(new File(path + File.separator
-//							+ fileName));
-//					filecontent = filePart.getInputStream();
-//
-//					int read = 0;
-//					final byte[] bytes = new byte[1024];
-//
-//					while ((read = filecontent.read(bytes)) != -1) {
-//						out.write(bytes, 0, read);
-//					}
-//					writer.println("New file " + fileName + " created at "
-//							+ path);
-//					writer.println("File " + fileName + " being uploaded to "
-//							+ path);
-//				} catch (FileNotFoundException fne) {
-//					writer.println("You either did not specify a file to upload or are "
-//							+ "trying to upload a file to a protected or nonexistent "
-//							+ "location.");
-//					writer.println("<br/> ERROR: " + fne.getMessage());
-//
-//					writer.println("Problems during file upload. Error:"
-//							+ fne.getMessage());
-//
-//				}
-//				writer.close();
-//			} else {
-//				
-//				writer.println("file is null");
-//			}
-//		} catch (IllegalStateException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("ill" + e.getMessage());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("io" + e.getMessage());
-//		} catch (ServletException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("servlet" + e.getMessage());
-//		}
-//	}
+	public void getFile() {
+		System.out.println("getFile");
+		ProjectPath pp = ProjectPath.getInstance();
+
+		URI path = pp.DataDir();
+		System.out.println("getFile:" + path);
+		Part filePart;
+		try {
+			
+			PrintWriter writer = response.getWriter();
+			filePart = request.getPart("files");
+			if (filePart != null) {
+				final String fileName = getFileName(filePart);
+				OutputStream out = null;
+				InputStream filecontent = null;
+
+				try {
+					out = new FileOutputStream(new File(path + File.separator
+							+ fileName));
+					filecontent = filePart.getInputStream();
+
+					int read = 0;
+					final byte[] bytes = new byte[1024];
+
+					while ((read = filecontent.read(bytes)) != -1) {
+						out.write(bytes, 0, read);
+					}
+					writer.println("New file " + fileName + " created at "
+							+ path);
+					writer.println("File " + fileName + " being uploaded to "
+							+ path);
+				} catch (FileNotFoundException fne) {
+					writer.println("You either did not specify a file to upload or are "
+							+ "trying to upload a file to a protected or nonexistent "
+							+ "location.");
+					writer.println("<br/> ERROR: " + fne.getMessage());
+
+					writer.println("Problems during file upload. Error:"
+							+ fne.getMessage());
+
+				}
+				writer.close();
+			} else {
+				
+				writer.println("file is null");
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ill" + e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("io" + e.getMessage());
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("servlet" + e.getMessage());
+		}
+	}
 
 	private String getFileName(final Part part) {
 		final String partHeader = part.getHeader("content-disposition");
