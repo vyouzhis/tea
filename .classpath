@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/tomcat7"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/ecj-4.4.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat7-websocket.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="D:/software/apache-tomcat-7.0.55/lib/websocket-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jsb-015/.m2/repository/com/google/inject/guice/3.0/guice-3.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jsb-015/.m2/repository/mysql/mysql-connector-java/5.1.32/mysql-connector-java-5.1.32.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0 (2)">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

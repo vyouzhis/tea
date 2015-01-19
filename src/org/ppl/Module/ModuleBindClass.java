@@ -18,6 +18,7 @@ import com.lib.manager.admin_login;
 import com.lib.manager.admin_login_action;
 import com.lib.manager.setting.admin_permission_list;
 import com.lib.manager.setting.admin_permission_setting;
+import com.lib.manager.setting.setting_index;
 
 public class ModuleBindClass extends PObject{
 	
@@ -25,6 +26,7 @@ public class ModuleBindClass extends PObject{
 	protected List<Object> ModuleList = null;
 	protected List<Object> ThemeList = null;
 	protected List<Object> PermList = null;
+	protected List<Object> ManagerList = null;
 	
 	public ModuleBindClass() {
 		// TODO Auto-generated constructor stub
@@ -54,6 +56,9 @@ public class ModuleBindClass extends PObject{
 		PermList.add(admin_permission_list.class);
 		PermList.add(admin_permission_setting.class);
 		
+		//manager index
+		ManagerList = new ArrayList<Object>();
+		ManagerList.add(setting_index.class);
 	}
 	
 	
