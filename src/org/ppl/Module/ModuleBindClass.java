@@ -11,6 +11,7 @@ import org.ppl.core.PObject;
 
 import com.lang._article;
 import com.lang._common;
+import com.lang.manager.setting._admin_permission_list;
 import com.lib.common.Footer;
 import com.lib.common.Header;
 import com.lib.manager.admin_index;
@@ -34,6 +35,7 @@ public class ModuleBindClass extends PObject{
 		// lang
 		LangList.add(_article.class);
 		LangList.add(_common.class);
+		LangList.add(_admin_permission_list.class);
 		
 		ThemeList = new ArrayList<Object>();
 		//lib

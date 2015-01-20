@@ -50,7 +50,7 @@ public class ACLControl extends ACLRole {
 						.get(BasePrograma.class, Names.named(libName)));
 				name = home.getProg();
 				Map<String, String> Index = new HashMap<String, String>();
-				Index.put("name", name);
+				Index.put("index_name", name);
 				lib_array.add(Index);
 			} else if (libName.length()>11) {			
 				libName = libName.substring(11);
@@ -60,6 +60,7 @@ public class ACLControl extends ACLRole {
 				desc = home._MLang("desc");
 			}
 		}
+		
 
 	}
 }

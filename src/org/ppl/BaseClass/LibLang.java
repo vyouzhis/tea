@@ -25,6 +25,10 @@ public class LibLang extends PObject implements BaseLangInterface {
 	}
 	
 	public void SelfPath(String path) {
-		selfPath = path.replace("\\.", "/");
+		String[] p = path.split("\\.");
+		for (int i = 2; i < p.length; i++) {
+			selfPath += "/"+p[i] ;	
+		}
+		
 	}
 }
