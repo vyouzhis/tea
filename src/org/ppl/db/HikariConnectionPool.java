@@ -27,7 +27,7 @@ public class HikariConnectionPool {
 		}
 		
 		HikariConfig config = new HikariConfig();
-		System.out.println(mConfig.GetValue("database.url"));
+		//System.out.println(mConfig.GetValue("database.url"));
 		config.setJdbcUrl(mConfig.GetValue("database.url"));
 		config.setUsername(mConfig.GetValue("database.username"));
 		config.setPassword(mConfig.GetValue("database.password"));
