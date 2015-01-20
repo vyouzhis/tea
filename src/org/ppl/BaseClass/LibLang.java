@@ -19,8 +19,8 @@ public class LibLang extends PObject implements BaseLangInterface {
 	
 	public void LangConfig() {
 		String LibName = SliceName(stdClass);
-		String path = "properties/lang/zh_cn/"+selfPath+"/"+LibName.substring(1)+".properties";
-		echo(path);
+		String path = "properties/lang/zh_cn"+selfPath+"/"+LibName.substring(1)+".properties";
+		//echo(path);
 		CLang = new Config(path);	
 	}
 	

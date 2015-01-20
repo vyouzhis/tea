@@ -55,97 +55,54 @@ ${header!""}
                 </tr> 
                </thead> 
                <tbody> 
+               <#list Pack_Class_List?keys as key> 
                <tr>
-																<td class="">权限列表</td>
-
-																<td>
-																																	<label>
-																			<small class="green">
-																			<b>查看:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[0]" name="setting_admin_permission_list[0]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>新建:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[1]" name="setting_admin_permission_list[1]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>编辑:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[2]" name="setting_admin_permission_list[2]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>删除:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[3]" name="setting_admin_permission_list[3]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="grey">
-																			<b>搜索:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[4]" name="setting_admin_permission_list[4]">
-																			<span class="lbl"></span>
-																		</label>
-																</td>
-																																<td>
-																<p class="alert alert-info"> 列出管理后台管理用户</p>
-																</td>
-																
-															</tr>
-															<tr>
-																<td class="">添加分组</td>
-
-																<td>
-																																	<label>
-																			<small class="green">
-																			<b>查看:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_setting[0]" name="setting_admin_permission_setting[0]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>新建:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_setting[1]" name="setting_admin_permission_setting[1]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>编辑:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_setting[2]" name="setting_admin_permission_setting[2]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="red">
-																			<b>删除:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_setting[3]" name="setting_admin_permission_setting[3]">
-																			<span class="lbl"></span>
-																		</label>
-																																																		<label>
-																			<small class="grey">
-																			<b>搜索:</b>
-																			</small>
-																			<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_setting[4]" name="setting_admin_permission_setting[4]">
-																			<span class="lbl"></span>
-																		</label>
-																</td>
-																																<td>
-																<p class="alert alert-info"> 添加管理后台管理用户分组</p>
-																</td>
-																
-															</tr>
-                 
+               		<td class="">${key}</td>
+			
+						<td>
+																							<label>
+									<small class="green">
+									<b>查看:</b>
+									</small>
+									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[0]" name="setting_admin_permission_list[0]">
+									<span class="lbl"></span>
+								</label>
+																																								<label>
+									<small class="red">
+									<b>新建:</b>
+									</small>
+									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[1]" name="setting_admin_permission_list[1]">
+									<span class="lbl"></span>
+								</label>
+																																								<label>
+									<small class="red">
+									<b>编辑:</b>
+									</small>
+									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[2]" name="setting_admin_permission_list[2]">
+									<span class="lbl"></span>
+								</label>
+																																								<label>
+									<small class="red">
+									<b>删除:</b>
+									</small>
+									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[3]" name="setting_admin_permission_list[3]">
+									<span class="lbl"></span>
+								</label>
+																																								<label>
+									<small class="grey">
+									<b>搜索:</b>
+									</small>
+									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[4]" name="setting_admin_permission_list[4]">
+									<span class="lbl"></span>
+								</label>
+						</td>
+																						<td>
+						<p class="alert alert-info"> 列出管理后台管理用户</p>
+						</td>
+						
+					</tr>
+															
+                  </#list> 
                </tbody> 
               </table> 
              </div> 

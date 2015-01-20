@@ -2,7 +2,9 @@ package org.ppl.core;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ppl.common.SessionAction;
 import org.ppl.db.DBSQL;
@@ -15,6 +17,7 @@ public class PObject extends DBSQL {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
+	protected Map<String, List<String>> PackClassList = null;
 
 	public void echo(Object o) {
 		System.out.println(o);
@@ -31,8 +34,10 @@ public class PObject extends DBSQL {
 	}
 
 	public String getBindName() {
-		if (BindName == null)
+		if (BindName == null) {
 			BindName = stdClass;
+
+		}
 		return BindName;
 	}
 
@@ -75,13 +80,30 @@ public class PObject extends DBSQL {
 	public List<String> PermFileList(String directoryName) {
 		List<String> fl = new ArrayList<String>();
 		File directory = new File(directoryName);
-
+		if (PackClassList == null) {
+			PackClassList = new HashMap<String, List<String>>();
+		}
 		// get all the files from a directory
 		File[] fList = directory.listFiles();
 
 		for (File file : fList) {
 			if (file.isFile()) {
-				fl.add("Permission_" + file.getName().split("\\.")[0]);
+				// echo("name:"+directory.getName()+"__"+file.getName());
+
+				String lib = file.getName().split("\\.")[0];
+				String index = directory.getName();
+				if (!index.equals("manager")) {
+
+					if (PackClassList.get(index) != null) {
+						if (!PackClassList.get(index).contains(lib))
+							PackClassList.get(index).add(lib);
+					} else {
+						List<String> l = new ArrayList<String>();
+						l.add(lib);
+						PackClassList.put(index, l);
+					}
+				}
+				fl.add("Permission_" + lib);
 			} else if (file.isDirectory()) {
 				fl.addAll(PermFileList(file.getAbsolutePath()));
 			}

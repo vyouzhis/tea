@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.BaseTheme;
@@ -35,32 +36,52 @@ public class ACLControl extends ACLRole {
 	}
 
 	public void aclLoadLib() {
-		//List<Map<String, Map<String, String>>> lib_array = new ArrayList<Map<String, Map<String, String>>>();
-		List<Map<String, String>> lib_array = new ArrayList<Map<String,String>>();  
+		Map<String, List<String>> plInfo = new HashMap<String, List<String>>();
+
 		Injector injector = Guice.createInjector(new ModuleBind());
-		List<String> pum = PermUrlMap();
-		String libName = "";
-		String name = "";
-		String desc = "";
-		for (int i = 0; i < pum.size(); i++) {
-			libName = pum.get(i);
-			
-			if (libName.substring(libName.length() - 6, 6).equals("_index")) {
-				BasePrograma home = (BasePrograma) injector.getInstance(Key
-						.get(BasePrograma.class, Names.named(libName)));
-				name = home.getProg();
-				Map<String, String> Index = new HashMap<String, String>();
-				Index.put("index_name", name);
-				lib_array.add(Index);
-			} else if (libName.length()>11) {			
-				libName = libName.substring(11);
-				Permission home = (Permission) injector.getInstance(Key.get(
-						Permission.class, Names.named(libName)));
-				name = home._MLang("name");
-				desc = home._MLang("desc");
+
+		// HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+
+		for (Entry<String, List<String>> entry : PackClassList.entrySet()) {
+			String key = entry.getKey();
+
+			List<String> value = entry.getValue();
+			for (int i = 0; i < value.size(); i++) {
+				if (value.get(i).substring(value.get(i).length() - 6)
+						.equals("_index")) {
+					BasePrograma Index = (BasePrograma) injector
+							.getInstance(Key.get(BasePrograma.class,
+									Names.named(value.get(i))));
+					Index._MLang("name");
+				} else {
+					Permission home = (Permission) injector.getInstance(Key
+							.get(Permission.class, Names.named(value.get(i))));
+					home._MLang("name");
+					home._MLang("desc");
+				}
 			}
 		}
-		
+	}
 
+	public String IndexName(String value) {
+		if (value.substring(value.length() - 6).equals("_index")) {
+			Injector injector = Guice.createInjector(new ModuleBind());
+			BasePrograma Index = (BasePrograma) injector.getInstance(Key.get(
+					BasePrograma.class, Names.named(value)));
+			return Index._MLang("name");
+		}
+		return null;
+	}
+	
+	public Map<String, String> LibInfo(String value) {
+		Injector injector = Guice.createInjector(new ModuleBind());
+		Map<String, String> info = new HashMap<String, String>();
+		
+		Permission home = (Permission) injector.getInstance(Key
+				.get(Permission.class, Names.named(value)));
+		info.put("name", home._MLang("name"));
+		info.put("desc", home._MLang("desc"));
+		
+		return info;
 	}
 }

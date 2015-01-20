@@ -35,7 +35,12 @@ public class admin_permission_list extends Permission implements
 		root.put("menu", menu());
 		
 		root.put("name", _MLang("name"));
-
+		echo(PackClassList);
+		
+		root.put("Pack_Class_List", PackClassList);
+		root.put("fun", this);
+		
+		//aclLoadLib();
 		super.View(root);
 	}
 
