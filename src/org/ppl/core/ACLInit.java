@@ -137,8 +137,7 @@ public class ACLInit extends PObject {
 		String role = aclfetchMyRole();
 		if(role==null) return false;
 		JSONObject roleJson = JSON.parseObject(role);
-		
-		
+				
 		return true;
 	}
 

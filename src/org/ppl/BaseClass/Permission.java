@@ -1,14 +1,12 @@
 package org.ppl.BaseClass;
 
 import java.util.List;
-import java.util.Map;
 
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 
-import com.lib.common.Header;
 import com.lib.common.Menu;
 import com.lib.common.Navbar;
 

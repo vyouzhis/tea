@@ -10,6 +10,7 @@ import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.BaseTheme;
 import org.ppl.BaseClass.Permission;
 import org.ppl.Module.ModuleBind;
+import org.ppl.etc.UrlClassList;
 
 import com.alibaba.fastjson.JSON;
 import com.google.inject.Guice;
@@ -36,14 +37,16 @@ public class ACLControl extends ACLRole {
 	}
 
 	public void aclLoadLib() {
-		Map<String, List<String>> plInfo = new HashMap<String, List<String>>();
+		//Map<String, List<String>> plInfo = new HashMap<String, List<String>>();
 
 		Injector injector = Guice.createInjector(new ModuleBind());
-
+		UrlClassList ucl = UrlClassList.getInstance();
+		Map<String, List<String>> PackClassList;
+		PackClassList = ucl.getPackClassList();
 		// HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
 
 		for (Entry<String, List<String>> entry : PackClassList.entrySet()) {
-			String key = entry.getKey();
+			//String key = entry.getKey();
 
 			List<String> value = entry.getValue();
 			for (int i = 0; i < value.size(); i++) {
@@ -64,13 +67,14 @@ public class ACLControl extends ACLRole {
 	}
 
 	public String IndexName(String value) {
-		if (value.substring(value.length() - 6).equals("_index")) {
-			Injector injector = Guice.createInjector(new ModuleBind());
+		
+		if (value.matches("(.*)_index")) {
+			Injector injector = Guice.createInjector(new ModuleBind());		
 			BasePrograma Index = (BasePrograma) injector.getInstance(Key.get(
 					BasePrograma.class, Names.named(value)));
-			return Index._MLang("name");
+			return Index._CLang(value);
 		}
-		return null;
+		return "not has lan key";
 	}
 	
 	public Map<String, String> LibInfo(String value) {
@@ -80,8 +84,7 @@ public class ACLControl extends ACLRole {
 		Permission home = (Permission) injector.getInstance(Key
 				.get(Permission.class, Names.named(value)));
 		info.put("name", home._MLang("name"));
-		info.put("desc", home._MLang("desc"));
-		
+		info.put("desc", home._MLang("desc"));		
 		return info;
 	}
 }

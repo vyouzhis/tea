@@ -2,12 +2,14 @@ package org.ppl.etc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ppl.common.PorG;
 
 public class UrlClassList {
 	static UrlClassList ucl = null;
 	private List<String> ucls = null;
+	private Map<String, List<String>> PackClassList = null;
 
 	public static UrlClassList getInstance() {
 		if (ucl == null) {
@@ -53,6 +55,14 @@ public class UrlClassList {
 
 	public String search(String libName) {
 		return BuildUrl(libName, "search");
+	}
+
+	public Map<String, List<String>> getPackClassList() {
+		return PackClassList;
+	}
+
+	public void setPackClassList(Map<String, List<String>> packClassList) {
+		PackClassList = packClassList;
 	}
 
 }

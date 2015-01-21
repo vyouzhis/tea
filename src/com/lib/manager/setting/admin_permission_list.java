@@ -1,11 +1,13 @@
 package com.lib.manager.setting;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ppl.BaseClass.BasePerminterface;
 import org.ppl.BaseClass.Permission;
 import org.ppl.common.PorG;
+import org.ppl.etc.UrlClassList;
 
 public class admin_permission_list extends Permission implements
 		BasePerminterface {
@@ -35,7 +37,11 @@ public class admin_permission_list extends Permission implements
 		root.put("menu", menu());
 		
 		root.put("name", _MLang("name"));
-		echo(PackClassList);
+		
+		UrlClassList ucl = UrlClassList.getInstance();
+		Map<String, List<String>> PackClassList;
+		PackClassList = ucl.getPackClassList();
+				
 		
 		root.put("Pack_Class_List", PackClassList);
 		root.put("fun", this);

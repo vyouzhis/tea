@@ -9,6 +9,7 @@ import java.util.Map;
 import org.ppl.common.SessionAction;
 import org.ppl.db.DBSQL;
 import org.ppl.etc.Config;
+import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.TimeClass;
@@ -17,8 +18,7 @@ public class PObject extends DBSQL {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
-	protected Map<String, List<String>> PackClassList = null;
-
+	
 	public void echo(Object o) {
 		System.out.println(o);
 	}
@@ -80,7 +80,10 @@ public class PObject extends DBSQL {
 	public List<String> PermFileList(String directoryName) {
 		List<String> fl = new ArrayList<String>();
 		File directory = new File(directoryName);
-		if (PackClassList == null) {
+		Map<String, List<String>> PackClassList;
+		UrlClassList ucl = UrlClassList.getInstance();
+		PackClassList = ucl.getPackClassList();
+		if(PackClassList==null){
 			PackClassList = new HashMap<String, List<String>>();
 		}
 		// get all the files from a directory
@@ -89,13 +92,12 @@ public class PObject extends DBSQL {
 		for (File file : fList) {
 			if (file.isFile()) {
 				// echo("name:"+directory.getName()+"__"+file.getName());
-
 				String lib = file.getName().split("\\.")[0];
 				String index = directory.getName();
-				if (!index.equals("manager")) {
-
+				if (!index.equals("manager") && !lib.matches("(.*)_index")) {
+					
 					if (PackClassList.get(index) != null) {
-						if (!PackClassList.get(index).contains(lib))
+						if (!PackClassList.get(index).contains(lib) )
 							PackClassList.get(index).add(lib);
 					} else {
 						List<String> l = new ArrayList<String>();
@@ -108,6 +110,8 @@ public class PObject extends DBSQL {
 				fl.addAll(PermFileList(file.getAbsolutePath()));
 			}
 		}
+		ucl.setPackClassList(PackClassList);
+		
 		return fl;
 	}
 
