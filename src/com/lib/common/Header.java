@@ -1,15 +1,11 @@
 package com.lib.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.common.PorG;
 
 public class Header extends BaseModule {
 	private String className = null;
-	private Map<String, Object> root = null;
-	
+
 	public Header() {
 		// TODO Auto-generated constructor stub
 		className = this.getClass().getCanonicalName();
@@ -19,25 +15,16 @@ public class Header extends BaseModule {
 	@Override
 	public void filter() {
 		// TODO Auto-generated method stub
-		super.View(Data());
+		Data();
+		super.View();
 	}
 
-	private Map<String, Object> Data() {
+	private void Data() {
 
-		if(root==null){
-			PorG pg = PorG.getInstance();
-			root = new HashMap<String, Object>();			
-			root.put("static_uri", pg.getContext_Path());
-		}
-		
-		return root;
+		PorG pg = PorG.getInstance();
+
+		setRoot("static_uri", pg.getContext_Path());
+
 	}
 
-	public Map<String, Object> getRoot() {
-		return root;
-	}
-
-	public void setRoot(Map<String, Object> root) {
-		this.root = root;
-	}
 }

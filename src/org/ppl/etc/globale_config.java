@@ -15,7 +15,7 @@ public class globale_config {
 	public static String SessSalt = "session.salt";
 	public static String sessAcl = "session.acl";
 	
-	
+	public static String SubRole = "subrole"; 
 	
 	public static globale_config getInstance() {
 		if (config == null) {

@@ -164,35 +164,17 @@ ${header!""}
 												</div>
 											</div>
 											<div class="widget-main">
-																						<label>
+											
+											<#list subMap?keys as key>
+											<label>
 											<small class="green">
-											<b>QQ:</b>
+											<b>${subMap[key]}:</b>
 											</small>
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="qq" name="qq">
+											<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}" name="${key}">
 											<span class="lbl"></span>
 											</label>
-																						<label>
-											<small class="green">
-											<b>手机:</b>
-											</small>
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="mobile" name="mobile">
-											<span class="lbl"></span>
-											</label>
-																						<label>
-											<small class="green">
-											<b>邮箱:</b>
-											</small>
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="email" name="email">
-											<span class="lbl"></span>
-											</label>
-																						<label>
-											<small class="green">
-											<b>银行卡:</b>
-											</small>
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="account_num" name="account_num">
-											<span class="lbl"></span>
-											</label>
-																						</div>
+											</#list>										
+											</div>
 										</div>
 									</div>
 									</div>

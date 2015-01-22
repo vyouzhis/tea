@@ -21,25 +21,25 @@ public class About extends BaseTheme{
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-		Map<String, Object> root = new HashMap<String, Object>();
 		
-		root.put("about", "about this com.");
 		
-		PorG pG = PorG.getInstance();
-		String fname = pG.porg("fname[0]");
-		String fname1 = pG.porg("fname[1]");
+		setRoot("about", "about this com.");
+		
+		
+		String fname = porg.getKey("fname[0]");
+		String fname1 = porg.getKey("fname[1]");
 		String fn = getSalt();
 		if(fname!=null ){
-			root.put("post_data", "About Show:"+fname);
-			root.put("post_data1", "About Show1:"+fname1);
+			setRoot("post_data", "About Show:"+fname);
+			setRoot("post_data1", "About Show1:"+fname1);
 			int i = aclLogin(fname, fname1, fn);
 			echo("login: "+i);
 		}
 		if(fn!=null)
-			root.put("fn", "get fn:"+fn);
+			setRoot("fn", "get fn:"+fn);
 		//pG.getFile();
 		
-		super.View(root);
+		super.View();
 	}
 
 

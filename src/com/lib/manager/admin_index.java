@@ -1,13 +1,8 @@
 package com.lib.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ppl.BaseClass.Permission;
 import org.ppl.common.PorG;
-import org.ppl.etc.UrlClassList;
 
-import com.lib.common.Header;
 
 public class admin_index extends Permission {
 
@@ -25,19 +20,19 @@ public class admin_index extends Permission {
 
 		if (super.Init() == -1)
 			return;
-		Map<String, Object> root = new HashMap<String, Object>();
+		
 		PorG pg = PorG.getInstance();
 
-		root.put("static_uri", pg.getContext_Path());
+		setRoot("static_uri", pg.getContext_Path());
 
 		String UserName = aclgetName();
-		root.put("UserName", UserName);
+		setRoot("UserName", UserName);
 
-		root.put("navbar", navbar());
+		setRoot("navbar", navbar());
 
-		root.put("menu", menu());
+		setRoot("menu", menu());
 
-		super.View(root);
+		super.View();
 	}
 
 }

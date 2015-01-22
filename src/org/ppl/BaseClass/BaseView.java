@@ -3,8 +3,10 @@ package org.ppl.BaseClass;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.ppl.common.PorG;
 import org.ppl.io.ProjectPath;
 
 import freemarker.template.Configuration;
@@ -14,8 +16,9 @@ import freemarker.template.TemplateException;
 
 public class BaseView extends BaseLang{
 	protected String html="";
-	
-	public void View(Map<String, Object> root) {
+	private Map<String, Object> root;
+		
+	public void View() {
 		if (root == null) {
 			echo("root is null");
 			return;
@@ -55,5 +58,16 @@ public class BaseView extends BaseLang{
 			e.printStackTrace();
 		}
 
+	}
+
+	public Map<String, Object> getRoot() {
+		return root;
+	}
+
+	public void setRoot(String key, Object obj) {
+		if(this.root == null){
+			root = new HashMap<String, Object>();
+		}
+		root.put(key, obj);
 	}
 }

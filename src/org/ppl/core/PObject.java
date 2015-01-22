@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.db.DBSQL;
 import org.ppl.etc.Config;
@@ -18,6 +19,7 @@ public class PObject extends DBSQL {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
+	protected PorG porg = PorG.getInstance();
 	
 	public void echo(Object o) {
 		System.out.println(o);

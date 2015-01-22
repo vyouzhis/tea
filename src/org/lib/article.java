@@ -20,37 +20,34 @@ public class article extends BaseTheme {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-				
-		super.View(Data());
+		Data();
+		super.View();
 	}
 
-	private Map<String, Object> Data() {
+	private void Data() {
+					
+		setRoot("about", "about this com.");
+
 		
-		Map<String, Object> root;
-		root = new HashMap<String, Object>();
-
-		root.put("about", "about this com.");
-
-		PorG pG = PorG.getInstance();
-		String fname = pG.porg("fname[0]");
-		String fname1 = pG.porg("fname[1]");
-		String fn = pG.porg("fn");
+		String fname = porg.getKey("fname[0]");
+		String fname1 = porg.getKey("fname[1]");
+		String fn = porg.getKey("fn");
 		if (fname != null) {
-			root.put("post_data", "About Show:" + fname);
-			root.put("post_data1", "About Show1:" + fname1);
+			setRoot("post_data", "About Show:" + fname);
+			setRoot("post_data1", "About Show1:" + fname1);
 
 		}
 		if (fn != null)
-			root.put("fn", "get fn:" + fn);
+			setRoot("fn", "get fn:" + fn);
 		// pG.getFile();
 		String name = aclgetNickName();
 		
-		root.put("tdesc", _MLang("desc"));
-		root.put("tlang", _Lang("tl"));
-		root.put("welcome", _CLang("welcome"));
-		root.put("wels", name);
+		setRoot("tdesc", _MLang("desc"));
+		setRoot("tlang", _Lang("tl"));
+		setRoot("welcome", _CLang("welcome"));
+		setRoot("wels", name);
 		
-		return root;
+		
 	}
 
 	@Override

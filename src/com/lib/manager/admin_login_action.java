@@ -11,8 +11,7 @@ public class admin_login_action extends Permission {
 	public void Show() {
 		// TODO Auto-generated method stub
 		
-		PorG pg = PorG.getInstance();
-		String action = pg.porg("action");
+		String action = porg.getKey("action");
 		if(action!=null){
 			login();
 		}else {
@@ -21,10 +20,10 @@ public class admin_login_action extends Permission {
 	}
 	
 	private void login() {
-		PorG pg = PorG.getInstance();
-		String salt = pg.porg("salt");
-		String email = pg.porg("email");
-		String passwd = pg.porg("passwd");
+		
+		String salt = porg.getKey("salt");
+		String email = porg.getKey("email");
+		String passwd = porg.getKey("passwd");
 				
 		UrlClassList ucl = UrlClassList.getInstance();
 		String bad_url = ucl.BuildUrl("admin_login", "");

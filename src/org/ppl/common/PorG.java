@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.apache.catalina.filters.SetCharacterEncodingFilter;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -123,7 +122,7 @@ public class PorG {
 		return null;
 	}
 
-	public String porg(String key) {
+	public String getKey(String key) {
 		if (sporg.containsKey(key)) {
 			return sporg.get(key);
 		}

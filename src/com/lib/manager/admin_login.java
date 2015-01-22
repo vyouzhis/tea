@@ -17,14 +17,13 @@ public class admin_login extends Permission {
 	
 	@Override
 	public void Show() {
-		// TODO Auto-generated method stub
-		Map<String, Object> root = new HashMap<String, Object>();
+		// TODO Auto-generated method stub		
 		PorG pg = PorG.getInstance();
 		UrlClassList ucl = UrlClassList.getInstance();
 		
-		root.put("static_uri", pg.getContext_Path());
-		root.put("admin_login_action_uri", ucl.BuildUrl("admin_login_action", ""));
-		root.put("salt", getSalt());
-		super.View(root);
+		setRoot("static_uri", pg.getContext_Path());
+		setRoot("admin_login_action_uri", ucl.BuildUrl("admin_login_action", ""));
+		setRoot("salt", getSalt());
+		super.View();
 	}
 }

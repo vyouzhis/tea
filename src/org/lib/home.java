@@ -10,44 +10,42 @@ import org.ppl.common.PorG;
 
 public class home extends BaseTheme {
 	private String className = null;
-	
+
 	public home() {
 		// TODO Auto-generated constructor stub
 		className = this.getClass().getCanonicalName();
 		super.GetSubClassName(className);
 	}
-	
+
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
+
 		
-		PorG pG = PorG.getInstance();
-		String id = pG.porg("id");
-				
-		Map<String, Object> root = new HashMap<String, Object>();
-	
-		root.put("user", "Big Joe");
-	
+		String id = porg.getKey("id");
+
+		setRoot("user", "Big Joe");
+
 		Map<String, Object> latest = new HashMap<String, Object>();
-	
-		root.put("latestProduct", latest);
-	
+
+		setRoot("latestProduct", latest);
+
 		latest.put("url", "products/greenmouse.html");
 		latest.put("name", "green mouse");
-	
+
 		List<String> countries = new ArrayList<String>();
-		if(id!=null){
-			countries.add("India:"+id);
+		if (id != null) {
+			countries.add("India:" + id);
 		}
 		countries.add("United States");
 		countries.add("Germany");
 		countries.add("France");
 
-		root.put("countries", countries);
-		
-		root.put("fun", this);
+		setRoot("countries", countries);
 
-		super.View(root);
+		setRoot("fun", this);
+
+		super.View();
 	}
 
 	public String add(String s) {
@@ -61,7 +59,7 @@ public class home extends BaseTheme {
 	@Override
 	public void UrlServlet(List<String> arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
