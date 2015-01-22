@@ -21,9 +21,8 @@ public class admin_index extends Permission {
 		if (super.Init() == -1)
 			return;
 		
-		PorG pg = PorG.getInstance();
 
-		setRoot("static_uri", pg.getContext_Path());
+		setRoot("static_uri", porg.getContext_Path());
 
 		String UserName = aclgetName();
 		setRoot("UserName", UserName);

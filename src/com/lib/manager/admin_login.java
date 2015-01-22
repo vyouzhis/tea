@@ -18,10 +18,10 @@ public class admin_login extends Permission {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub		
-		PorG pg = PorG.getInstance();
+
 		UrlClassList ucl = UrlClassList.getInstance();
 		
-		setRoot("static_uri", pg.getContext_Path());
+		setRoot("static_uri", porg.getContext_Path());
 		setRoot("admin_login_action_uri", ucl.BuildUrl("admin_login_action", ""));
 		setRoot("salt", getSalt());
 		super.View();

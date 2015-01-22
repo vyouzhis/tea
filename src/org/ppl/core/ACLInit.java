@@ -104,7 +104,7 @@ public class ACLInit extends PObject {
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
 			
-			 format = "SELECT g.permissions,g.subpermiss FROM "
+			 format = "SELECT g.mainrole,g.subrole FROM "
 					+ mConfig.GetValue("db_pre_rule") + "user_info u, "
 					+ mConfig.GetValue("db_pre_rule")
 					+ "group g where u.gid =  g.id and u.uid=%s LIMIT 1";
@@ -112,8 +112,8 @@ public class ACLInit extends PObject {
 			
 			Map<String, Object> role = FetchOne(sql);
 			if(role!=null){				
-				UserSess.put("main_role", role.get("permissions").toString());
-				UserSess.put("sub_role", role.get("subpermiss").toString());
+				UserSess.put("main_role", role.get("mainrole").toString());
+				UserSess.put("sub_role", role.get("subrole").toString());
 			}
 						
 			String json = JSON.toJSONString(UserSess);

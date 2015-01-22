@@ -37,9 +37,44 @@ public class admin_permission_setting extends Permission implements
 		if (super.Init() == -1)
 			return;
 
-		PorG pg = PorG.getInstance();
+		def();
+				
+		if (argList.size() == 2) {
+			switch (argList.get(1).toString()) {
+			case "read":
+				read(null);
+				break;
+			case "create":
+				create(null);
+				UrlClassList ucl = UrlClassList.getInstance();
+				String bad_url = ucl.read("admin_permission_list");
 
-		setRoot("static_uri", pg.getContext_Path());
+				ShowMessage ms = ShowMessage.getInstance();
+				String res = ms.SetMsg(bad_url, _CLang("ok_save"), 3000);
+				super.setHtml(res);
+				return;
+			default:
+				break;
+			}
+		}
+		
+
+		super.View();
+	}
+
+	@Override
+	public void read(Object arg) {
+		// TODO Auto-generated method stub
+		UrlClassList ucl = UrlClassList.getInstance();
+		Map<String, List<String>> PackClassList;
+		PackClassList = ucl.getPackClassList();
+		echo(PackClassList);
+		
+		setRoot("Pack_Class_List", PackClassList);
+	}
+
+	private void def() {
+		setRoot("static_uri", porg.getContext_Path());
 
 		String UserName = aclgetName();
 		setRoot("UserName", UserName);
@@ -62,43 +97,15 @@ public class admin_permission_setting extends Permission implements
 		}
 
 		setRoot("subMap", subMap);
-
-		UrlClassList ucl = UrlClassList.getInstance();
-		Map<String, List<String>> PackClassList;
-		PackClassList = ucl.getPackClassList();
-
-		setRoot("Pack_Class_List", PackClassList);
+		
 		setRoot("fun", this);
-
-		if (argList.get(1).toString().equals("create")) {
-			create(null);
-			String bad_url = ucl.read("admin_permission_list");
-
-			ShowMessage ms = ShowMessage.getInstance();
-			String res = ms.SetMsg(bad_url, _CLang("ok_save"), 3000);
-			super.setHtml(res);
-			return;
-
-		} else if (argList.get(1).toString().equals("edit")) {
-
-		} else if (argList.get(1).toString().equals("remove")) {
-
-		}
-
-		super.View();
 	}
-
-	@Override
-	public void read(Object arg) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-		PorG pg = PorG.getInstance();
-		Map<String, String> role_pg = pg.getAllpg();
+		
+		Map<String, String> role_pg = porg.getAllpg();
 		String role_json = "";
 		Map<String, Map<String, String>> role = new HashMap<String, Map<String, String>>();
 		Map<String, String> sub;

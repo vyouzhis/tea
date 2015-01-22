@@ -24,10 +24,8 @@ public class Menu extends BaseModule {
 
 	private void Data() {
 
-	
-			PorG pg = PorG.getInstance();
 					
-			setRoot("static_uri", pg.getContext_Path());
+			setRoot("static_uri", porg.getContext_Path());
 		
 		
 	

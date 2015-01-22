@@ -33,14 +33,12 @@ ${header!""}
        <div class="col-xs-12"> 
        <#list Pack_Class_List?keys as key> 
            
-        <!-- PAGE CONTENT BEGINS --> 
-        <form enctype="multipart/form-data" action="/admin_permission_setting/edit" method="POST" class="form-horizontal" name="group_add" id="group_add"> 
-         <input type="text" style="display:none;" name="gid" value="1" id="gid" /> 
+        <!-- PAGE CONTENT BEGINS -->         
          <div class="row"> 
           <div class="col-xs-12 col-xs-12"> 
            <div class="widget-box"> 
             <div class="widget-header"> 
-             <h4> <a href="/admin_permission_setting/read?gid=1">管理组</a> <input hidden="true" value="管理组" name="group_name" /><input hidden="true" value="全局管理所有的功能" name="group_desc" /> </h4> 
+             <h4> <a href="${static_uri}/admin_permission_setting/read?gid=${Gid[key]}">${key}</a> </h4> 
              <div class="widget-toolbar"> 
               <a data-action="collapse" href="#"> <i class="icon-chevron-up"></i> </a> 
               <a data-action="close" href="#"> <i class="icon-remove"></i> </a> 
@@ -49,17 +47,19 @@ ${header!""}
             <div class="widget-body"> 
              <div class="widget-main no-padding"> 
               <table class="table table-striped table-bordered table-hover"> 
-              <#list Pack_Class_List[key] as val>
+              
                <thead class="thin-border-bottom"> 
                 <tr> 
-                 <th> <i class="icon-user"></i> ${fun.IndexName(key+"_index")} 用户功能 </th> 
+                 <th> <i class="icon-user"></i> 用户功能 </th> 
                  <th>权限</th> 
                  <th>说明</th> 
                 </tr> 
                </thead> 
                <tbody> 
-               
-               <#assign infos = fun.LibInfo(val) >
+               <#assign libList = Pack_Class_List[key] >
+               <#list libList?keys as item>
+               <#assign values = libList[item] >
+               <#assign infos = fun.LibInfo(item) >
               
                <tr>
                		<td class="">${infos.name}</td>
@@ -69,35 +69,35 @@ ${header!""}
 									<small class="green">
 									<b>查看:</b>
 									</small>
-									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[0]" name="setting_admin_permission_list[0]">
+									<input type="checkbox" <#if fun.RoleCheck(values, 0) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[0]" name="setting_admin_permission_list[0]">
 									<span class="lbl"></span>
 								</label>
 																																								<label>
 									<small class="red">
 									<b>新建:</b>
 									</small>
-									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[1]" name="setting_admin_permission_list[1]">
+									<input type="checkbox" <#if fun.RoleCheck(values, 1) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[1]" name="setting_admin_permission_list[1]">
 									<span class="lbl"></span>
 								</label>
 																																								<label>
 									<small class="red">
 									<b>编辑:</b>
 									</small>
-									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[2]" name="setting_admin_permission_list[2]">
+									<input type="checkbox" <#if fun.RoleCheck(values, 2) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[2]" name="setting_admin_permission_list[2]">
 									<span class="lbl"></span>
 								</label>
 																																								<label>
 									<small class="red">
 									<b>删除:</b>
 									</small>
-									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[3]" name="setting_admin_permission_list[3]">
+									<input type="checkbox" <#if fun.RoleCheck(values, 3) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[3]" name="setting_admin_permission_list[3]">
 									<span class="lbl"></span>
 								</label>
 																																								<label>
 									<small class="grey">
 									<b>搜索:</b>
 									</small>
-									<input type="checkbox" checked="checked" class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[4]" name="setting_admin_permission_list[4]">
+									<input type="checkbox" <#if fun.RoleCheck(values, 4) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="setting_admin_permission_list[4]" name="setting_admin_permission_list[4]">
 									<span class="lbl"></span>
 								</label>
 						</td>
@@ -117,8 +117,7 @@ ${header!""}
           <!-- /span --> 
          </div>
          <!-- /row --> 
-         <button class="btn btn-xs btn-success pull-right"> <span class="bigger-110">Save</span> <i class="icon-arrow-right icon-on-right"></i> </button> 
-        </form> 
+        
         								
         </#list> 
         <div class="space-24"></div> 

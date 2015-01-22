@@ -60,8 +60,7 @@ public class Permission extends BaseTheme implements BasePerminterface {
 
 	@Override
 	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override
