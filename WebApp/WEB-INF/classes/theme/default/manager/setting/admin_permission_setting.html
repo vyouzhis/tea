@@ -32,14 +32,14 @@ ${header!""}
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								
-								<form enctype="multipart/form-data" action="${static_uri}/admin_permission_setting/create" method="POST" class="form-horizontal" name="group_add" id="group_add">
-									<input type="text" style="display:none;" name="gid" value="0" id="gid">			
+								<form enctype="multipart/form-data" action="${action_url}" method="POST" class="form-horizontal" name="group_add" id="group_add">
+									<input type="text" style="display:none;" name="gid" value="${gid!0}" id="gid">			
 									<div class="form-group has-info">
 										<label class="col-xs-12 col-sm-3 control-label no-padding-right" for="inputInfo">组名:</label>
 
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon input-icon-right">
-												<input type="text" value="" class="width-100" name="group_name" id="group_name">
+												<input type="text" value="${group_name!""}" class="width-100" name="group_name" id="group_name">
 												<i class="icon-info-sign"></i>
 											</span>
 										</div>
@@ -50,7 +50,7 @@ ${header!""}
 
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon input-icon-right">
-												<input type="text" value="" class="width-100" name="group_desc" id="group_desc">
+												<input type="text" value="${group_desc!""}" class="width-100" name="group_desc" id="group_desc">
 												<i class="icon-info-sign"></i>
 											</span>
 										</div>
@@ -99,35 +99,35 @@ ${header!""}
 																			<small class="green">
 																			<b>查看:</b>
 																			</small>
-																			<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}_${val}_0" name="${key}_${val}_0">
+																			<input type="checkbox" <#if fun.MainRoleCheckAction(key, val, 0) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}_${val}_0" name="${key}_${val}_0">
 																			<span class="lbl"></span>
 																		</label>
 																		<label>
 																			<small class="red">
 																			<b>创建:</b>
 																			</small>
-																			<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}_${val}_1" name="${key}_${val}_1">
+																			<input type="checkbox" <#if fun.MainRoleCheckAction(key, val, 1) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}_${val}_1" name="${key}_${val}_1">
 																			<span class="lbl"></span>
 																		</label>
 																		<label>
 																			<small class="red">
 																			<b>编辑:</b>
 																			</small>
-																			<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}_${val}_2" name="${key}_${val}_2">
+																			<input type="checkbox" <#if fun.MainRoleCheckAction(key, val, 2) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}_${val}_2" name="${key}_${val}_2">
 																			<span class="lbl"></span>
 																		</label>
 																		<label>
 																			<small class="red">
 																			<b>删除:</b>
 																			</small>
-																			<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}_${val}_3" name="${key}_${val}_3">
+																			<input type="checkbox" <#if fun.MainRoleCheckAction(key, val, 3) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}_${val}_3" name="${key}_${val}_3">
 																			<span class="lbl"></span>
 																		</label>
 																		<label>
 																			<small class="grey">
 																			<b>搜索:</b>
 																			</small>
-																			<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}_${val}_4" name="${key}_${val}_4">
+																			<input type="checkbox" <#if fun.MainRoleCheckAction(key, val, 4) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}_${val}_4" name="${key}_${val}_4">
 																			<span class="lbl"></span>
 																		</label>
 																</td>
@@ -170,7 +170,7 @@ ${header!""}
 											<small class="green">
 											<b>${subMap[key]}:</b>
 											</small>
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="${key}" name="${key}">
+											<input type="checkbox" <#if fun.SubroleCheckAction(key) > checked="checked" </#if> class="ace ace-switch ace-switch-6" id="${key}" name="${key}">
 											<span class="lbl"></span>
 											</label>
 											</#list>										
@@ -197,7 +197,7 @@ ${header!""}
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 						
-						<div class="widget-main hide no-padding">
+						<div class="widget-main <#if group_user??> <#else>hide </#if> no-padding">
 							<table class="table table-striped table-bordered table-hover">
 								<thead class="thin-border-bottom">
 									<tr>
@@ -215,7 +215,20 @@ ${header!""}
 								</thead>
 
 								<tbody>
-																	</tbody>
+									<#if group_user?? >
+									<#list group_user as item >
+									<tr>
+										<td class="">${item.nickname}</td>
+
+										<td>
+											<a href="#">${item.email}</a>
+										</td>
+
+										
+									</tr>
+									</#list>
+									</#if>
+								</tbody>
 							</table>
 						</div>
 					</div>

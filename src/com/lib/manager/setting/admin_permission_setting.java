@@ -23,6 +23,9 @@ import com.mongodb.util.Hash;
 public class admin_permission_setting extends Permission implements
 		BasePerminterface {
 	private List<String> argList;
+	private JSONObject MainRoleJson;
+	private List<String> SubRoleJson;
+	private Map<String, String> role_pg = null;
 
 	public admin_permission_setting() {
 		// TODO Auto-generated constructor stub
@@ -38,7 +41,7 @@ public class admin_permission_setting extends Permission implements
 			return;
 
 		def();
-				
+
 		if (argList.size() == 2) {
 			switch (argList.get(1).toString()) {
 			case "read":
@@ -46,20 +49,27 @@ public class admin_permission_setting extends Permission implements
 				break;
 			case "create":
 				create(null);
-				UrlClassList ucl = UrlClassList.getInstance();
-				String bad_url = ucl.read("admin_permission_list");
-
-				ShowMessage ms = ShowMessage.getInstance();
-				String res = ms.SetMsg(bad_url, _CLang("ok_save"), 3000);
-				super.setHtml(res);
+				Msg();
+				return;
+			case "edit":
+				edit(null);
+				Msg();
 				return;
 			default:
 				break;
 			}
 		}
-		
 
 		super.View();
+	}
+
+	private void Msg() {
+		UrlClassList ucl = UrlClassList.getInstance();
+		String ok_url = ucl.read("admin_permission_list");
+
+		ShowMessage ms = ShowMessage.getInstance();
+		String res = ms.SetMsg(ok_url, _CLang("ok_save"), 3000);
+		super.setHtml(res);
 	}
 
 	@Override
@@ -68,12 +78,61 @@ public class admin_permission_setting extends Permission implements
 		UrlClassList ucl = UrlClassList.getInstance();
 		Map<String, List<String>> PackClassList;
 		PackClassList = ucl.getPackClassList();
-		echo(PackClassList);
-		
+
+		setRoot("action_url", ucl.create(SliceName(stdClass)));
+
+		if (porg.getKey("gid") != null) {
+			getGroupMainRole(porg.getKey("gid"));
+			setRoot("gid", porg.getKey("gid"));
+			setRoot("action_url", ucl.edit(SliceName(stdClass)));
+			getGroupUser(porg.getKey("gid"));
+		}
+
 		setRoot("Pack_Class_List", PackClassList);
 	}
 
+	private void getGroupMainRole(String gid) {
+		String sql = "SELECT gname, gdesc, mainrole, subrole FROM `"
+				+ mConfig.GetValue("db_pre_rule") + "group` where id=" + gid;
+		Map<String, Object> res = FetchOne(sql);
+		setRoot("group_name", res.get("gname"));
+		setRoot("group_desc", res.get("gdesc"));
+		MainRoleJson = null;
+		SubRoleJson = null;
+		if (res.get("mainrole") != null)
+			MainRoleJson = JSON.parseObject(res.get("mainrole").toString());
+		if (res.get("subrole") != null)
+			SubRoleJson = JSON.parseObject(res.get("subrole").toString(),
+					List.class);
+
+	}
+
+	public boolean MainRoleCheckAction(String main, String lib, int action) {
+		if (MainRoleJson == null)
+			return false;
+		if (!MainRoleJson.containsKey(main))
+			return false;
+		Object rj = MainRoleJson.get(main);
+
+		JSONObject libJson = JSON.parseObject(rj.toString());
+		if (!libJson.containsKey(lib))
+			return false;
+
+		String act = libJson.get(lib).toString();
+
+		return act.matches("(.*)" + action + "(.*)");
+
+	}
+
+	public boolean SubroleCheckAction(String lib) {
+		if (SubRoleJson == null)
+			return false;
+		return SubRoleJson.contains(lib);
+	}
+
 	private void def() {
+		role_pg = porg.getAllpg();
+		
 		setRoot("static_uri", porg.getContext_Path());
 
 		String UserName = aclgetName();
@@ -97,21 +156,81 @@ public class admin_permission_setting extends Permission implements
 		}
 
 		setRoot("subMap", subMap);
-		
+
 		setRoot("fun", this);
 	}
-	
+
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
 		
-		Map<String, String> role_pg = porg.getAllpg();
-		String role_json = "";
-		Map<String, Map<String, String>> role = new HashMap<String, Map<String, String>>();
-		Map<String, String> sub;
+
 		String group_name = role_pg.get("group_name");
 		String group_desc = role_pg.get("group_desc");
 
+		String SubRole = TreatSubRole();
+
+		role_pg.remove("group_name");
+		role_pg.remove("group_desc");
+		role_pg.remove("gid");
+
+		String MainRole = TreatMainRole();
+
+		TimeClass tc = TimeClass.getInstance();
+		int now = (int) tc.time();
+		String format = "INSERT INTO `tea`.`"
+				+ mConfig.GetValue("db_pre_rule")
+				+ "group` "
+				+ "(`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
+				+ " VALUES ('%s', '%s',  '%s', '%s', %d, %d, %d);";
+		String sql = String.format(format, group_name, group_desc, MainRole,
+				SubRole, aclGetUid(), now, now);
+
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void edit(Object arg) {
+		// TODO Auto-generated method stub
+		
+		String SubRole = TreatSubRole();
+		String group_name = role_pg.get("group_name");
+		String group_desc = role_pg.get("group_desc");
+		String gid = role_pg.get("gid");
+		
+		role_pg.remove("group_name");
+		role_pg.remove("group_desc");
+		role_pg.remove("gid");
+
+		String MainRole = TreatMainRole();
+
+		Config mConfig = new Config(globale_config.Config);
+		TimeClass tc = TimeClass.getInstance();
+		int now = (int) tc.time();
+		String format = "UPDATE `tea`.`"
+				+ mConfig.GetValue("db_pre_rule")
+				+ "group` SET "
+				+ "`gname` = '%s', `gdesc` = '%s', `mainrole` = '%s', `subrole` = '%s', `etime` = '%d' "
+				+ "WHERE `role_group`.`id` = %s;";
+
+		String sql = String.format(format, group_name,
+				group_desc, MainRole, SubRole, now,
+				gid);
+		
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private String TreatSubRole() {
 		Config mConfig = new Config(globale_config.Config);
 		String subRole = mConfig.GetValue(globale_config.SubRole);
 		JSONObject subJson = JSON.parseObject(subRole);
@@ -129,16 +248,19 @@ public class admin_permission_setting extends Permission implements
 			subRoles = JSON.toJSONString(subList);
 		}
 
-		role_pg.remove("group_name");
-		role_pg.remove("group_desc");
-		role_pg.remove("gid");
+		return subRoles;
+	}
 
+	private String TreatMainRole() {
+
+		Map<String, Map<String, String>> role = new HashMap<String, Map<String, String>>();
+		Map<String, String> sub;
 		String sub_name, sub_action;
 		for (Entry<String, String> entry : role_pg.entrySet()) {
 			String key = entry.getKey();
 			// String value = entry.getValue();
 			String[] role_split = key.split("_", 2);
-			echo(key);
+			
 			sub_name = role_split[1].substring(0, role_split[1].length() - 2);
 			sub_action = role_split[1].substring(role_split[1].length() - 1);
 
@@ -153,29 +275,23 @@ public class admin_permission_setting extends Permission implements
 			sub.put(sub_name, sub_action);
 			role.put(role_split[0], sub);
 		}
-		role_json = JSON.toJSONString(role);
-		TimeClass tc = TimeClass.getInstance();
-		int now = (int)tc.time();
-		String format = "INSERT INTO `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
-				+ "group` "
-				+ "(`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
-				+ " VALUES ('%s', '%s',  '%s', '%s', %d, %d, %d);";
-		String sql = String.format(format, group_name, group_desc, role_json,
-				subRoles, aclGetUid(), now, now);
 
+		return JSON.toJSONString(role);
+	}
+	
+	private void getGroupUser(String gid) {
+		Config mConfig = new Config(globale_config.Config);
+		
+		String format = "SELECT nickname,email FROM `"+ mConfig.GetValue("db_pre_rule")+"user_info` where gid=%s and status=1 and isdelete=0;";
+		String sql = String.format(format, gid);
+		List<Map<String, Object>> res = null;
 		try {
-			update(sql);
+			res = FetchAll(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void edit(Object arg) {
-		// TODO Auto-generated method stub
-
+		setRoot("group_user", res);
 	}
 
 	@Override
@@ -198,3 +314,4 @@ public class admin_permission_setting extends Permission implements
 	}
 
 }
+

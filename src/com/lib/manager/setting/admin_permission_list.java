@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BasePerminterface;
 import org.ppl.BaseClass.Permission;
+import org.ppl.etc.Config;
+import org.ppl.etc.globale_config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -65,8 +67,8 @@ public class admin_permission_list extends Permission implements
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
-
-		String format = "SELECT id,gname,mainrole FROM `role_group` where uid=%d and status=1;";
+		Config mConfig = new Config(globale_config.Config);
+		String format = "SELECT id,gname,mainrole FROM `"+ mConfig.GetValue("db_pre_rule")+"group` where uid=%d and status=1;";
 		String sql = String.format(format, aclGetUid());
 		List<Map<String, Object>> res = null;
 		Map<String, Map<String, String>> PackClassList = new HashMap<>();
@@ -82,7 +84,7 @@ public class admin_permission_list extends Permission implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		echo(PackClassList);
+		
 		setRoot("Pack_Class_List", PackClassList);
 		setRoot("Gid", Gid);
 	}
