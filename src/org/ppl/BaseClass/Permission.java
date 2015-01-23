@@ -2,6 +2,8 @@ package org.ppl.BaseClass;
 
 import java.util.List;
 
+import javax.security.auth.Subject;
+
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
@@ -59,14 +61,22 @@ public class Permission extends BaseTheme implements BasePerminterface {
 	}
 
 	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
 	public void Show() {
+		// TODO Auto-generated method stub				
+	}
+	
+	@Override
+	public void View() {
 		// TODO Auto-generated method stub
-		
+		setRoot("static_uri", porg.getContext_Path());
+
+		String UserName = aclgetName();
+		setRoot("UserName", UserName);
+
+		setRoot("navbar", navbar());
+
+		setRoot("menu", menu());
+		super.View();
 	}
 	
 	public String GetName() {

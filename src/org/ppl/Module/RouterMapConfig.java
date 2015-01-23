@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseTheme;
 import org.ppl.BaseClass.Permission;
+import org.ppl.common.PorG;
 import org.ppl.core.PObject;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.Config;
@@ -40,25 +41,22 @@ public class RouterMapConfig extends PObject {
 		ParserMap();
 	}
 
-	public List<String> getRMC() {
-		return RMC;
-	}
-
 	public void map(String key) {
 		servletPath = key.trim();
 	}
 
 	public void match() {
 		if (matchRouter()) {
-			if (BaseName != null && RMC.size() > 0) {				
+			if (BaseName != null && RMC.size() > 0) {	
+				porg.UrlServlet(RMC);
+				
 				HikariConnectionPool hcp = new HikariConnectionPool();	
 				Injector injector = Guice.createInjector(new ModuleBind());
 				//System.out.println("match BaseName: " + BaseName);
 				if(BaseName.length()>11 && BaseName.substring(0, 11).equals("Permission_")){
 					BaseName = BaseName.substring(11);
 					Permission home = (Permission) injector.getInstance(Key.get(Permission.class, Names.named(BaseName)));
-					home.SetCon(hcp.GetCon(0));
-					home.UrlServlet(RMC);
+					home.SetCon(hcp.GetCon(0));					
 					home.Show();
 					htmlCon = home.getHtml();
 					//System.out.println(htmlCon);
@@ -67,7 +65,6 @@ public class RouterMapConfig extends PObject {
 					BaseTheme home = (BaseTheme) injector.getInstance(Key.get(
 						BaseTheme.class, Names.named(BaseName)));
 					home.SetCon(hcp.GetCon(0));
-					home.UrlServlet(RMC);
 					home.Show();
 					htmlCon = home.getHtml();
 					isAjax = home.isAjax();

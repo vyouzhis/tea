@@ -11,12 +11,18 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 public abstract class BaseLang extends ACLControl implements BaseLangInterface {
-	private String StdName;
+	private String StdName=null;
+		
+	public void setStdName(String stdName) {
+		StdName = "_"+stdName;
+	}
 	
 	@Override
 	public String _Lang(String key) {
 		// TODO Auto-generated method stub
-		StdName = "_"+SliceName(stdClass);
+		if(StdName == null){
+			StdName = "_"+SliceName(stdClass);
+		}
 		
 		if(StdName.equals("_common")){
 			return _CLang(key);
@@ -37,9 +43,10 @@ public abstract class BaseLang extends ACLControl implements BaseLangInterface {
 	}
 	
 	public String _MLang(String key) {
-		
-		StdName = "_"+SliceName(stdClass);
-				
+
+		if(StdName == null){
+			StdName = "_"+SliceName(stdClass);
+		}
 		return find(key, StdName);
 	}
 	

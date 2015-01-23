@@ -21,7 +21,6 @@ public class admin_login extends Permission {
 
 		UrlClassList ucl = UrlClassList.getInstance();
 		
-		setRoot("static_uri", porg.getContext_Path());
 		setRoot("admin_login_action_uri", ucl.BuildUrl("admin_login_action", ""));
 		setRoot("salt", getSalt());
 		super.View();

@@ -33,6 +33,7 @@ public class PorG {
 	private HttpServletResponse response;
 	private Map<String, String> sporg;
 	private String Context_Path;
+	private List<String> rmc;
 	
 	public static PorG getInstance() {
 		if (source == null) {
@@ -223,6 +224,14 @@ public class PorG {
 
 	public void setContext_Path(String context_Path) {
 		Context_Path = context_Path;
+	}
+	
+	public void UrlServlet(List<String> arg){
+		this.rmc = arg;
+	}
+	
+	public List<String> getRmc() {
+		return rmc;
 	}
 	
 	public Map<String, String> getAllpg() {

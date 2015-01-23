@@ -20,16 +20,6 @@ public class admin_index extends Permission {
 
 		if (super.Init() == -1)
 			return;
-		
-
-		setRoot("static_uri", porg.getContext_Path());
-
-		String UserName = aclgetName();
-		setRoot("UserName", UserName);
-
-		setRoot("navbar", navbar());
-
-		setRoot("menu", menu());
 
 		super.View();
 	}

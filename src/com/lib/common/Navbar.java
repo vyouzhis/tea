@@ -2,6 +2,7 @@ package com.lib.common;
 
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.common.PorG;
+import org.ppl.etc.UrlClassList;
 
 public class Navbar extends BaseModule {
 	private String className = null;
@@ -20,10 +21,9 @@ public class Navbar extends BaseModule {
 	}
 
 	private void Data() {
-
-		setRoot("static_uri", porg.getContext_Path());
-		setRoot("UserName", aclgetName());
-
+		UrlClassList ucl = UrlClassList.getInstance();
+		setRoot("UserName", aclgetNickName());
+		setRoot("logout_url", ucl.BuildUrl("admin_login_action", ""));
 	}
 
 }

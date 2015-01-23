@@ -28,10 +28,4 @@ public class jsonapi extends BaseTheme {
 		super.setHtml(json);
 	}
 
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

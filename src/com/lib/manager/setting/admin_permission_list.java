@@ -22,6 +22,9 @@ public class admin_permission_list extends Permission implements
 		String className = this.getClass().getCanonicalName();
 		// stdClass = className;
 		super.GetSubClassName(className);
+		setRoot("name", _MLang("name"));
+
+		setRoot("fun", this);
 	}
 
 	@Override
@@ -29,9 +32,7 @@ public class admin_permission_list extends Permission implements
 		// TODO Auto-generated method stub
 		if (super.Init() == -1)
 			return;
-
-		Default();
-
+		rmc = porg.getRmc();
 		if (rmc.size() == 2) {
 			switch (rmc.get(1).toString()) {
 			case "read":
@@ -48,21 +49,6 @@ public class admin_permission_list extends Permission implements
 		super.View();
 	}
 
-	private void Default() {
-
-		setRoot("static_uri", porg.getContext_Path());
-
-		String UserName = aclgetName();
-		setRoot("UserName", UserName);
-
-		setRoot("navbar", navbar());
-
-		setRoot("menu", menu());
-
-		setRoot("name", _MLang("name"));
-
-		setRoot("fun", this);
-	}
 
 	@Override
 	public void read(Object arg) {
@@ -134,9 +120,4 @@ public class admin_permission_list extends Permission implements
 
 	}
 
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		this.rmc = arg;
-	}
 }

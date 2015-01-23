@@ -55,11 +55,4 @@ public class home extends BaseTheme {
 	public int mul(int a, int b) {
 		return a * b;
 	}
-
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -24,10 +24,11 @@ public class ACLInit extends PObject {
 		String aclSess = SessAct.GetSession(mConfig
 				.GetValue(globale_config.sessAcl));
 		// Object actJson = null;
-		if(aclSess==null)return 0;
+		if (aclSess == null)
+			return 0;
 		JSONObject actJson = JSON.parseObject(aclSess);
 		// echo(actJson.size());
-		if (actJson.get("Uid") != null)
+		if (actJson != null)
 			return actJson.getIntValue("Uid");
 		return 0;
 	}
@@ -36,9 +37,11 @@ public class ACLInit extends PObject {
 		String aclSess = SessAct.GetSession(mConfig
 				.GetValue(globale_config.sessAcl));
 		// Object actJson = null;
-		
+		if (aclSess == null)
+			return null;
 		JSONObject actJson = JSON.parseObject(aclSess);
-
+		if (actJson == null)
+			return null;
 		return actJson.getString("NickName");
 	}
 
@@ -46,8 +49,11 @@ public class ACLInit extends PObject {
 		String aclSess = SessAct.GetSession(mConfig
 				.GetValue(globale_config.sessAcl));
 		// Object actJson = null;
+		if (aclSess == null)
+			return null;
 		JSONObject actJson = JSON.parseObject(aclSess);
-
+		if (actJson == null)
+			return null;
 		return actJson.getString("Name");
 	}
 
@@ -59,14 +65,17 @@ public class ACLInit extends PObject {
 
 		return actJson.getString("CM");
 	}
-	
+
 	public String aclfetchMyRole() {
 		String aclSess = SessAct.GetSession(mConfig
 				.GetValue(globale_config.sessAcl));
 		// Object actJson = null;
+		if (aclSess == null)
+			return null;
 		JSONObject actJson = JSON.parseObject(aclSess);
-
-		return actJson.getString("role");
+		if (actJson == null)
+			return null;
+		return actJson.getString("main_role");
 	}
 
 	public int aclLogin(String name, String passwd, String get_salt) {
@@ -82,10 +91,10 @@ public class ACLInit extends PObject {
 
 		if (res != null) {
 			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {
-				echo("passwd:"+passwd+" md5:");
+				echo("passwd:" + passwd + " md5:");
 				return -2;
 			}
-			
+
 			long now_time = tc.time();
 			String new_cm = en.MD5(now_time + "");
 			format = "UPDATE " + mConfig.GetValue("db_pre_rule")
@@ -103,21 +112,21 @@ public class ACLInit extends PObject {
 			UserSess.put("NickName", res.get("nickname").toString());
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
-			
-			 format = "SELECT g.mainrole,g.subrole FROM "
+
+			format = "SELECT g.mainrole,g.subrole FROM "
 					+ mConfig.GetValue("db_pre_rule") + "user_info u, "
 					+ mConfig.GetValue("db_pre_rule")
 					+ "group g where u.gid =  g.id and u.uid=%s LIMIT 1";
-			 sql = String.format(format, res.get("uid").toString());
-			
+			sql = String.format(format, res.get("uid").toString());
+
 			Map<String, Object> role = FetchOne(sql);
-			if(role!=null){				
+			if (role != null) {
 				UserSess.put("main_role", role.get("mainrole").toString());
 				UserSess.put("sub_role", role.get("subrole").toString());
 			}
-						
+
 			String json = JSON.toJSONString(UserSess);
-			
+
 			SessAct.SetSession(mConfig.GetValue(globale_config.sessAcl), json);
 
 			return 0;
@@ -125,7 +134,7 @@ public class ACLInit extends PObject {
 
 		return -1;
 	}
-	
+
 	public boolean aclmyRole(String action) {
 		Map<String, Integer> act = new HashMap<String, Integer>();
 		act.put("read", 0);
@@ -133,11 +142,12 @@ public class ACLInit extends PObject {
 		act.put("edit", 0);
 		act.put("remove", 0);
 		act.put("search", 0);
-		
+
 		String role = aclfetchMyRole();
-		if(role==null) return false;
+		if (role == null)
+			return false;
 		JSONObject roleJson = JSON.parseObject(role);
-				
+
 		return true;
 	}
 
@@ -145,4 +155,3 @@ public class ACLInit extends PObject {
 		SessAct.SetSession(mConfig.GetValue(globale_config.sessAcl), "");
 	}
 }
-

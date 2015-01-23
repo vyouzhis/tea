@@ -15,8 +15,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 		// TODO Auto-generated constructor stub
 		//echo(super.stdClass+":baseTheme");
 	}
-
-	public abstract void UrlServlet(List<String> arg);
+	
 	public abstract void Show();
 	
 	public void setHtml(String Con) {

@@ -42,11 +42,4 @@ public class About extends BaseTheme{
 		super.View();
 	}
 
-
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

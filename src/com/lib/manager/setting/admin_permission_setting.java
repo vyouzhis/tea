@@ -32,6 +32,10 @@ public class admin_permission_setting extends Permission implements
 		String className = this.getClass().getCanonicalName();
 		// stdClass = className;
 		super.GetSubClassName(className);
+		role_pg = porg.getAllpg();
+
+		setRoot("name", _MLang("name"));
+		setRoot("fun", this);
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class admin_permission_setting extends Permission implements
 		// TODO Auto-generated method stub
 		if (super.Init() == -1)
 			return;
-
+		argList = porg.getRmc();
 		def();
 
 		if (argList.size() == 2) {
@@ -91,6 +95,7 @@ public class admin_permission_setting extends Permission implements
 		setRoot("Pack_Class_List", PackClassList);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getGroupMainRole(String gid) {
 		String sql = "SELECT gname, gdesc, mainrole, subrole FROM `"
 				+ mConfig.GetValue("db_pre_rule") + "group` where id=" + gid;
@@ -131,18 +136,6 @@ public class admin_permission_setting extends Permission implements
 	}
 
 	private void def() {
-		role_pg = porg.getAllpg();
-		
-		setRoot("static_uri", porg.getContext_Path());
-
-		String UserName = aclgetName();
-		setRoot("UserName", UserName);
-
-		setRoot("navbar", navbar());
-
-		setRoot("menu", menu());
-
-		setRoot("name", _MLang("name"));
 
 		Config mConfig = new Config(globale_config.Config);
 		String subRole = mConfig.GetValue(globale_config.SubRole);
@@ -157,13 +150,11 @@ public class admin_permission_setting extends Permission implements
 
 		setRoot("subMap", subMap);
 
-		setRoot("fun", this);
 	}
 
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-		
 
 		String group_name = role_pg.get("group_name");
 		String group_desc = role_pg.get("group_desc");
@@ -197,12 +188,12 @@ public class admin_permission_setting extends Permission implements
 	@Override
 	public void edit(Object arg) {
 		// TODO Auto-generated method stub
-		
+
 		String SubRole = TreatSubRole();
 		String group_name = role_pg.get("group_name");
 		String group_desc = role_pg.get("group_desc");
 		String gid = role_pg.get("gid");
-		
+
 		role_pg.remove("group_name");
 		role_pg.remove("group_desc");
 		role_pg.remove("gid");
@@ -218,10 +209,9 @@ public class admin_permission_setting extends Permission implements
 				+ "`gname` = '%s', `gdesc` = '%s', `mainrole` = '%s', `subrole` = '%s', `etime` = '%d' "
 				+ "WHERE `role_group`.`id` = %s;";
 
-		String sql = String.format(format, group_name,
-				group_desc, MainRole, SubRole, now,
-				gid);
-		
+		String sql = String.format(format, group_name, group_desc, MainRole,
+				SubRole, now, gid);
+
 		try {
 			update(sql);
 		} catch (SQLException e) {
@@ -260,7 +250,7 @@ public class admin_permission_setting extends Permission implements
 			String key = entry.getKey();
 			// String value = entry.getValue();
 			String[] role_split = key.split("_", 2);
-			
+
 			sub_name = role_split[1].substring(0, role_split[1].length() - 2);
 			sub_action = role_split[1].substring(role_split[1].length() - 1);
 
@@ -278,11 +268,13 @@ public class admin_permission_setting extends Permission implements
 
 		return JSON.toJSONString(role);
 	}
-	
+
 	private void getGroupUser(String gid) {
 		Config mConfig = new Config(globale_config.Config);
-		
-		String format = "SELECT nickname,email FROM `"+ mConfig.GetValue("db_pre_rule")+"user_info` where gid=%s and status=1 and isdelete=0;";
+
+		String format = "SELECT nickname,email FROM `"
+				+ mConfig.GetValue("db_pre_rule")
+				+ "user_info` where gid=%s and status=1 and isdelete=0;";
 		String sql = String.format(format, gid);
 		List<Map<String, Object>> res = null;
 		try {
@@ -306,12 +298,4 @@ public class admin_permission_setting extends Permission implements
 
 	}
 
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		argList = arg;
-
-	}
-
 }
-

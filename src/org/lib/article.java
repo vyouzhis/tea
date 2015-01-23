@@ -48,13 +48,5 @@ public class article extends BaseTheme {
 		setRoot("wels", name);
 		
 		
-	}
-
-	@Override
-	public void UrlServlet(List<String> arg) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
+	}	
 }
