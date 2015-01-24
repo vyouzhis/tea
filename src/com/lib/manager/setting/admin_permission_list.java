@@ -13,8 +13,7 @@ import org.ppl.etc.globale_config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class admin_permission_list extends Permission implements
-		BasePerminterface {
+public class admin_permission_list extends Permission implements BasePerminterface{
 	private List<String> rmc;
 	
 	public admin_permission_list() {
@@ -45,7 +44,7 @@ public class admin_permission_list extends Permission implements
 				break;
 			}
 		}
-		// aclLoadLib();
+
 		super.View();
 	}
 
@@ -99,25 +98,26 @@ public class admin_permission_list extends Permission implements
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void edit(Object arg) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void remove(Object arg) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void search(Object arg) {
 		// TODO Auto-generated method stub
-
+		
 	}
+
 
 }

@@ -25,6 +25,7 @@ public class user_profile extends Permission implements BasePerminterface {
 		setRoot("name", _MLang("name"));
 
 		setRoot("fun", this);
+		super.setAction(1);
 	}
 
 	public void Show() {
@@ -53,7 +54,6 @@ public class user_profile extends Permission implements BasePerminterface {
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
-		super.read(arg);
 		ListGroup();
 		UrlClassList ucl = UrlClassList.getInstance();
 		String uid = porg.getKey("uid");
@@ -97,6 +97,7 @@ public class user_profile extends Permission implements BasePerminterface {
 			setRoot("nickname", res.get("nickname"));
 			setRoot("username", res.get("name"));
 			setRoot("email", res.get("email"));
+			setRoot("phone", res.get("phone"));
 			setRoot("group_id", res.get("gid"));
 		}
 	}
@@ -104,11 +105,11 @@ public class user_profile extends Permission implements BasePerminterface {
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-		super.create(arg);
 		Config mConfig = new Config(globale_config.Config);
 		String nickname = porg.getKey("nickname");
 		String username = porg.getKey("username");
 		String email = porg.getKey("email");
+		String phone = porg.getKey("phone");
 		String pass1 = porg.getKey("pass1");
 		String pass2 = porg.getKey("pass2");
 		String group = porg.getKey("group");
@@ -127,10 +128,10 @@ public class user_profile extends Permission implements BasePerminterface {
 		String format = "INSERT INTO `tea`.`"
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info` "
-				+ "(`name`, `passwd`, `cm`, `nickname`, `email`, `ctime`, `ltime`,  `gid`, `cid`)"
-				+ " VALUES ( '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d')";
+				+ "(`name`, `passwd`, `cm`, `nickname`, `email`, `ctime`, `ltime`,  `gid`, `cid`,`phone`)"
+				+ " VALUES ( '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s')";
 		String sql = String.format(format, username, pwd, "", nickname, email,
-				now, now, group, aclGetUid());
+				now, now, group, aclGetUid(), phone);
 
 		try {
 			update(sql);
@@ -144,12 +145,12 @@ public class user_profile extends Permission implements BasePerminterface {
 	@Override
 	public void edit(Object arg) {
 		// TODO Auto-generated method stub
-		super.edit(arg);
 
 		Config mConfig = new Config(globale_config.Config);
 		String nickname = porg.getKey("nickname");
 		String username = porg.getKey("username");
 		String email = porg.getKey("email");
+		String phone = porg.getKey("phone");
 		String pass1 = porg.getKey("pass1");
 		String pass2 = porg.getKey("pass2");
 		String group = porg.getKey("group");
@@ -161,26 +162,25 @@ public class user_profile extends Permission implements BasePerminterface {
 				return;
 			}
 			Encrypt en = Encrypt.getInstance();
-			pwd = ", `passwd`='"+en.MD5(pass1)+"' ";
+			pwd = ", `passwd`='" + en.MD5(pass1) + "' ";
 		}
-		
 
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
-		
+
 		String format = "UPDATE `tea`.`"
 				+ mConfig.GetValue("db_pre_rule")
-				+ "user_info` SET `name` = '%s', `nickname` = '%s', `gid` = '%s'" +
-				pwd +
-				" WHERE `role_user_info`.`uid` = %s";
-		String sql = String.format(format, username, nickname, group, uid);
+				+ "user_info` SET `name` = '%s', `nickname` = '%s',`email`='%s',`etime`='%d',`phone`='%s' ,`gid` = '%s'"
+				+ pwd + " WHERE `role_user_info`.`uid` = %s";
+		String sql = String.format(format, username, nickname, email, now,
+				phone, group, uid);
 		try {
 			update(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Msg(_CLang("ok_save"));
 	}
 
@@ -191,5 +191,17 @@ public class user_profile extends Permission implements BasePerminterface {
 		ShowMessage ms = ShowMessage.getInstance();
 		String res = ms.SetMsg(ok_url, msg, 3000);
 		super.setHtml(res);
+	}
+
+	@Override
+	public void remove(Object arg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void search(Object arg) {
+		// TODO Auto-generated method stub
+
 	}
 }

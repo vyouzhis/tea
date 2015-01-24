@@ -46,7 +46,7 @@ public class user_list extends Permission implements BasePerminterface {
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
-		super.read(arg);
+		
 		Config mConfig = new Config(globale_config.Config);
 		String sql = "SELECT uid,name,nickname,email,"
 				+ "from_unixtime(ctime) as ctime , from_unixtime(ltime) as ltime FROM "
@@ -78,5 +78,29 @@ public class user_list extends Permission implements BasePerminterface {
 		ShowMessage ms = ShowMessage.getInstance();
 		String res = ms.SetMsg(ok_url, msg, 3000);
 		super.setHtml(res);
+	}
+
+	@Override
+	public void create(Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void edit(Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void search(Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

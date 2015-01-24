@@ -1,8 +1,6 @@
 package com.lib.manager;
 
 import org.ppl.BaseClass.Permission;
-import org.ppl.common.PorG;
-
 
 public class admin_index extends Permission {
 

@@ -1,10 +1,6 @@
 package com.lib.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ppl.BaseClass.Permission;
-import org.ppl.common.PorG;
 import org.ppl.etc.UrlClassList;
 
 public class admin_login extends Permission {
@@ -18,7 +14,7 @@ public class admin_login extends Permission {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub		
-
+		
 		UrlClassList ucl = UrlClassList.getInstance();
 		
 		setRoot("admin_login_action_uri", ucl.BuildUrl("admin_login_action", ""));
