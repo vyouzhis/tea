@@ -46,7 +46,7 @@ public class Permission extends BaseTheme  {
 		// TODO Auto-generated method stub
 		setRoot("static_uri", porg.getContext_Path());
 
-		String UserName = aclgetName();
+		String UserName = aclGetName();
 		
 		setRoot("UserName", UserName);
 

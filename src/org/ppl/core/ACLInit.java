@@ -21,52 +21,39 @@ public class ACLInit extends PObject {
 	}
 
 	public int aclGetUid() {
-		String aclSess = SessAct.GetSession(mConfig
-				.GetValue(globale_config.sessAcl));
-		// Object actJson = null;
-		if (aclSess == null)
+		String uid = getInfo("Uid");
+		if (uid == null)
 			return 0;
-		JSONObject actJson = JSON.parseObject(aclSess);
-		// echo(actJson.size());
-		if (actJson != null)
-			return actJson.getIntValue("Uid");
-		return 0;
+		return Integer.valueOf(uid);
 	}
 
-	public String aclgetNickName() {
-		String aclSess = SessAct.GetSession(mConfig
-				.GetValue(globale_config.sessAcl));
-		// Object actJson = null;
-		if (aclSess == null)
-			return null;
-		JSONObject actJson = JSON.parseObject(aclSess);
-		if (actJson == null)
-			return null;
-		return actJson.getString("NickName");
+	public String aclGetPhone() {
+		return getInfo("phone");
+	}
+	
+	public String aclGetNickName() {
+		return getInfo("NickName");
+	}
+	
+	public String aclGetEmail() {
+		return getInfo("email");
 	}
 
-	public String aclgetName() {
-		String aclSess = SessAct.GetSession(mConfig
-				.GetValue(globale_config.sessAcl));
-		// Object actJson = null;
-		if (aclSess == null)
-			return null;
-		JSONObject actJson = JSON.parseObject(aclSess);
-		if (actJson == null)
-			return null;
-		return actJson.getString("Name");
+	public String aclGetName() {
+		return getInfo("Name");
 	}
 
 	public String aclgetCM() {
-		String aclSess = SessAct.GetSession(mConfig
-				.GetValue(globale_config.sessAcl));
-		// Object actJson = null;
-		JSONObject actJson = JSON.parseObject(aclSess);
 
-		return actJson.getString("CM");
+		return getInfo("CM");
 	}
 
 	public String aclfetchMyRole() {
+
+		return getInfo("main_role");
+	}
+
+	private String getInfo(String key) {
 		String aclSess = SessAct.GetSession(mConfig
 				.GetValue(globale_config.sessAcl));
 		// Object actJson = null;
@@ -75,12 +62,12 @@ public class ACLInit extends PObject {
 		JSONObject actJson = JSON.parseObject(aclSess);
 		if (actJson == null)
 			return null;
-		return actJson.getString("main_role");
+		return actJson.getString(key);
 	}
 
 	public int aclLogin(String name, String passwd, String get_salt) {
 		Config mConfig = new Config(globale_config.Config);
-		String format = "select uid, cm, passwd,nickname  from "
+		String format = "select uid, cm, passwd,nickname,phone,email  from "
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info WHERE  name='%s' limit 1";
 		String sql = String.format(format, name);
@@ -110,6 +97,8 @@ public class ACLInit extends PObject {
 			Map<String, String> UserSess = new HashMap<String, String>();
 			UserSess.put("Uid", res.get("uid").toString());
 			UserSess.put("NickName", res.get("nickname").toString());
+			UserSess.put("phone", res.get("phone").toString());
+			UserSess.put("email", res.get("email").toString());
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
 
@@ -133,22 +122,6 @@ public class ACLInit extends PObject {
 		}
 
 		return -1;
-	}
-
-	public boolean aclmyRole(String action) {
-		Map<String, Integer> act = new HashMap<String, Integer>();
-		act.put("read", 0);
-		act.put("create", 0);
-		act.put("edit", 0);
-		act.put("remove", 0);
-		act.put("search", 0);
-
-		String role = aclfetchMyRole();
-		if (role == null)
-			return false;
-		JSONObject roleJson = JSON.parseObject(role);
-
-		return true;
 	}
 
 	public void aclLogout() {

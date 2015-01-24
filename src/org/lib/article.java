@@ -40,7 +40,7 @@ public class article extends BaseTheme {
 		if (fn != null)
 			setRoot("fn", "get fn:" + fn);
 		// pG.getFile();
-		String name = aclgetNickName();
+		String name = aclGetNickName();
 		
 		setRoot("tdesc", _MLang("desc"));
 		setRoot("tlang", _Lang("tl"));

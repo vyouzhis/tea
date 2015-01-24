@@ -3,7 +3,7 @@
      <script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 					</script> 
-     <div class="sidebar-shortcuts" id="sidebar-shortcuts"> 
+    <!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts"> 
       <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large"> 
        <button class="btn btn-success"> <i class="icon-signal"></i> </button> 
        <button class="btn btn-info"> <i class="icon-pencil"></i> </button> 
@@ -17,9 +17,9 @@
        <span class="btn btn-danger"></span> 
       </div> 
      </div>
-     <!-- #sidebar-shortcuts --> 
+      #sidebar-shortcuts --> 
      <ul class="nav nav-list"> 
-      <li class=""> <a href="index.html"> <i class="icon-dashboard"></i> <span class="menu-text"> 控制台 </span> </a> </li> 
+      <li class=""> <a href="${Index_url}"> <i class="icon-dashboard"></i> <span class="menu-text"> 控制台 </span> </a> </li> 
        
       <#list menu?keys as key>
       <li <#if fun.isMainMenuActive(key) > class="active open" </#if>> <a class="dropdown-toggle" href="#"> <i class="icon-list"></i> <span class="menu-text">系统管理</span> <b class="arrow icon-angle-down"></b> </a> 

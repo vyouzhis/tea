@@ -25,8 +25,8 @@ public class RouterMapConfig extends PObject {
 	private String servletPath = null;
 	private String mehtod = null;
 	private boolean NullMap = true;
-	//private BaseTheme home = null;
-	//private Config mConfig = null;
+	// private BaseTheme home = null;
+	// private Config mConfig = null;
 	private String htmlCon;
 	private boolean isAjax = false;
 	private UrlClassList ucl;
@@ -36,8 +36,8 @@ public class RouterMapConfig extends PObject {
 		// TODO Auto-generated constructor stub
 
 		RMC = new ArrayList<String>();
-		
-		//mConfig = new Config(globale_config.UrlMap);
+
+		// mConfig = new Config(globale_config.UrlMap);
 		ParserMap();
 	}
 
@@ -47,29 +47,31 @@ public class RouterMapConfig extends PObject {
 
 	public void match() {
 		if (matchRouter()) {
-			if (BaseName != null && RMC.size() > 0) {	
+			if (BaseName != null && RMC.size() > 0) {
 				porg.UrlServlet(RMC);
-				
-				HikariConnectionPool hcp = new HikariConnectionPool();	
+
+				HikariConnectionPool hcp = new HikariConnectionPool();
 				Injector injector = Guice.createInjector(new ModuleBind());
-				//System.out.println("match BaseName: " + BaseName);
-				if(BaseName.length()>11 && BaseName.substring(0, 11).equals("Permission_")){
+				// System.out.println("match BaseName: " + BaseName);
+				if (BaseName.length() > 11
+						&& BaseName.substring(0, 11).equals("Permission_")) {
 					BaseName = BaseName.substring(11);
-					Permission home = (Permission) injector.getInstance(Key.get(Permission.class, Names.named(BaseName)));
-					home.SetCon(hcp.GetCon(0));					
+					Permission home = (Permission) injector.getInstance(Key
+							.get(Permission.class, Names.named(BaseName)));
+					home.SetCon(hcp.GetCon(0));
 					home.Show();
 					htmlCon = home.getHtml();
-					//System.out.println(htmlCon);
+					// System.out.println(htmlCon);
 					isAjax = home.isAjax();
-				}else{
+				} else {
 					BaseTheme home = (BaseTheme) injector.getInstance(Key.get(
-						BaseTheme.class, Names.named(BaseName)));
+							BaseTheme.class, Names.named(BaseName)));
 					home.SetCon(hcp.GetCon(0));
 					home.Show();
 					htmlCon = home.getHtml();
 					isAjax = home.isAjax();
 				}
-								
+
 				NullMap = false;
 			}
 		}
@@ -96,74 +98,80 @@ public class RouterMapConfig extends PObject {
 		if (servletPath.length() > 0 && servletPath.substring(0, 1).equals("/")) {
 			servletPath = servletPath.substring(1);
 		}
-		//System.out.println("servletpath: "+servletPath);
+		// System.out.println("servletpath: "+servletPath);
 		String[] UrlServlet = servletPath.split("/");
 		String uri;
 		String mMthod = null;
 
 		List<String> lu = ucl.getUcls();
-		
+
 		// System.out.println("getUcls: " + lu.size());
 		for (int i = 0; i < lu.size(); i++) {
 			RMC.clear();
 			BaseName = lu.get(i).toString();
-						
+
 			mMthod = GetMapMethod(BaseName);
-			if(mMthod == null)continue;
-			
-			int l = mMthod.toLowerCase()
-					.indexOf(mehtod.toLowerCase());
+			if (mMthod == null)
+				continue;
+
+			int l = mMthod.toLowerCase().indexOf(mehtod.toLowerCase());
 			if (l == -1) {
 				BaseName = null;
-				//System.out.println("method is not");
+				// System.out.println("method is not");
 				continue;
 			}
-			
+
 			uri = GetMapUri(BaseName);
-			//System.out.println(uri);
+			// System.out.println(uri);
 			if (uri.length() > 0 && uri.substring(0, 1).equals("/")) {
 				uri = uri.substring(1);
 			}
-			
+
 			String[] uris = uri.split("/");
 
-			if (uri.length() == 0 && servletPath.length() == 0){				
-				//System.out.println("uri equals index " + uri);
+			if (uri.length() == 0 && servletPath.length() == 0) {
+				// System.out.println("uri equals index " + uri);
 				RMC.add("");
 				return true;
-			}else if (uri.length() == 0 && servletPath.length() != 0) {
+			} else if (uri.length() == 0 && servletPath.length() != 0) {
 				continue;
 			}
-			
-			if (uri.length()>1 && uri.substring(uri.length()-1).equals("?")) {
+
+			if (uri.length() > 1 && uri.substring(uri.length() - 1).equals("?")) {
 				if (uris.length < UrlServlet.length) {
 					BaseName = null;
-					//System.out.println("UrlServlet.length < "
-					//		+ UrlServlet.length);
+					// System.out.println("UrlServlet.length < "
+					// + UrlServlet.length);
 					continue;
 				}
 			} else {
 
 				if (uris.length != UrlServlet.length) {
 					BaseName = null;
-					//System.out.println("UrlServlet.length != "
-					//		+ UrlServlet.length);
+					// System.out.println("UrlServlet.length != "
+					// + UrlServlet.length);
 					continue;
 				}
 			}
-			
+
 			for (int j = 0; j < UrlServlet.length; j++) {
-				//System.out.println("uri: "+uris[j]+" us:"+UrlServlet[j]);
+				// System.out.println("uri: "+uris[j]+" us:"+UrlServlet[j]);
 				Pattern r = Pattern.compile(uris[j]);
-				if(uris[j].length()>11 && uris[j].substring(0, 11).equals("Permission_")){
+				if (uris[j].length() > 11
+						&& uris[j].substring(0, 11).equals("Permission_")) {
 					r = Pattern.compile(uris[j].substring(11));
-				}				
+				}
 				//
 				Matcher m = r.matcher(UrlServlet[j]);
 				if (m.find()) {
-					RMC.add(m.group());
-//					System.out.println("Found value: " + BaseName + " arg:"
-//							+ m.group());
+					if (m.group().equals(UrlServlet[j])) {
+						RMC.add(m.group());
+						System.out.println("Found value: " + BaseName + " arg:"
+								+ m.group());
+					} else {
+						RMC.clear();
+						break;
+					}
 				} else {
 					RMC.clear();
 					break;
@@ -200,37 +208,37 @@ public class RouterMapConfig extends PObject {
 				}
 			}
 		}
-				
+
 		List<String> pum = PermUrlMap();
 		for (int i = 0; i < pum.size(); i++) {
 			ucl.setUcls(pum.get(i));
 		}
-		
+
 	}
-			
+
 	private String GetMapMethod(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String method = mConfig.GetValue(key + ".method");
-		if(method==null) {
+		if (method == null) {
 			List<String> pum = PermUrlMap();
 			if (pum.contains(key)) {
 				return "POST|GET";
 			}
 		}
-		
+
 		return method;
 	}
-	
+
 	private String GetMapUri(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String uri = mConfig.GetValue(key + ".uri");
-		if(uri==null) {
+		if (uri == null) {
 			List<String> pum = PermUrlMap();
-			if(pum.contains(key)){
-				return key+"/(read|create|edit|remove|search)";
+			if (pum.contains(key)) {
+				return key + "/(read|create|edit|remove|search)";
 			}
 		}
-		
+
 		return uri;
 	}
 }

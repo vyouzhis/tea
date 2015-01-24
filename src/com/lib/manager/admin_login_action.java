@@ -10,7 +10,7 @@ public class admin_login_action extends Permission {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-		
+		isAutoHtml = false;
 		String action = porg.getKey("action");
 		if(action!=null){
 			login();
@@ -67,7 +67,7 @@ public class admin_login_action extends Permission {
 	}
 	
 	private void Bad(String url, String msg) {
-		isAutoHtml = false;
+		
 		ShowMessage ms = ShowMessage.getInstance();				
 		String res = ms.SetMsg(url, msg, 3000);
 		

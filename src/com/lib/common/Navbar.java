@@ -22,8 +22,9 @@ public class Navbar extends BaseModule {
 
 	private void Data() {
 		UrlClassList ucl = UrlClassList.getInstance();
-		setRoot("UserName", aclgetNickName());
+		setRoot("UserName", aclGetNickName());
 		setRoot("logout_url", ucl.BuildUrl("admin_login_action", ""));
+		setRoot("my_profile", ucl.BuildUrl("my_profile", ""));
 	}
 
 }

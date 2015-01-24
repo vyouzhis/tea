@@ -33,7 +33,10 @@ public class Menu extends BaseModule {
 			super.html = "";
 			return;
 		}
+		UrlClassList ucl = UrlClassList.getInstance();
+		setRoot("Index_url", ucl.BuildUrl("admin_index", ""));
 		setRoot("fun", this);
+		
 		super.View();
 	}
 

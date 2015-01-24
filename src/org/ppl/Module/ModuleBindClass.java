@@ -13,6 +13,7 @@ import com.lang._article;
 import com.lang._common;
 import com.lang.manager.setting._admin_permission_list;
 import com.lang.manager.setting._admin_permission_setting;
+import com.lang.manager.user._my_profile;
 import com.lang.manager.user._user_profile;
 import com.lang.manager.user._user_list;
 import com.lib.common.Footer;
@@ -23,6 +24,7 @@ import com.lib.manager.admin_login_action;
 import com.lib.manager.setting.admin_permission_list;
 import com.lib.manager.setting.admin_permission_setting;
 import com.lib.manager.setting.setting_index;
+import com.lib.manager.user.my_profile;
 import com.lib.manager.user.user_profile;
 import com.lib.manager.user.user_index;
 import com.lib.manager.user.user_list;
@@ -45,6 +47,7 @@ public class ModuleBindClass extends PObject{
 		LangList.add(_admin_permission_setting.class);
 		LangList.add(_user_list.class);
 		LangList.add(_user_profile.class);
+		LangList.add(_my_profile.class);
 		
 		ThemeList = new ArrayList<Object>();
 		//lib
@@ -63,6 +66,7 @@ public class ModuleBindClass extends PObject{
 		PermList.add(admin_index.class);
 		PermList.add(admin_login.class);
 		PermList.add(admin_login_action.class);
+		PermList.add(my_profile.class);
 		
 		PermList.add(admin_permission_list.class);
 		PermList.add(admin_permission_setting.class);
