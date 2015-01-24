@@ -103,6 +103,7 @@ public class ACLInit extends PObject {
 			int ltime = Integer.valueOf(res.get("ltime").toString());
 			int error = Integer.valueOf(res.get("error").toString());
 			int now = (int) tc.time();
+			echo("now:"+now+"__ltime:"+ltime);
 			
 			if(now-ltime < 60*5 && error >2)return -3;
 			
