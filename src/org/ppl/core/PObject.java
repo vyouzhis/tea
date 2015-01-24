@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.db.DBSQL;
@@ -19,6 +20,7 @@ public class PObject extends DBSQL {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
+	protected CookieAction cookie = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
 	
 	public void echo(Object o) {
@@ -55,10 +57,31 @@ public class PObject extends DBSQL {
 		Config mConfig = new Config(globale_config.Config);
 
 		SessAct.SetSession(mConfig.GetValue(globale_config.SessSalt), salt);
-
+		cookie.SetCookie(mConfig.GetValue(globale_config.CookieSalt), salt);
+		
 		return salt;
 	}
 
+	public String easyGetSalt() {
+		Config mConfig = new Config(globale_config.Config);
+		String salt = SessAct.GetSession(mConfig
+				.GetValue(globale_config.SessSalt));
+		
+		
+		return salt;
+	}
+	
+	public boolean easyCheckSalt(String salt) {
+		Config mConfig = new Config(globale_config.Config);
+
+		String sess_salt = SessAct.GetSession(mConfig
+				.GetValue(globale_config.SessSalt));
+		
+		if (sess_salt == null)
+			return false;
+		return sess_salt.equals(salt);		
+	}
+	
 	public boolean checkSalt(String salt) {
 
 		Config mConfig = new Config(globale_config.Config);
@@ -68,6 +91,7 @@ public class PObject extends DBSQL {
 
 		String sess_salt = SessAct.GetSession(mConfig
 				.GetValue(globale_config.SessSalt));
+		
 		if (sess_salt == null)
 			return false;
 		if (sess_salt.equals(salt)) {

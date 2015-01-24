@@ -1,6 +1,11 @@
 package org.ppl.BaseClass;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import org.ppl.common.PorG;
 import org.ppl.common.ShowMessage;
+import org.ppl.core.SystemLog;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
@@ -8,16 +13,17 @@ import org.ppl.etc.globale_config;
 import com.lib.common.Menu;
 import com.lib.common.Navbar;
 
-public class Permission extends BaseTheme  {
-	private int Action=0; // default 0 is menu, 1 is action
+public class Permission extends BaseTheme {
+	private int Action = 0; // default 0 is menu, 1 is action
+
 	protected int Init() {
-		Config mConfig = new Config(globale_config.Config);
-		int uid = aclGetUid();
+		Config mConfig = new Config(globale_config.Config);		
 		UrlClassList ucl = UrlClassList.getInstance();
 		String bad_url = "";
 		ShowMessage ms = ShowMessage.getInstance();
 		String res = "";
-		if (uid == 0 && !stdClass.equals(mConfig.GetValue("login_module"))) {
+		boolean i = aclCheckAccess();
+		if (!stdClass.equals(mConfig.GetValue("login_module")) && i==false) {
 
 			bad_url = ucl.BuildUrl("admin_login", "");
 
@@ -26,14 +32,38 @@ public class Permission extends BaseTheme  {
 			super.setHtml(res);
 			return -1;
 		}
+		
 		if (checkRole() == false) {
 			bad_url = ucl.BuildUrl("admin_index", "");
 			res = ms.SetMsg(bad_url, _CLang("error_role"), 3000);
-
 			super.setHtml(res);
+			aclLogout();
 			return -1;
 		}
+		
+		if(CheckOntime() == false){
+			bad_url = ucl.BuildUrl("admin_index", "");
+			res = ms.SetMsg(bad_url, _CLang("error_offtime"), 3000);
+
+			super.setHtml(res);
+			aclLogout();
+			return -1;
+		}
+		
+		Log();
+
 		return 0;
+	}
+
+	private void Log() {
+		SystemLog sl = new SystemLog();
+		String sql = sl.Log(aclGetUid());
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -47,13 +77,13 @@ public class Permission extends BaseTheme  {
 		setRoot("static_uri", porg.getContext_Path());
 
 		String UserName = aclGetName();
-		
+
 		setRoot("UserName", UserName);
 
 		setRoot("navbar", navbar());
 
 		setRoot("menu", menu());
-		
+
 		super.View();
 	}
 
@@ -88,4 +118,5 @@ public class Permission extends BaseTheme  {
 	public void setAction(int action) {
 		Action = action;
 	}
+	
 }

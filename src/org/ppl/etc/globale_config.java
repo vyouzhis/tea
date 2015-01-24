@@ -13,7 +13,9 @@ public class globale_config {
 	
 	//session
 	public static String SessSalt = "session.salt";
+	public static String Ontime = "session.ontime";
 	public static String sessAcl = "session.acl";
+	public static String CookieSalt = "cookie.csalt";
 	
 	public static String SubRole = "subrole"; 
 	

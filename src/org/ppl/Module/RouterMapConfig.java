@@ -85,6 +85,10 @@ public class RouterMapConfig extends PObject {
 		return htmlCon;
 	}
 
+	public String setHeaderSalt() {
+		return easyGetSalt();
+	}
+	
 	public String setContentType() {
 		if (isAjax) {
 			return "application/json";
@@ -166,8 +170,8 @@ public class RouterMapConfig extends PObject {
 				if (m.find()) {
 					if (m.group().equals(UrlServlet[j])) {
 						RMC.add(m.group());
-						System.out.println("Found value: " + BaseName + " arg:"
-								+ m.group());
+//						System.out.println("Found value: " + BaseName + " arg:"
+//								+ m.group());
 					} else {
 						RMC.clear();
 						break;

@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `role_user_info` (
   `nickname` varchar(255) NOT NULL COMMENT 'nick name',
   `email` varchar(255) NOT NULL COMMENT 'email',
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',
-  `etime` int(11) NOT NULL DEFAULT '1' COMMENT 'edit time',  
+  `etime` int(11)  DEFAULT '0' COMMENT 'edit time',  
   `ltime` int(11) NOT NULL DEFAULT '1' COMMENT 'last login time',  
   `phone` varchar(128) NOT NULL DEFAULT '' COMMENT 'user phone',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
@@ -58,6 +58,5 @@ CREATE TABLE IF NOT EXISTS  `role_log` (
   `action` tinyint(1) DEFAULT '0' COMMENT 'action: read-0  create-1 edit-2 remove-3 search-4',
   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'client source IP',   
   `ctime` int(11) NOT NULL DEFAULT '0' COMMENT 'log time',  
-  `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
    PRIMARY KEY (`id`)   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

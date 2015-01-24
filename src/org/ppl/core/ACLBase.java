@@ -12,7 +12,7 @@ public class ACLBase extends ACLInit {
 				+ "user_info` WHERE uid =%d and cm='%s' LIMIT 1";
 		String sql = String.format(format, uid, cm);
 		Map<String, Object> res = FetchOne(sql);
-		if(res != null) return true;
+		if(res != null && res.get("uid")!=null) return true;
 		else {
 			aclLogout();
 			return false;

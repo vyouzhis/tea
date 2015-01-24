@@ -64,6 +64,8 @@ public class ACLInit extends PObject {
 			return null;
 		return actJson.getString(key);
 	}
+	
+	
 
 	public int aclLogin(String name, String passwd, String get_salt) {
 		Config mConfig = new Config(globale_config.Config);
@@ -77,8 +79,7 @@ public class ACLInit extends PObject {
 		Map<String, Object> res = FetchOne(sql);
 
 		if (res != null) {
-			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {
-				echo("passwd:" + passwd + " md5:");
+			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {				
 				return -2;
 			}
 
@@ -101,6 +102,9 @@ public class ACLInit extends PObject {
 			UserSess.put("email", res.get("email").toString());
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
+
+			int now = (int) tc.time();
+			SessAct.SetSession(mConfig.GetValue(globale_config.Ontime), now+"");
 
 			format = "SELECT g.mainrole,g.subrole FROM "
 					+ mConfig.GetValue("db_pre_rule") + "user_info u, "

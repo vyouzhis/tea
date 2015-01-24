@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.ppl.Module.RouterMapConfig;
+import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.common.ShowMessage;
@@ -37,20 +38,25 @@ public class Index extends HttpServlet {
 		
 		ShowMessage sm = ShowMessage.getInstance();
 		sm.Init(req, res);
-		
+				
 		HttpSession session = req.getSession(true);
 		SessionAction sa = SessionAction.getInstance();
 		sa.init(session);					
+		
+		CookieAction ca = CookieAction.getInstance();
+		ca.init(req);
 		
 		RouterMapConfig rmc = new RouterMapConfig();
 		
 		rmc.map(req.getServletPath());
 		rmc.setMehtod(req.getMethod());
+				
 		rmc.match();
 		if(rmc.routing()){
 			res.getWriter().println("not class <br /> 404");
 		}else{
 			res.setContentType(rmc.setContentType());
+			
 			res.getWriter().println(rmc.getHtml());
 		}
 
@@ -85,6 +91,7 @@ public class Index extends HttpServlet {
         String pathInfo = req.getPathInfo();
         String query = req.getQueryString();
         String mehtod = req.getMethod();
+        String ip = req.getRemoteHost();
 
         res.setContentType("text/html");
         
@@ -98,6 +105,7 @@ public class Index extends HttpServlet {
         out.print("Path Info: " + pathInfo + "<br />");
         out.print("mehtod: " + mehtod + "<br />");
         out.print("Query: " + query);
+        out.print("ip: " + ip);
 		
 		out.close();
 	}
