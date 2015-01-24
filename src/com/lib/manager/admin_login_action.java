@@ -52,6 +52,7 @@ public class admin_login_action extends Permission {
 		case -2:			
 			Bad(bad_url,super._CLang("error_passwd"));
 			return;
+		
 		default:
 			Bad(bad_url,super._CLang("error_nothing"));
 			return;

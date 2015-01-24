@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `role_user_info` (
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
   `gid` int(11) NOT NULL DEFAULT '0' COMMENT 'group id',
   `cid` int(11) NOT NULL DEFAULT '0' COMMENT 'creater uid',
+  `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -30,11 +30,11 @@ public class ACLInit extends PObject {
 	public String aclGetPhone() {
 		return getInfo("phone");
 	}
-	
+
 	public String aclGetNickName() {
 		return getInfo("NickName");
 	}
-	
+
 	public String aclGetEmail() {
 		return getInfo("email");
 	}
@@ -64,12 +64,28 @@ public class ACLInit extends PObject {
 			return null;
 		return actJson.getString(key);
 	}
-	
-	
+
+	private void ErrorPWD(String name) {
+		Config mConfig = new Config(globale_config.Config);
+		TimeClass tc = TimeClass.getInstance();
+		int now = (int) tc.time();
+		
+		String format = "UPDATE `tea`.`"
+				+ mConfig.GetValue("db_pre_rule")
+				+ "user_info` SET `error` = `error`+1, `ltime`=%d WHERE `name` = '%s' LIMIT 1";
+		
+		String sql = String.format(format, now, name);
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public int aclLogin(String name, String passwd, String get_salt) {
 		Config mConfig = new Config(globale_config.Config);
-		String format = "select uid, cm, passwd,nickname,phone,email  from "
+		String format = "select uid, cm, passwd,nickname,phone,email,ltime,error  from "
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info WHERE  name='%s' limit 1";
 		String sql = String.format(format, name);
@@ -79,15 +95,21 @@ public class ACLInit extends PObject {
 		Map<String, Object> res = FetchOne(sql);
 
 		if (res != null) {
-			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {				
+			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {
+				ErrorPWD(name);
 				return -2;
 			}
-
-			long now_time = tc.time();
-			String new_cm = en.MD5(now_time + "");
+			
+			int ltime = Integer.valueOf(res.get("ltime").toString());
+			int error = Integer.valueOf(res.get("error").toString());
+			int now = (int) tc.time();
+			
+			if(now-ltime < 60*5 && error >2)return -3;
+			
+			String new_cm = en.MD5(now + "");
 			format = "UPDATE " + mConfig.GetValue("db_pre_rule")
-					+ "user_info SET `cm` = '%s', `ltime`=%d WHERE `uid`='%d';";
-			sql = String.format(format, new_cm, now_time, res.get("uid"));
+					+ "user_info SET `cm` = '%s', `ltime`=%d, `error`=0 WHERE `uid`='%d';";
+			sql = String.format(format, new_cm, now, res.get("uid"));
 
 			try {
 				update(sql);
@@ -103,8 +125,9 @@ public class ACLInit extends PObject {
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
 
-			int now = (int) tc.time();
-			SessAct.SetSession(mConfig.GetValue(globale_config.Ontime), now+"");
+			
+			SessAct.SetSession(mConfig.GetValue(globale_config.Ontime), now
+					+ "");
 
 			format = "SELECT g.mainrole,g.subrole FROM "
 					+ mConfig.GetValue("db_pre_rule") + "user_info u, "
