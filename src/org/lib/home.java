@@ -20,7 +20,6 @@ public class home extends BaseTheme {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-
 		
 		String id = porg.getKey("id");
 
