@@ -33,7 +33,7 @@ public class admin_permission_setting extends Permission implements
 		// stdClass = className;
 		super.GetSubClassName(className);
 		role_pg = porg.getAllpg();
-
+		super.setAction(1);
 		setRoot("name", _MLang("name"));
 		setRoot("fun", this);
 	}
@@ -46,22 +46,25 @@ public class admin_permission_setting extends Permission implements
 		argList = porg.getRmc();
 		def();
 
-		if (argList.size() == 2) {
-			switch (argList.get(1).toString()) {
-			case "read":
-				read(null);
-				break;
-			case "create":
-				create(null);
-				Msg();
-				return;
-			case "edit":
-				edit(null);
-				Msg();
-				return;
-			default:
-				break;
-			}
+		if (argList.size() != 2) {
+			Msg(_CLang("error_role"));
+			return;
+		}
+		switch (argList.get(1).toString()) {
+		case "read":
+			read(null);
+			break;
+		case "create":
+			create(null);
+			Msg();
+			return;
+		case "edit":
+			edit(null);
+			Msg();
+			return;
+		default:
+			Msg(_CLang("error_role"));
+			return;
 		}
 
 		super.View();
@@ -106,7 +109,7 @@ public class admin_permission_setting extends Permission implements
 		SubRoleJson = null;
 		if (res.get("mainrole") != null)
 			MainRoleJson = JSON.parseObject(res.get("mainrole").toString());
-		if (res.get("subrole") != null)
+		if (res.get("subrole").toString().length() > 0)
 			SubRoleJson = JSON.parseObject(res.get("subrole").toString(),
 					List.class);
 

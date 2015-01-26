@@ -39,6 +39,10 @@ public class ACLInit extends PObject {
 		return getInfo("email");
 	}
 
+	public int aclGetGid() {
+		return Integer.valueOf(getInfo("gid"));
+	}
+	
 	public String aclGetName() {
 		return getInfo("Name");
 	}
@@ -85,7 +89,7 @@ public class ACLInit extends PObject {
 
 	public int aclLogin(String name, String passwd, String get_salt) {
 		Config mConfig = new Config(globale_config.Config);
-		String format = "select uid, cm, passwd,nickname,phone,email,ltime,error  from "
+		String format = "select uid, cm, passwd,nickname,phone,email,ltime,error,gid  from "
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info WHERE  name='%s' limit 1";
 		String sql = String.format(format, name);
@@ -103,9 +107,9 @@ public class ACLInit extends PObject {
 			int ltime = Integer.valueOf(res.get("ltime").toString());
 			int error = Integer.valueOf(res.get("error").toString());
 			int now = (int) tc.time();
-			echo("now:"+now+"__ltime:"+ltime);
 			
-			if(now-ltime < 60*5 && error >2)return -3;
+			int delay = mConfig.GetInt(globale_config.TimeDelay);
+			if(now-ltime < delay && error >2)return -3;
 			
 			String new_cm = en.MD5(now + "");
 			format = "UPDATE " + mConfig.GetValue("db_pre_rule")
@@ -123,6 +127,7 @@ public class ACLInit extends PObject {
 			UserSess.put("NickName", res.get("nickname").toString());
 			UserSess.put("phone", res.get("phone").toString());
 			UserSess.put("email", res.get("email").toString());
+			UserSess.put("gid", res.get("gid").toString());
 			UserSess.put("Name", name);
 			UserSess.put("CM", new_cm);
 

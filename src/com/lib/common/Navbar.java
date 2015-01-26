@@ -25,6 +25,11 @@ public class Navbar extends BaseModule {
 		setRoot("UserName", aclGetNickName());
 		setRoot("logout_url", ucl.BuildUrl("admin_login_action", ""));
 		setRoot("my_profile", ucl.BuildUrl("my_profile", ""));
+		
+		int uid = aclGetUid();
+		if(uid==1){
+			setRoot("role_update_url", ucl.BuildUrl("admin_index", "")+"?update=1");
+		}
 	}
 
 }

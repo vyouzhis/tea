@@ -39,7 +39,7 @@ public class Menu extends BaseModule {
 		
 		super.View();
 	}
-
+	
 	private boolean myRole() {
 		String role = aclfetchMyRole();
 
@@ -92,7 +92,12 @@ public class Menu extends BaseModule {
 		UrlClassList ucl = UrlClassList.getInstance();
 		return ucl.read(lib);
 	}
-
+	
+	public String MainName(String lib) {
+		
+		return _CLang(lib+"_index");
+	}
+	
 	public String libName(String lib) {
 
 		setStdName(lib);

@@ -37,13 +37,13 @@ public class Permission extends BaseTheme {
 			bad_url = ucl.BuildUrl("admin_index", "");
 			res = ms.SetMsg(bad_url, _CLang("error_role"), 3000);
 			super.setHtml(res);
-			aclLogout();
+			
 			return -1;
 		}
 		
 		if(CheckOntime() == false){
 			bad_url = ucl.BuildUrl("admin_index", "");
-			res = ms.SetMsg(bad_url, _CLang("error_offtime"), 3000);
+			res = ms.SetMsg(bad_url, _CLang("error_timeout"), 3000);
 
 			super.setHtml(res);
 			aclLogout();
@@ -117,6 +117,15 @@ public class Permission extends BaseTheme {
 
 	public void setAction(int action) {
 		Action = action;
+	}
+	
+	public void Msg(String msg) {
+		UrlClassList ucl = UrlClassList.getInstance();
+		String ok_url = ucl.read("user_list");
+
+		ShowMessage ms = ShowMessage.getInstance();
+		String res = ms.SetMsg(ok_url, msg, 3000);
+		super.setHtml(res);
 	}
 	
 }

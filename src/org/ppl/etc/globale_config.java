@@ -17,6 +17,9 @@ public class globale_config {
 	public static String sessAcl = "session.acl";
 	public static String CookieSalt = "cookie.csalt";
 	
+	public static String TimeDelay = "time.delay";
+	public static String TimeOut = "time.out";
+	
 	public static String SubRole = "subrole"; 
 	
 	public static globale_config getInstance() {

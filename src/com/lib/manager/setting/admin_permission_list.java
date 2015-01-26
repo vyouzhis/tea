@@ -7,15 +7,18 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BasePerminterface;
 import org.ppl.BaseClass.Permission;
+import org.ppl.common.ShowMessage;
 import org.ppl.etc.Config;
+import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class admin_permission_list extends Permission implements BasePerminterface{
+public class admin_permission_list extends Permission implements
+		BasePerminterface {
 	private List<String> rmc;
-	
+
 	public admin_permission_list() {
 		// TODO Auto-generated constructor stub
 		String className = this.getClass().getCanonicalName();
@@ -32,35 +35,39 @@ public class admin_permission_list extends Permission implements BasePerminterfa
 		if (super.Init() == -1)
 			return;
 		rmc = porg.getRmc();
-		if (rmc.size() == 2) {
-			switch (rmc.get(1).toString()) {
-			case "read":
-				read(null);
-				break;
-			case "create":
-				create(null);
-				break;
-			default:
-				break;
-			}
+		if (rmc.size() != 2) {
+			Msg(_CLang("error_role"));
+			return;
+		}
+		switch (rmc.get(1).toString()) {
+		case "read":
+			read(null);
+			break;
+		case "edit":
+			edit(null);
+			return;
+		default:
+			Msg(_CLang("error_role"));
+			return;
 		}
 
 		super.View();
 	}
 
-
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
 		Config mConfig = new Config(globale_config.Config);
-		String format = "SELECT id,gname,mainrole FROM `"+ mConfig.GetValue("db_pre_rule")+"group` where uid=%d and status=1;";
+		String format = "SELECT id,gname,mainrole FROM `"
+				+ mConfig.GetValue("db_pre_rule")
+				+ "group` where uid=%d and status=1;";
 		String sql = String.format(format, aclGetUid());
 		List<Map<String, Object>> res = null;
 		Map<String, Map<String, String>> PackClassList = new HashMap<>();
 		Map<String, String> Gid = new HashMap<>();
 		try {
 			res = FetchAll(sql);
-			for (Map<String, Object> map : res) {				
+			for (Map<String, Object> map : res) {
 				PackClassList.put(map.get("gname").toString(), JsonToMap(map
 						.get("mainrole").toString()));
 				Gid.put(map.get("gname").toString(), map.get("id").toString());
@@ -69,7 +76,7 @@ public class admin_permission_list extends Permission implements BasePerminterfa
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		setRoot("Pack_Class_List", PackClassList);
 		setRoot("Gid", Gid);
 	}
@@ -80,7 +87,7 @@ public class admin_permission_list extends Permission implements BasePerminterfa
 		for (String key : subJson.keySet()) {
 			String dbJson = subJson.getString(key);
 			JSONObject dbJ = JSON.parseObject(dbJson);
-			for (String k : dbJ.keySet()) {				
+			for (String k : dbJ.keySet()) {
 				subMap.put(k, dbJ.getString(k));
 			}
 
@@ -98,26 +105,25 @@ public class admin_permission_list extends Permission implements BasePerminterfa
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void edit(Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void remove(Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void search(Object arg) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

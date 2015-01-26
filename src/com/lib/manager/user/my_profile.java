@@ -16,9 +16,9 @@ public class my_profile extends Permission {
 		String className = this.getClass().getCanonicalName();
 		// stdClass = className;
 		super.GetSubClassName(className);
-		setRoot("name", _MLang("name"));
-
+		setRoot("name", _MLang("name"));		
 		setRoot("fun", this);
+		super.setAction(1);
 	}
 
 	@Override

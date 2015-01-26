@@ -101,7 +101,8 @@ public class ACLControl extends ACLRole {
 		int ontime = Integer.valueOf(time);
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
-		if(now-ontime>60*30){			
+		int timeOut = mConfig.GetInt(globale_config.TimeOut);
+		if(now-ontime>timeOut){			
 			return false;
 		}
 		

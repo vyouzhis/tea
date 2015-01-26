@@ -32,22 +32,25 @@ public class user_profile extends Permission implements BasePerminterface {
 		if (super.Init() == -1)
 			return;
 		rmc = porg.getRmc();
-		if (rmc.size() == 2) {
-			switch (rmc.get(1).toString()) {
-			case "read":
-				read(null);
-				break;
-			case "create":
-				create(null);
-				return;
-			case "edit":
-				edit(null);
-				return;
-			default:
-				Msg(_CLang("error_role"));
-				return;
-			}
+		if (rmc.size() != 2) {
+			Msg(_CLang("error_role"));
+			return;
 		}
+		switch (rmc.get(1).toString()) {
+		case "read":
+			read(null);
+			break;
+		case "create":
+			create(null);
+			return;
+		case "edit":
+			edit(null);
+			return;
+		default:
+			Msg(_CLang("error_role"));
+			return;
+		}
+
 		super.View();
 	};
 
@@ -182,15 +185,6 @@ public class user_profile extends Permission implements BasePerminterface {
 		}
 
 		Msg(_CLang("ok_save"));
-	}
-
-	private void Msg(String msg) {
-		UrlClassList ucl = UrlClassList.getInstance();
-		String ok_url = ucl.read("user_list");
-
-		ShowMessage ms = ShowMessage.getInstance();
-		String res = ms.SetMsg(ok_url, msg, 3000);
-		super.setHtml(res);
 	}
 
 	@Override
