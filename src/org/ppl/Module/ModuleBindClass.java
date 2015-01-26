@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.lib.About;
 import org.lib.article;
-import org.lib.home;
+
 import org.lib.jsonapi;
 import org.ppl.core.PObject;
 
@@ -18,6 +18,8 @@ import com.lang.manager.user._user_profile;
 import com.lang.manager.user._user_list;
 import com.lib.common.Footer;
 import com.lib.common.Header;
+import com.lib.common.SufaceHeader;
+import com.lib.common.SurfaceFooter;
 import com.lib.manager.admin_index;
 import com.lib.manager.admin_login;
 import com.lib.manager.admin_login_action;
@@ -28,6 +30,7 @@ import com.lib.manager.user.my_profile;
 import com.lib.manager.user.user_profile;
 import com.lib.manager.user.user_index;
 import com.lib.manager.user.user_list;
+import com.lib.surface.home;
 
 public class ModuleBindClass extends PObject{
 	
@@ -49,18 +52,35 @@ public class ModuleBindClass extends PObject{
 		LangList.add(_user_profile.class);
 		LangList.add(_my_profile.class);
 		
+		/**
+		 * surface start
+		 */
 		ThemeList = new ArrayList<Object>();
 		//lib
 		ThemeList.add(About.class);
 		ThemeList.add(article.class);
 		ThemeList.add(home.class);
 		ThemeList.add(jsonapi.class);
+		/**
+		 * surface end
+		 */
 		
+		/**
+		 *  common start
+		 */
 		ModuleList = new ArrayList<Object>();
 		//common
 		ModuleList.add(Footer.class);
 		ModuleList.add(Header.class);
+		ModuleList.add(SurfaceFooter.class);
+		ModuleList.add(SufaceHeader.class);
+		/**
+		 *  common end
+		 */
 		
+		/*
+		 * manager start
+		 */
 		//Permission
 		PermList = new ArrayList<Object>();
 		PermList.add(admin_index.class);
@@ -78,6 +98,10 @@ public class ModuleBindClass extends PObject{
 		ManagerList = new ArrayList<Object>();
 		ManagerList.add(setting_index.class);
 		ManagerList.add(user_index.class);
+		
+		/*
+		 * manager end
+		 */
 	}
 	
 	
