@@ -15,13 +15,8 @@ public class Header extends BaseModule {
 	@Override
 	public void filter() {
 		// TODO Auto-generated method stub
-		Data();
+		
 		super.View();
-	}
-
-	private void Data() {
-		setRoot("static_uri", porg.getContext_Path());
-
 	}
 
 }

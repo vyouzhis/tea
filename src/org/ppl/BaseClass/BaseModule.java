@@ -10,7 +10,7 @@ public abstract class BaseModule extends BaseView {
 	@Override
 	public void View() {
 		// TODO Auto-generated method stub
-		setRoot("static_uri", porg.getContext_Path());
+		setRoot("BaseModule", "1");
 		super.View();
 	}
 }

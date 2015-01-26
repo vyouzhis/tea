@@ -23,6 +23,8 @@ public class BaseView extends BaseLang{
 			echo("root is null");
 			return;
 		}
+		
+		InitStatic();
 
 		ProjectPath pp = ProjectPath.getInstance();
 
@@ -60,6 +62,13 @@ public class BaseView extends BaseLang{
 
 	}
 
+	private void InitStatic() {
+		setRoot("static_uri", porg.getContext_Path());
+		setRoot("static_css_uri", porg.getContext_Path()+"/static/ace/css");
+		setRoot("static_js_uri", porg.getContext_Path()+"/static/ace/js");
+		setRoot("static_avatars_uri", porg.getContext_Path()+"/static/ace/avatars");
+	}
+	
 	public Map<String, Object> getRoot() {
 		return root;
 	}
