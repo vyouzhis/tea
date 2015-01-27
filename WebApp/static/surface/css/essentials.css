@@ -1580,7 +1580,7 @@ li.divider {
 .sky-form .checkbox input:focus + i,
 .sky-form .toggle input:focus + i,
 .form-control:focus {
-	border-color:#c6c6c6;
+	border-color:#a94545;
 
 	-webkit-box-shadow:none;
 	   -moz-box-shadow:none;

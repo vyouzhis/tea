@@ -3,10 +3,6 @@ package org.ppl.Module;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lib.About;
-import org.lib.article;
-
-import org.lib.jsonapi;
 import org.ppl.core.PObject;
 
 import com.lang._article;
@@ -18,8 +14,9 @@ import com.lang.manager.user._user_profile;
 import com.lang.manager.user._user_list;
 import com.lib.common.Footer;
 import com.lib.common.Header;
-import com.lib.common.SufaceHeader;
+import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
+import com.lib.icore.Register;
 import com.lib.manager.admin_index;
 import com.lib.manager.admin_login;
 import com.lib.manager.admin_login_action;
@@ -30,13 +27,16 @@ import com.lib.manager.user.my_profile;
 import com.lib.manager.user.user_profile;
 import com.lib.manager.user.user_index;
 import com.lib.manager.user.user_list;
+import com.lib.surface.About;
+import com.lib.surface.article;
 import com.lib.surface.home;
+import com.lib.surface.jsonapi;
 
 public class ModuleBindClass extends PObject{
 	
 	protected List<Object> LangList = null;
 	protected List<Object> ModuleList = null;
-	protected List<Object> ThemeList = null;
+	protected List<Object> SurfaceList = null;
 	protected List<Object> PermList = null;
 	protected List<Object> ManagerList = null;
 	
@@ -55,12 +55,13 @@ public class ModuleBindClass extends PObject{
 		/**
 		 * surface start
 		 */
-		ThemeList = new ArrayList<Object>();
+		SurfaceList = new ArrayList<Object>();
 		//lib
-		ThemeList.add(About.class);
-		ThemeList.add(article.class);
-		ThemeList.add(home.class);
-		ThemeList.add(jsonapi.class);
+		SurfaceList.add(About.class);
+		SurfaceList.add(article.class);
+		SurfaceList.add(home.class);
+		SurfaceList.add(jsonapi.class);
+		SurfaceList.add(Register.class);
 		/**
 		 * surface end
 		 */
@@ -73,7 +74,8 @@ public class ModuleBindClass extends PObject{
 		ModuleList.add(Footer.class);
 		ModuleList.add(Header.class);
 		ModuleList.add(SurfaceFooter.class);
-		ModuleList.add(SufaceHeader.class);
+		ModuleList.add(SurfaceHeader.class);
+		
 		/**
 		 *  common end
 		 */

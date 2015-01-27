@@ -1,8 +1,6 @@
 package org.ppl.BaseClass;
 
-import com.lib.common.Footer;
-import com.lib.common.Header;
-import com.lib.common.SufaceHeader;
+import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
 
 public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
@@ -42,7 +40,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 	private void common() {
 		
 		if (header_html.length() == 0) {
-			SufaceHeader header = new SufaceHeader();
+			SurfaceHeader header = new SurfaceHeader();
 			header.filter();
 			header_html = header.getHtml();
 		}

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ppl.BaseClass.BaseTheme;
+import org.ppl.BaseClass.BaseSurface;
 
-public class home extends BaseTheme {
+public class home extends BaseSurface {
 	private String className = null;
 
 	public home() {

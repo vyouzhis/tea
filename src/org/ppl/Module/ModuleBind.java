@@ -2,7 +2,7 @@ package org.ppl.Module;
 
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.BaseClass.BasePrograma;
-import org.ppl.BaseClass.BaseTheme;
+import org.ppl.BaseClass.BaseSurface;
 import org.ppl.BaseClass.LibLang;
 import org.ppl.BaseClass.Permission;
 
@@ -26,11 +26,11 @@ public class ModuleBind extends ModuleBindClass implements Module {
 			binder.bind(LibLang.class).annotatedWith(Names.named(name)).to(c);
 		}
 
-		for (int i = 0; i < ThemeList.size(); i++) {
-			Class<? extends BaseTheme> bc = (Class<? extends BaseTheme>) ThemeList
+		for (int i = 0; i < SurfaceList.size(); i++) {
+			Class<? extends BaseSurface> bc = (Class<? extends BaseSurface>) SurfaceList
 					.get(i);
 			name = SliceName(bc.getName());
-			binder.bind(BaseTheme.class).annotatedWith(Names.named(name))
+			binder.bind(BaseSurface.class).annotatedWith(Names.named(name))
 					.to(bc);
 		}
 
