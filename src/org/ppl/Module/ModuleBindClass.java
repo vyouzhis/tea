@@ -17,6 +17,9 @@ import com.lib.common.Header;
 import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
 import com.lib.icore.Register;
+import com.lib.icore.Register_ok;
+import com.lib.icore.icore;
+import com.lib.icore.icore_login;
 import com.lib.manager.admin_index;
 import com.lib.manager.admin_login;
 import com.lib.manager.admin_login_action;
@@ -37,6 +40,7 @@ public class ModuleBindClass extends PObject{
 	protected List<Object> LangList = null;
 	protected List<Object> ModuleList = null;
 	protected List<Object> SurfaceList = null;
+	protected List<Object> iCoreList = null;
 	protected List<Object> PermList = null;
 	protected List<Object> ManagerList = null;
 	
@@ -62,8 +66,19 @@ public class ModuleBindClass extends PObject{
 		SurfaceList.add(home.class);
 		SurfaceList.add(jsonapi.class);
 		SurfaceList.add(Register.class);
+		SurfaceList.add(Register_ok.class);
+		SurfaceList.add(icore_login.class);
 		/**
 		 * surface end
+		 */
+		
+		/**
+		 * icore start
+		 */
+		iCoreList = new ArrayList<Object>();
+		iCoreList.add(icore.class);
+		/**
+		 * icore end
 		 */
 		
 		/**

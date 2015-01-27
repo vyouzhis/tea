@@ -3,6 +3,7 @@ package org.ppl.Module;
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.LibLang;
 import org.ppl.BaseClass.Permission;
 
@@ -31,6 +32,14 @@ public class ModuleBind extends ModuleBindClass implements Module {
 					.get(i);
 			name = SliceName(bc.getName());
 			binder.bind(BaseSurface.class).annotatedWith(Names.named(name))
+					.to(bc);
+		}
+		
+		for (int i = 0; i < iCoreList.size(); i++) {
+			Class<? extends BaseiCore> bc = (Class<? extends BaseiCore>) iCoreList
+					.get(i);
+			name = SliceName(bc.getName());
+			binder.bind(BaseiCore.class).annotatedWith(Names.named(name))
 					.to(bc);
 		}
 

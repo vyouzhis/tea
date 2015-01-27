@@ -30,7 +30,11 @@ public class UrlClassList {
 		if (!this.ucls.contains(libName))
 			this.ucls.add(libName);
 	}
-
+	
+	public String Url() {
+		return null;
+	}
+	
 	public String BuildUrl(String libName, String action) {
 		PorG pg = PorG.getInstance();
 		String url = pg.getContext_Path() + "/" + libName + "/" + action;
