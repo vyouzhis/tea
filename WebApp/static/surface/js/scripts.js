@@ -62,13 +62,7 @@
 			http://srobbin.com/jquery-plugins/backstretch/
 *************************************************** **/
  
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	ga('create', 'UA-34016412-11', 'auto');
-	ga('send', 'pageview');
 
 
 	/* Init */
@@ -1532,42 +1526,7 @@ function _toggle() {
 			 * INITIALIZE
 			 ***********************************************/
 
-			/**
-			 * Tests if smooth scrolling is allowed. Shuts down everything if not.
-			 */
-			function initTest() {
-
-				var disableKeyboard = false;
-
-				// disable keys for google reader (spacebar conflict)
-				if (document.URL.indexOf("google.com/reader/view") > -1) {
-					disableKeyboard = true;
-				}
-
-				// disable everything if the page is blacklisted
-				if (options.excluded) {
-					var domains = options.excluded.split(/[,\n] ?/);
-					domains.push("mail.google.com"); // exclude Gmail for now
-					for (var i = domains.length; i--;) {
-						if (document.URL.indexOf(domains[i]) > -1) {
-							observer && observer.disconnect();
-							removeEvent("mousewheel", wheel);
-							disableKeyboard = true;
-							isExcluded = true;
-							break;
-						}
-					}
-				}
-
-				// disable keyboard support if anything above requested it
-				if (disableKeyboard) {
-					removeEvent("keydown", keydown);
-				}
-
-				if (options.keyboardSupport && !disableKeyboard) {
-					addEvent("keydown", keydown);
-				}
-			}
+			
 
 			/**
 			 * Sets up scrolls array, determines if frames are involved.
@@ -1585,7 +1544,7 @@ function _toggle() {
 				root = (document.compatMode.indexOf('CSS') >= 0) ? html : body;
 				activeElement = body;
 
-				initTest();
+				
 				initDone = true;
 
 				// Checks if this script is running in a frame

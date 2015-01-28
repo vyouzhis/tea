@@ -45,7 +45,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 			header_html = header.getHtml();
 		}
 		if (footer_html.length() == 0) {
-			SurfaceFooter footer = new SurfaceFooter();
+			SurfaceFooter footer = new SurfaceFooter();			
 			footer.filter();
 			footer_html = footer.getHtml();
 		}

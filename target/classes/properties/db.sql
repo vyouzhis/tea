@@ -37,19 +37,6 @@ CREATE TABLE IF NOT EXISTS `role_group`  (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `role_roles`;
-CREATE TABLE IF NOT EXISTS  `role_roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL  COMMENT 'parent id ',
-  `lib` varchar(30) NOT NULL DEFAULT '' COMMENT 'lib name lib ppl/lib ',
-  `rname` varchar(30) NOT NULL DEFAULT '' COMMENT 'roles name module ppl/lib ',
-  `rdesc` varchar(200) NOT NULL DEFAULT '' COMMENT 'roles desc',    
-  `ismenu` tinyint(1) DEFAULT '1' COMMENT 'defaule 1  0 main menu, 1 menu , 2 action',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',
-  `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete' ,
-   PRIMARY KEY (`id`),
-   UNIQUE KEY `lib` (`lib`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `role_log`;
 CREATE TABLE IF NOT EXISTS  `role_log` (
@@ -60,4 +47,18 @@ CREATE TABLE IF NOT EXISTS  `role_log` (
   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'client source IP',   
   `ctime` int(11) NOT NULL DEFAULT '0' COMMENT 'log time',  
    PRIMARY KEY (`id`)   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `web_user`;
+CREATE TABLE IF NOT EXISTS `web_user` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(100) NOT NULL,
+  `password` char(32) NOT NULL,
+  `alias` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `token_auth` char(32) NOT NULL,  
+  `ctime` int(11) NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_keytoken` (`token_auth`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

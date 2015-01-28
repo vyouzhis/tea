@@ -72,7 +72,26 @@
 		<script type="text/javascript" src="${surface_plugins}/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
 		<script type="text/javascript" src="${surface_static_js_uri}/revolution_slider.js"></script>
 		
+			
+		<#if register_js??>
+		<script type="text/javascript" src="${static_js_uri}/jquery.md5.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("form").submit(function(e) {
+				chkForm();
+			});
+		});
 
-		<script type="text/javascript" src="${surface_static_js_uri}/scripts.js"></script>
+		function chkForm() {
+			var passwd = $("#passwd1").val();			
+			var md5 = $.md5(passwd);
+			$("#passwd1").val(md5);
+			
+			var passwd2 = $("#passwd2").val();			
+			var md52 = $.md5(passwd2);
+			$("#passwd2").val(md52);
+		}
+		</script>
+		</#if>
 </body>
 </html>

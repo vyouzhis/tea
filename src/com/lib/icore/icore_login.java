@@ -22,6 +22,7 @@ public class icore_login extends BaseSurface {
 		Encrypt en = Encrypt.getInstance();
 		String ok_action = en.MD5(String.valueOf(tc.time()));
 		setRoot("icore_url", ucl.BuildUrl("icore", ok_action));
+		
 		super.View();
 	}
 }

@@ -50,4 +50,15 @@ CREATE TABLE IF NOT EXISTS  `role_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
+DROP TABLE IF EXISTS `web_user`;
+CREATE TABLE IF NOT EXISTS `web_user` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(100) NOT NULL,
+  `password` char(32) NOT NULL,
+  `alias` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `token_auth` char(32) NOT NULL,  
+  `ctime` int(11) NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_keytoken` (`token_auth`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

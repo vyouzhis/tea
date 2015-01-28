@@ -20,7 +20,7 @@ public class PObject extends DBSQL {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
-	protected CookieAction cookie = CookieAction.getInstance();
+	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
 	
 	public void echo(Object o) {
@@ -57,8 +57,7 @@ public class PObject extends DBSQL {
 		Config mConfig = new Config(globale_config.Config);
 
 		SessAct.SetSession(mConfig.GetValue(globale_config.SessSalt), salt);
-		cookie.SetCookie(mConfig.GetValue(globale_config.CookieSalt), salt);
-		
+				
 		return salt;
 	}
 

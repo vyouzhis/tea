@@ -38,14 +38,14 @@
 						<div class="col-md-6 col-sm-6">
 
 							<!-- registration form -->
-							<form action="${register_ok}" method="post" class="sky-form boxed">
+							<form action="${register_ok}" method="post" id="form" name="form" class="sky-form boxed">
 								<header>Register an account</header>
 								
 								<fieldset>								
 									<section>
 										<label class="input">
 											<i class="icon-append fa fa-envelope"></i>
-											<input required type="email" placeholder="Email address">
+											<input required type="email" id="login" name="login" placeholder="Email address">
 											<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
 										</label>
 									</section>
@@ -53,7 +53,7 @@
 									<section>
 										<label class="input">
 											<i class="icon-append fa fa-lock"></i>
-											<input required type="password" placeholder="Password">
+											<input required type="password" id="passwd1" name="passwd1" placeholder="Password">
 											<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
 										</label>
 									</section>
@@ -61,7 +61,7 @@
 									<section>
 										<label class="input">
 											<i class="icon-append fa fa-lock"></i>
-											<input required type="password" placeholder="Confirm password">
+											<input required type="password" id="passwd2" name="passwd2"  placeholder="Confirm password">
 											<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
 										</label>
 									</section>

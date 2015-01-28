@@ -22,6 +22,7 @@ public class globale_config {
 	
 	public static String SubRole = "subrole"; 
 	
+		
 	public static globale_config getInstance() {
 		if (config == null) {
 			config = new globale_config();

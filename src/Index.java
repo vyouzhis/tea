@@ -44,7 +44,7 @@ public class Index extends HttpServlet {
 		sa.init(session);					
 		
 		CookieAction ca = CookieAction.getInstance();
-		ca.init(req);
+		ca.init(req, res);
 		
 		RouterMapConfig rmc = new RouterMapConfig();
 		
