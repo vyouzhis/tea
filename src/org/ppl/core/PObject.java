@@ -131,7 +131,7 @@ public class PObject extends DBSQL {
 						PackClassList.put(index, l);
 					}
 				}
-				fl.add("Permission_" + lib);
+				fl.add("Permission." + lib);
 			} else if (file.isDirectory()) {
 				fl.addAll(PermFileList(file.getAbsolutePath()));
 			}

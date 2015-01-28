@@ -28,7 +28,7 @@ public class Permission extends BaseTheme {
 			bad_url = ucl.BuildUrl("admin_login", "");
 
 			res = ms.SetMsg(bad_url, _CLang("error_login"), 3000);
-
+			isAutoHtml = false;
 			super.setHtml(res);
 			return -1;
 		}
@@ -37,14 +37,14 @@ public class Permission extends BaseTheme {
 			bad_url = ucl.BuildUrl("admin_index", "");
 			res = ms.SetMsg(bad_url, _CLang("error_role"), 3000);
 			super.setHtml(res);
-
+			isAutoHtml = false;
 			return -1;
 		}
 
 		if (CheckOntime() == false) {
 			bad_url = ucl.BuildUrl("admin_index", "");
 			res = ms.SetMsg(bad_url, _CLang("error_timeout"), 3000);
-
+			isAutoHtml = false;
 			super.setHtml(res);
 			aclLogout();
 			return -1;

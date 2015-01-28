@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.Permission;
 import org.ppl.core.PObject;
 import org.ppl.db.HikariConnectionPool;
@@ -13,6 +14,7 @@ import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 
+import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -29,14 +31,16 @@ public class RouterMapConfig extends PObject {
 	private boolean isAjax = false;
 	private UrlClassList ucl;
 	private String BaseName = null;
+	private List<String> pum = null;
 
 	public RouterMapConfig() {
 		// TODO Auto-generated constructor stub
 
 		RMC = new ArrayList<String>();
-
+		pum = PermUrlMap();
 		// mConfig = new Config(globale_config.UrlMap);
 		ParserMap();
+		
 	}
 
 	public void map(String key) {
@@ -44,37 +48,54 @@ public class RouterMapConfig extends PObject {
 	}
 
 	public void match() {
+		String[] BaseClass;
 		if (matchRouter()) {
 			if (BaseName != null && RMC.size() > 0) {
 				porg.UrlServlet(RMC);
 
 				HikariConnectionPool hcp = new HikariConnectionPool();
 				Injector injector = Guice.createInjector(new ModuleBind());
-				// System.out.println("match BaseName: " + BaseName);
-				if (BaseName.length() > 11
-						&& BaseName.substring(0, 11).equals("Permission_")) {
-					BaseName = BaseName.substring(11);
+				 
+				BaseClass = BaseName.split("\\.");
+				if(BaseClass.length != 2) return;
+				
+				switch (BaseClass[0]) {
+				case "Permission":
 					Permission home = (Permission) injector.getInstance(Key
-							.get(Permission.class, Names.named(BaseName)));
+							.get(Permission.class, Names.named(BaseClass[1])));
 					home.SetCon(hcp.GetCon(0));
 					home.Show();
 					htmlCon = home.getHtml();
 					// System.out.println(htmlCon);
 					isAjax = home.isAjax();
-				} else {
-					BaseSurface home = (BaseSurface) injector.getInstance(Key.get(
-							BaseSurface.class, Names.named(BaseName)));
-					home.SetCon(hcp.GetCon(0));
-					home.Show();
-					htmlCon = home.getHtml();
-					isAjax = home.isAjax();
+					break;
+				case "BaseSurface":
+					BaseSurface Shome = (BaseSurface) injector.getInstance(Key.get(
+							BaseSurface.class, Names.named(BaseClass[1])));
+					
+					Shome.SetCon(hcp.GetCon(0));
+					Shome.Show();
+					htmlCon = Shome.getHtml();
+					isAjax = Shome.isAjax();
+					break;
+				case "BaseiCore":
+					BaseiCore ihome = (BaseiCore) injector.getInstance(Key.get(
+							BaseiCore.class, Names.named(BaseClass[1])));
+					
+					ihome.SetCon(hcp.GetCon(0));
+					ihome.Show();
+					htmlCon = ihome.getHtml();
+					isAjax = ihome.isAjax();
+					break;
+				default:
+					return;
 				}
-
+								 											
 				NullMap = false;
 			}
 		}
 	}
-
+	
 	public boolean routing() {
 		return NullMap;
 	}
@@ -106,7 +127,7 @@ public class RouterMapConfig extends PObject {
 		String mMthod = null;
 
 		List<String> lu = ucl.getUcls();
-
+		
 		// System.out.println("getUcls: " + lu.size());
 		for (int i = 0; i < lu.size(); i++) {
 			RMC.clear();
@@ -160,7 +181,7 @@ public class RouterMapConfig extends PObject {
 				// System.out.println("uri: "+uris[j]+" us:"+UrlServlet[j]);
 				Pattern r = Pattern.compile(uris[j]);
 				if (uris[j].length() > 11
-						&& uris[j].substring(0, 11).equals("Permission_")) {
+						&& uris[j].substring(0, 11).equals("Permission.")) {
 					r = Pattern.compile(uris[j].substring(11));
 				}
 				//
@@ -198,20 +219,23 @@ public class RouterMapConfig extends PObject {
 	}
 
 	private void ParserMap() {
-		String[] uri = null;
+		String uri = null;
 		Config mConfig = new Config(globale_config.UrlMap);
 		ucl = UrlClassList.getInstance();
 
 		if (ucl.getUcls() == null) {
 			for (Object um : mConfig.getKey()) {
-				uri = um.toString().split("\\.");
-				if (uri.length > 1 && uri[1].equals("uri")) {
-					ucl.setUcls(uri[0]);
+				uri = um.toString();
+//				if (uri.length > 2 && uri[2].equals("uri")) {
+//					ucl.setUcls(uri[1]);
+//				}
+				if(uri.substring(uri.length()-4).equals(".uri")){
+					ucl.setUcls(uri.substring(0,uri.length()-4));
 				}
+				
 			}
 		}
-
-		List<String> pum = PermUrlMap();
+		
 		for (int i = 0; i < pum.size(); i++) {
 			ucl.setUcls(pum.get(i));
 		}
@@ -221,8 +245,7 @@ public class RouterMapConfig extends PObject {
 	private String GetMapMethod(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String method = mConfig.GetValue(key + ".method");
-		if (method == null) {
-			List<String> pum = PermUrlMap();
+		if (method == null) {			
 			if (pum.contains(key)) {
 				return "POST|GET";
 			}
@@ -234,8 +257,7 @@ public class RouterMapConfig extends PObject {
 	private String GetMapUri(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String uri = mConfig.GetValue(key + ".uri");
-		if (uri == null) {
-			List<String> pum = PermUrlMap();
+		if (uri == null) {			
 			if (pum.contains(key)) {
 				return key + "/(read|create|edit|remove|search)";
 			}
