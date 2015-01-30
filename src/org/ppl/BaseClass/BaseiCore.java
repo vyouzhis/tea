@@ -73,7 +73,7 @@ public class BaseiCore extends BaseSurface {
 		isAutoHtml = false;
 		super.setHtml(res);
 
-		cookieAct.SetCookie(globale_config.Uinfo, "", 1);
+		cookieAct.DelCookie(globale_config.Uinfo);
 	}
 
 	public int iLogin(String login, String pwd) {

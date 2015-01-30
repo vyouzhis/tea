@@ -34,8 +34,7 @@ public class RouterMapConfig extends PObject {
 		// TODO Auto-generated constructor stub
 
 		RMC = new ArrayList<String>();
-		pum = PermUrlMap();
-		// mConfig = new Config(globale_config.UrlMap);
+		pum = PermUrlMap();		
 		ParserMap();
 		
 	}
