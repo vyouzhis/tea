@@ -20,6 +20,7 @@ import com.lib.icore.Register;
 import com.lib.icore.Register_ok;
 import com.lib.icore.icore;
 import com.lib.icore.icore_login;
+import com.lib.icore.icore_test;
 import com.lib.manager.admin_index;
 import com.lib.manager.admin_login;
 import com.lib.manager.admin_login_action;
@@ -77,6 +78,7 @@ public class ModuleBindClass extends PObject{
 		 */
 		iCoreList = new ArrayList<Object>();
 		iCoreList.add(icore.class);
+		iCoreList.add(icore_test.class);
 		/**
 		 * icore end
 		 */

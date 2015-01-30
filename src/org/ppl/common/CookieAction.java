@@ -25,6 +25,7 @@ public class CookieAction {
 	public void SetCookie(String key, String val) {		
 		Cookie userCookie = new Cookie(key, val);
 		userCookie.setMaxAge(60*60*24*365); //Store cookie for 1 year
+		userCookie.setPath("/");
 		response.addCookie(userCookie);
 	}
 	
@@ -36,7 +37,9 @@ public class CookieAction {
 
 	public String GetCookie(String key) {
 		Cookie[] cookies = request.getCookies();
-						
+		if (cookies==null) {
+			return null;
+		}
 		for(Cookie cookie : cookies){
 		    if(key.equals(cookie.getName())){
 		        return cookie.getValue();

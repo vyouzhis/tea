@@ -14,7 +14,6 @@ import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 
-import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -25,8 +24,6 @@ public class RouterMapConfig extends PObject {
 	private String servletPath = null;
 	private String mehtod = null;
 	private boolean NullMap = true;
-	// private BaseTheme home = null;
-	// private Config mConfig = null;
 	private String htmlCon;
 	private boolean isAjax = false;
 	private UrlClassList ucl;
@@ -102,10 +99,6 @@ public class RouterMapConfig extends PObject {
 
 	public String getHtml() {
 		return htmlCon;
-	}
-
-	public String setHeaderSalt() {
-		return easyGetSalt();
 	}
 	
 	public String setContentType() {
