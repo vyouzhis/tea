@@ -37,6 +37,7 @@ public class Register_ok extends BaseSurface {
 				"( '%s', '%s', '%s', '%s', '%s', '%d');";
 		
 		String sql = String.format(format, login, passwd, login,login,passwd, now);
+		echo(sql);
 		try {
 			update(sql);
 		} catch (SQLException e) {

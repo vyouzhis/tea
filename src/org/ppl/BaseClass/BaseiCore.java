@@ -1,6 +1,5 @@
 package org.ppl.BaseClass;
 
-import java.util.List;
 import java.util.Map;
 
 import org.ppl.common.ShowMessage;
@@ -14,15 +13,21 @@ public class BaseiCore extends BaseSurface {
 
 	protected int Init() {
 		String method = porg.getMehtod();
+				
 		if(method.toLowerCase().equals("get")){
 			if(isLogin()==-1){
 				iLogout();
+				
 				return -1;
 			}
 		}else{
 			String username = porg.getKey("username");
 			String passwd = porg.getKey("passwd_login");
-			iLogin(username, passwd);
+			if(iLogin(username, passwd) == -1){
+				
+				iLogout();
+				return -1;
+			}
 		}
 		
 		return 0;
@@ -49,6 +54,7 @@ public class BaseiCore extends BaseSurface {
 		String uinfo = cookieAct.GetCookie(globale_config.Uinfo);
 		
 		Map<String, Object> res = JSON.parseObject(uinfo, Map.class);
+		if(res==null) return null;
 		return res.get(key).toString();
 	}
 	
@@ -63,7 +69,7 @@ public class BaseiCore extends BaseSurface {
 		isAutoHtml = false;
 		super.setHtml(res);
 		
-		cookieAct.SetCookie("", "", 1);
+		cookieAct.SetCookie(globale_config.Uinfo, "", 1);
 	}
 	
 	public int iLogin(String login, String pwd) {
@@ -77,6 +83,7 @@ public class BaseiCore extends BaseSurface {
 		
 		String format = "SELECT * FROM `web_user` where login='%s' limit 1;";
 		String sql = String.format(format, login);
+				
 		Map<String, Object> res ;
 		
 		res = FetchOne(sql);
@@ -85,7 +92,8 @@ public class BaseiCore extends BaseSurface {
 		}
 		
 		Encrypt ec = Encrypt.getInstance();
-		String check_passd = ec.MD5(res.get("password").toString() + user_salt); 
+		String check_passd = ec.MD5(res.get("password").toString() + user_salt);
+		
 		if(!check_passd.equals(pwd)) return -1;
 		
 		String info_json = JSON.toJSONString(res); 

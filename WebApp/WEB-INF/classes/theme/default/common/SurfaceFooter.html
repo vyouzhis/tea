@@ -125,7 +125,7 @@
 		if (passwd_login != null) {
 			var md_login = $.md5(passwd_login);
 			var salt = $("#salt").val();
-			$("#passwd_login").val(md_login+salt);
+			$("#passwd_login").val($.md5(md_login+salt));
 		}
 	}
 </script>

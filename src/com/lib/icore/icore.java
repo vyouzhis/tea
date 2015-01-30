@@ -16,6 +16,7 @@ public class icore extends BaseiCore {
 		// TODO Auto-generated method stub
 		
 		if(super.Init()==-1){
+			
 			return ;
 		}
 		super.View();
