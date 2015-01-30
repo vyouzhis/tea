@@ -5,6 +5,8 @@ import org.ppl.etc.UrlClassList;
 import org.ppl.io.Encrypt;
 import org.ppl.io.TimeClass;
 
+import com.lib.common.SurfaceFooter;
+
 public class icore_login extends BaseSurface {
 	private String className = null;
 
@@ -19,9 +21,15 @@ public class icore_login extends BaseSurface {
 		// TODO Auto-generated method stub
 		UrlClassList ucl = UrlClassList.getInstance();
 		TimeClass tc = TimeClass.getInstance();
-		Encrypt en = Encrypt.getInstance();
-		String ok_action = en.MD5(String.valueOf(tc.time()));
-		setRoot("icore_url", ucl.BuildUrl("icore", ok_action));
+		
+		String salt = getSalt();
+		setRoot("icore_url", ucl.BuildUrl("icore", tc.time()+""));
+		setRoot("salt", salt);
+				
+		SurfaceFooter footer = new SurfaceFooter();	
+		footer.setRoot("register_js", "1");
+		footer.filter();
+		footer_html = footer.getHtml();
 		
 		super.View();
 	}

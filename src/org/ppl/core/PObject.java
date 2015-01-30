@@ -60,26 +60,6 @@ public class PObject extends DBSQL {
 				
 		return salt;
 	}
-
-	public String easyGetSalt() {
-		Config mConfig = new Config(globale_config.Config);
-		String salt = SessAct.GetSession(mConfig
-				.GetValue(globale_config.SessSalt));
-		
-		
-		return salt;
-	}
-	
-	public boolean easyCheckSalt(String salt) {
-		Config mConfig = new Config(globale_config.Config);
-
-		String sess_salt = SessAct.GetSession(mConfig
-				.GetValue(globale_config.SessSalt));
-		
-		if (sess_salt == null)
-			return false;
-		return sess_salt.equals(salt);		
-	}
 	
 	public boolean checkSalt(String salt) {
 

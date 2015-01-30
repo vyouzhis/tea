@@ -33,13 +33,13 @@
 							<!-- login form -->
 							<form class="sky-form boxed" method="post" action="${icore_url}">
 								<header>I'm a returning customer</header>
-								
+								<input  style="display:none;" type="text" id="salt" name="salt" value="${salt}" />
 								<fieldset>
 
 									<section>
 										<label class="input">
 											<i class="icon-append fa fa-envelope"></i>
-											<input type="email" placeholder="Email address" required="">
+											<input type="email" id="username" name="username" placeholder="Email address" required="">
 											<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
 										</label>
 									</section>
@@ -47,7 +47,7 @@
 									<section>
 										<label class="input">
 											<i class="icon-append fa fa-lock"></i>
-											<input type="password" placeholder="Password" required="">
+											<input type="password" id="passwd_login" name="passwd_login" placeholder="Password" required="">
 											<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
 										</label>
 										<div class="note"><a href="page-login.html#">Forgot Password?</a></div>

@@ -33,6 +33,7 @@ public class PorG {
 	private HttpServletResponse response;
 	private Map<String, String> sporg;
 	private String Context_Path;
+	private String mehtod = null;
 	private List<String> rmc;
 	private static final String[] HEADERS_TO_TRY = { 
 	    "X-Forwarded-For",
@@ -259,6 +260,14 @@ public class PorG {
 	        }
 	    }
 	    return request.getRemoteAddr();
+	}
+
+	public String getMehtod() {
+		return mehtod;
+	}
+
+	public void setMehtod(String mehtod) {
+		this.mehtod = mehtod;
 	}
 	
 }

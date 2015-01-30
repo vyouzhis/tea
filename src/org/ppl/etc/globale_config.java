@@ -22,6 +22,8 @@ public class globale_config {
 	
 	public static String SubRole = "subrole"; 
 	
+	//cookie user info
+	public static String Uinfo = "iCore";
 		
 	public static globale_config getInstance() {
 		if (config == null) {

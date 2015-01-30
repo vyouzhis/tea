@@ -32,9 +32,10 @@ public class Index extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 			
-		PorG pg = PorG.getInstance();
-		pg.Init(req, res);
-		pg.setContext_Path(req.getContextPath());
+		PorG porg = PorG.getInstance();
+		porg.Init(req, res);
+		porg.setContext_Path(req.getContextPath());
+		porg.setMehtod(req.getMethod());
 		
 		ShowMessage sm = ShowMessage.getInstance();
 		sm.Init(req, res);
