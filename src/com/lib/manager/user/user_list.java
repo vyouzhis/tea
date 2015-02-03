@@ -10,6 +10,7 @@ import org.ppl.common.ShowMessage;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
+import org.ppl.net.MailSender;
 
 public class user_list extends Permission implements BasePerminterface {
 	private List<String> rmc;
@@ -66,7 +67,7 @@ public class user_list extends Permission implements BasePerminterface {
 		}
 
 		UrlClassList ucl = UrlClassList.getInstance();
-		setRoot("edit_url", ucl.read("user_profile"));
+		setRoot("edit_url", ucl.read("user_profile"));			
 	}
 
 	private void Default() {

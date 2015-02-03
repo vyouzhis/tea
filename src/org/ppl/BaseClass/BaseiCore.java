@@ -5,6 +5,7 @@ import java.util.Map;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
+import org.ppl.io.DesEncrypter;
 import org.ppl.io.Encrypt;
 
 import com.alibaba.fastjson.JSON;
@@ -31,35 +32,6 @@ public class BaseiCore extends BaseSurface {
 		}
 
 		return 0;
-	}
-
-	private int isLogin() {
-		int uid = igetUid();
-		if (uid > 0)
-			return uid;
-		return -1;
-	}
-
-	public int igetUid() {
-		String uid = getUinfo("id");
-		echo(uid);
-		if (uid == null)
-			return 0;
-		return Integer.valueOf(uid);
-	}
-
-	public String igetName() {
-		return getUinfo("alias");
-	}
-
-	@SuppressWarnings("unchecked")
-	private String getUinfo(String key) {
-		String uinfo = cookieAct.GetCookie(globale_config.Uinfo);
-		if(uinfo==null) return null;
-		Map<String, Object> res = JSON.parseObject(uinfo, Map.class);
-		if (res == null)
-			return null;
-		return res.get(key).toString();
 	}
 
 	public void iLogout() {
@@ -104,7 +76,10 @@ public class BaseiCore extends BaseSurface {
 			return -1;
 
 		String info_json = JSON.toJSONString(res);
-		cookieAct.SetCookie(globale_config.Uinfo, info_json);
+
+		String hex = ec.toHex(info_json);
+
+		cookieAct.SetCookie(globale_config.Uinfo, hex);
 		return 0;
 	}
 }

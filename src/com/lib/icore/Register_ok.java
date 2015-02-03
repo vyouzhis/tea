@@ -33,11 +33,11 @@ public class Register_ok extends BaseSurface {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int)tc.time();
 		String format = "INSERT INTO `tea`.`web_user`" +
-				" (`login`, `password`, `alias`, `email`, `token_auth`, `ctime`) VALUES " +
-				"( '%s', '%s', '%s', '%s', '%s', '%d');";
+				" (`login`, `password`, `alias`, `email`, `ctime`) VALUES " +
+				"( '%s', '%s', '%s', '%s',  '%d');";
 		
-		String sql = String.format(format, login, passwd, login,login,passwd, now);
-		echo(sql);
+		String sql = String.format(format, login, passwd, login,login, now);
+		
 		try {
 			update(sql);
 		} catch (SQLException e) {

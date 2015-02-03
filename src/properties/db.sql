@@ -57,8 +57,7 @@ CREATE TABLE IF NOT EXISTS `web_user` (
   `password` char(32) NOT NULL,
   `alias` varchar(45) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `token_auth` char(32) NOT NULL,  
   `ctime` int(11) NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uniq_keytoken` (`token_auth`)
+  UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

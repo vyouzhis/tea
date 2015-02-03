@@ -8,7 +8,7 @@ public class DesEncrypter {
 	Cipher ecipher;
 	Cipher dcipher;
 
-	DesEncrypter() throws Exception {
+	public DesEncrypter() throws Exception {
 		SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 		ecipher = Cipher.getInstance("DES");
 		dcipher = Cipher.getInstance("DES");

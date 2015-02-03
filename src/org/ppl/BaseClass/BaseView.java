@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ppl.common.PorG;
+import org.ppl.etc.globale_config;
+import org.ppl.io.Encrypt;
 import org.ppl.io.ProjectPath;
+
+import com.alibaba.fastjson.JSON;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -84,5 +88,37 @@ public class BaseView extends BaseLang{
 			root = new HashMap<String, Object>();
 		}
 		root.put(key, obj);
+	}
+	
+	public int isLogin() {
+		int uid = igetUid();
+		if (uid > 0)
+			return uid;
+		return -1;
+	}
+
+	public int igetUid() {
+		String uid = getUinfo("id");		
+		if (uid == null)
+			return 0;
+		return Integer.valueOf(uid);
+	}
+
+	public String igetName() {
+		return getUinfo("alias");
+	}
+
+	@SuppressWarnings("unchecked")
+	private String getUinfo(String key) {
+		String uinfo = cookieAct.GetCookie(globale_config.Uinfo);
+		if (uinfo == null)
+			return null;
+		Encrypt en = Encrypt.getInstance();
+		String hex = en.hexToString(uinfo);		
+
+		Map<String, Object> res = JSON.parseObject(hex, Map.class);
+		if (res == null)
+			return null;
+		return res.get(key).toString();
 	}
 }

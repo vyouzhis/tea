@@ -10,6 +10,7 @@ public class globale_config {
 	public static String Mongo = PropertiesPath+"mongo"+ext;
 	public static String Mysql = PropertiesPath+"mysql"+ext;
 	public static String UrlMap = PropertiesPath+"UrlMap"+ext;
+	public static String Mail = PropertiesPath+"mail"+ext;
 	
 	//session
 	public static String SessSalt = "session.salt";

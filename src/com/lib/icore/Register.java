@@ -1,6 +1,7 @@
 package com.lib.icore;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
@@ -22,6 +23,17 @@ public class Register extends BaseSurface {
 		// TODO Auto-generated method stub
 		UrlClassList ucl = UrlClassList.getInstance();
 		TimeClass tc = TimeClass.getInstance();
+				
+		if (isLogin() > 0) {
+			ShowMessage ms = ShowMessage.getInstance();
+			String url = ucl.BuildUrl("icore", tc.time() + "");
+			echo(url);
+			ms.ShowMsg(url);
+
+			return;
+		}
+		
+		
 		Encrypt en = Encrypt.getInstance();
 		String ok_action = en.MD5(String.valueOf(tc.time()));
 		cookieAct.SetCookie(globale_config.CookieSalt, ok_action);

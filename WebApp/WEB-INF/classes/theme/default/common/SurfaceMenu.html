@@ -73,11 +73,15 @@
 									</li>
 									<li class="dropdown">
 										<a class="dropdown-toggle" href="page-login.html#">User <span>Profile</span></a>
-										<ul class="dropdown-menu">											
+										<ul class="dropdown-menu">		
+										<#if uid??>
+										<li><a href="/tea/logout"><i class="fa fa-user"></i> LogOut</a></li>
+										<#else>									
 										<li><a href="/tea/login"><i class="fa fa-user"></i> Login</a></li>
 										<li><a href="/tea/register"><i class="fa fa-user"></i> Register</a></li>
+										</#if>
 										<li><a href="/tea/user_info"><i class="fa fa-key"></i> user_info</a></li>
-										<li><a href="page-user-profile.html"><i class="fa fa-angle-right"></i> User Profile</a></li>
+										<li><a href="/tea/icore/1422580921"><i class="fa fa-angle-right"></i> User Profile</a></li>
 										</ul>
 									</li>
 									<li class="dropdown">

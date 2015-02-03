@@ -14,6 +14,9 @@ public class SurfaceMenu extends BaseModule{
 	@Override
 	public void filter() {
 		// TODO Auto-generated method stub
+		if(igetUid()>0){
+			setRoot("uid", igetUid());
+		}
 		super.View();
 	}
 
