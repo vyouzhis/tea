@@ -192,9 +192,15 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.6-rc1</version>
 		</dependency>
-		
-		<!-- mail end -->
 
+		<!-- mail end -->
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+		<!-- httpclient -->
 	</dependencies>
 
 
