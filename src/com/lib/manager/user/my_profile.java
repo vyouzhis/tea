@@ -24,6 +24,8 @@ public class my_profile extends Permission {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
+		if (super.Init() == -1)
+			return;
 		String edit_id = porg.getKey("edit_id");
 		UrlClassList ucl = UrlClassList.getInstance();
 		setRoot("action_url", ucl.BuildUrl(SliceName(stdClass), ""));
