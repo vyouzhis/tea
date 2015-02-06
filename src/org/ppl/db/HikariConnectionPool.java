@@ -5,17 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ppl.etc.Config;
-import org.ppl.etc.globale_config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class HikariConnectionPool {
-
+	static HikariConnectionPool source;
 	public HikariDataSource ds = null;
 	private Config mConfig = null;
 	private List<Connection> Con = null;
 
+	public static HikariConnectionPool getInstance() {
+		if (source == null) {
+			source = new HikariConnectionPool();
+		}
+
+		return source;
+	}
+	
 	public HikariConnectionPool() {
 		// TODO Auto-generated constructor stub
 		mConfig = new Config("properties/mysql.properties");
@@ -39,7 +46,7 @@ public class HikariConnectionPool {
 		
 		ds = new HikariDataSource(config);
 		ds.setMaximumPoolSize(2);
-		Connect();
+		Connect();		
 	}
 
 	private void Connect() {

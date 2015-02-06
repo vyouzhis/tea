@@ -70,7 +70,7 @@ public class PorG {
 		Config mConfig = new Config(globale_config.Config);
 		long maxFileSize = Integer.valueOf(mConfig.GetInt("maxFileSize"));
 		
-		int maxMemSize = (int)maxFileSize;
+		int maxMemSize = mConfig.GetInt("maxMemSize");
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(maxMemSize);

@@ -49,7 +49,7 @@ public class RouterMapConfig extends PObject {
 			if (BaseName != null && RMC.size() > 0) {
 				porg.UrlServlet(RMC);
 
-				HikariConnectionPool hcp = new HikariConnectionPool();
+				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 				Injector injector = Guice.createInjector(new ModuleBind());
 				 
 				BaseClass = BaseName.split("\\.");

@@ -90,9 +90,7 @@ public class ACLControl extends ACLRole {
 	}
 
 	public boolean CheckOntime() {
-		List<String> rmc = porg.getRmc();
-		if (rmc.size() < 2)
-			return true;
+		
 		
 		Config mConfig = new Config(globale_config.Config);
 		String time = SessAct.GetSession(mConfig.GetValue(globale_config.Ontime));
@@ -102,8 +100,14 @@ public class ACLControl extends ACLRole {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 		int timeOut = mConfig.GetInt(globale_config.TimeOut);
-		if(now-ontime>timeOut){			
-			return false;
+		if(now-ontime>timeOut){	
+			List<String> rmc = porg.getRmc();
+			if (rmc.size() < 2){
+				aclLogout();
+				return true;
+			}else{
+				return false;
+			}
 		}
 		
 		SessAct.SetSession(mConfig.GetValue(globale_config.Ontime), now+"");

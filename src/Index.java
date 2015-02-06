@@ -25,7 +25,7 @@ public class Index extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		System.out.println("init ");
+		System.out.println("init http");
 	}
 	
 	public void service(HttpServletRequest req, HttpServletResponse res)
