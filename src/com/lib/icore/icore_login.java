@@ -3,7 +3,6 @@ package com.lib.icore;
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
-import org.ppl.io.Encrypt;
 import org.ppl.io.TimeClass;
 
 import com.lib.common.SurfaceFooter;
@@ -32,11 +31,8 @@ public class icore_login extends BaseSurface {
 			return;
 		}
 
-		
-		
-
 		String salt = getSalt();
-		setRoot("icore_url", ucl.BuildUrl("icore", tc.time() + ""));
+		setRoot("icore_url", ucl.BuildUrl("icore_login_action", tc.time() + ""));
 		setRoot("salt", salt);
 
 		SurfaceFooter footer = new SurfaceFooter();
