@@ -1,7 +1,6 @@
 package com.lib.common;
 
 import org.ppl.BaseClass.BaseModule;
-import org.ppl.common.PorG;
 
 public class Header extends BaseModule {
 	private String className = null;

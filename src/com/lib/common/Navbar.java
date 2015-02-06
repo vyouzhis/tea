@@ -1,7 +1,6 @@
 package com.lib.common;
 
 import org.ppl.BaseClass.BaseModule;
-import org.ppl.common.PorG;
 import org.ppl.etc.UrlClassList;
 
 public class Navbar extends BaseModule {

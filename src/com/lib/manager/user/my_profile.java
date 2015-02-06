@@ -1,5 +1,10 @@
 package com.lib.manager.user;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 
 import org.ppl.BaseClass.Permission;
@@ -7,6 +12,7 @@ import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
+import org.ppl.io.ProjectPath;
 import org.ppl.io.TimeClass;
 
 public class my_profile extends Permission {
@@ -16,7 +22,7 @@ public class my_profile extends Permission {
 		String className = this.getClass().getCanonicalName();
 		// stdClass = className;
 		super.GetSubClassName(className);
-		setRoot("name", _MLang("name"));		
+		setRoot("name", _MLang("name"));
 		setRoot("fun", this);
 		super.setAction(1);
 	}
@@ -29,8 +35,8 @@ public class my_profile extends Permission {
 		String edit_id = porg.getKey("edit_id");
 		UrlClassList ucl = UrlClassList.getInstance();
 		setRoot("action_url", ucl.BuildUrl(SliceName(stdClass), ""));
-		
-		if (edit_id != null) {			
+
+		if (edit_id != null) {
 			setRoot("alerts", "q");
 			setRoot("save_msg", editMyProfile());
 			setRoot("nickname", porg.getKey("nickname"));
@@ -79,7 +85,22 @@ public class my_profile extends Permission {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			SaveLogo();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return _CLang("ok_save");
+	}
+	
+	private void SaveLogo() throws FileNotFoundException {
+		String name = porg.getUpload_name().get("user_logo_file").toString();
+		byte[] val = porg.getUpload_string().get("user_logo_file");
+		ProjectPath pp = ProjectPath.getInstance();
+		pp.SaveFile(name, val);
+
 	}
 
 }

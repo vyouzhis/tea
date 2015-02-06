@@ -1,40 +1,34 @@
 package org.ppl.common;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
-import org.ppl.io.ProjectPath;
+import org.ppl.etc.Config;
+import org.ppl.etc.globale_config;
 
 public class PorG {
 	static PorG source;
 	private HttpServletRequest request;
-	private HttpServletResponse response;
+	//private HttpServletResponse response;
 	private Map<String, String> sporg;
 	private String Context_Path;
 	private String mehtod = null;
 	private List<String> rmc;
+	private Map<String, String> upload_name=null;
+	private Map<String, byte[]> upload_string=null;
+	
 	private static final String[] HEADERS_TO_TRY = { 
 	    "X-Forwarded-For",
 	    "Proxy-Client-IP",
@@ -59,82 +53,9 @@ public class PorG {
 
 	public void Init(HttpServletRequest req, HttpServletResponse res) {
 		request = req;
-		response = res;
+		//response = res;
 		sporg = new HashMap<String, String>();
 		ParserParame();
-	}
-
-	public void getFile() {
-		System.out.println("getFile");
-		ProjectPath pp = ProjectPath.getInstance();
-
-		URI path = pp.DataDir();
-		System.out.println("getFile:" + path);
-		Part filePart;
-		try {
-			
-			PrintWriter writer = response.getWriter();
-			filePart = request.getPart("files");
-			if (filePart != null) {
-				final String fileName = getFileName(filePart);
-				OutputStream out = null;
-				InputStream filecontent = null;
-
-				try {
-					out = new FileOutputStream(new File(path + File.separator
-							+ fileName));
-					filecontent = filePart.getInputStream();
-
-					int read = 0;
-					final byte[] bytes = new byte[1024];
-
-					while ((read = filecontent.read(bytes)) != -1) {
-						out.write(bytes, 0, read);
-					}
-					writer.println("New file " + fileName + " created at "
-							+ path);
-					writer.println("File " + fileName + " being uploaded to "
-							+ path);
-				} catch (FileNotFoundException fne) {
-					writer.println("You either did not specify a file to upload or are "
-							+ "trying to upload a file to a protected or nonexistent "
-							+ "location.");
-					writer.println("<br/> ERROR: " + fne.getMessage());
-
-					writer.println("Problems during file upload. Error:"
-							+ fne.getMessage());
-
-				}
-				writer.close();
-			} else {
-				
-				writer.println("file is null");
-			}
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("ill" + e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("io" + e.getMessage());
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("servlet" + e.getMessage());
-		}
-	}
-
-	private String getFileName(final Part part) {
-		final String partHeader = part.getHeader("content-disposition");
-		System.out.println("Part Header = " + partHeader);
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
-			}
-		}
-		return null;
 	}
 
 	public String getKey(String key) {
@@ -144,26 +65,19 @@ public class PorG {
 		return null;
 	}
 
-	@SuppressWarnings({ "unused", "null" })
+	@SuppressWarnings({ "unused" })
 	private void ParserParame() {
-		long maxFileSize = (2 * 1024 * 1024);
-
-		int maxMemSize = (2 * 1024 * 1024);
+		Config mConfig = new Config(globale_config.Config);
+		long maxFileSize = Integer.valueOf(mConfig.GetInt("maxFileSize"));
+		
+		int maxMemSize = (int)maxFileSize;
+		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ProjectPath pp = ProjectPath.getInstance();
-		File file = new File(pp.DataDir());
-		// Set factory constraints
 		factory.setSizeThreshold(maxMemSize);
-		factory.setRepository(file);
 
-		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		upload.setHeaderEncoding("UTF-8");
-		// Set overall request size constraint
 		upload.setSizeMax(maxFileSize);
-		// upload.parseRequest(RequestContext)
-		// Parse the request
-
 		String contentType = request.getContentType();
 
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -181,7 +95,7 @@ public class PorG {
 			final String encoding = "UTF-8";
 			try {
 				ServletRequestContext context = new ServletRequestContext(request) ;
-
+				
 				List<FileItem> items = upload.parseRequest(context);
 				Iterator<FileItem> iter = items.iterator();
 
@@ -202,20 +116,29 @@ public class PorG {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						
+						//System.out.println("name:"+name+"  value:"+value);
+												
 						sporg.put(name, Check(value));
 					} else {
-						// processUploadedFile(item);
+
 						String fieldName = item.getFieldName();
 						String fileName = item.getName();
-						// String contentType = item.getContentType();
-						boolean isInMemory = item.isInMemory();
-						long sizeInBytes = item.getSize();
-
+				
+						if(upload_name==null){
+							upload_name = new HashMap<>();
+						}
+						upload_name.put(fieldName, fileName);				
+						if(upload_string==null){
+							upload_string = new HashMap<>();
+						}
+						upload_string.put(fieldName, item.get());
+						
 					}
 				}
 			} catch (FileUploadException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace();				
 			}
 		}
 
@@ -269,5 +192,13 @@ public class PorG {
 	public void setMehtod(String mehtod) {
 		this.mehtod = mehtod;
 	}
-	
+
+	public Map<String, String> getUpload_name() {
+		return upload_name;
+	}
+
+	public Map<String, byte[]> getUpload_string() {
+		return upload_string;
+	}
+
 }
