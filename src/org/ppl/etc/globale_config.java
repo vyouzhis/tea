@@ -23,6 +23,8 @@ public class globale_config {
 	
 	public static String SubRole = "subrole"; 
 	
+	public static String CookieRegion = "Region";
+	
 	//cookie user info
 	public static String Uinfo = "iCore";
 		

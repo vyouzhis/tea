@@ -40,8 +40,6 @@ public class cUrl {
 
 		HttpGet httpget = new HttpGet(url);
 
-		// System.out.println("Executing request " + httpget.getRequestLine());
-
 		// Create a custom response handler
 		ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
@@ -61,8 +59,6 @@ public class cUrl {
 		String responseBody = null;
 		try {
 			responseBody = httpclient.execute(httpget, responseHandler);
-			// System.out.println("----------------------------------------");
-			// System.out.println(responseBody);
 
 			httpclient.close();
 		} catch (ClientProtocolException e) {

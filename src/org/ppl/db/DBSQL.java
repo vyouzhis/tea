@@ -15,7 +15,7 @@ public class DBSQL {
 
 	public static DBSQL dataSource = null;
 	private Connection Con = null;
-	private  Statement stmt = null;
+	private Statement stmt = null;
 
 	public DBSQL() {
 	}
@@ -23,12 +23,12 @@ public class DBSQL {
 	public void SetCon(Connection MainCon) {
 		Con = MainCon;
 	}
-	
+
 	public void end() {
 		try {
 			stmt.close();
-			//c.commit();
-			//c.close();			 
+			// c.commit();
+			// c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class DBSQL {
 		return dataSource;
 	}
 
-	public  Connection createConnection(String driver, String url,
+	public Connection createConnection(String driver, String url,
 			String username, String password) throws ClassNotFoundException,
 			SQLException {
 		Class.forName(driver);
@@ -61,7 +61,7 @@ public class DBSQL {
 		}
 	}
 
-	public  void rollback(Connection connection) {
+	public void rollback(Connection connection) {
 		try {
 			if (connection != null) {
 				connection.rollback();
@@ -71,8 +71,7 @@ public class DBSQL {
 		}
 	}
 
-	public  List<Map<String, Object>> map(ResultSet rs)
-			throws SQLException {
+	public List<Map<String, Object>> map(ResultSet rs) throws SQLException {
 		List<Map<String, Object>> results = new ArrayList<Map<String, Object>>();
 		Object value = null;
 		try {
@@ -83,44 +82,44 @@ public class DBSQL {
 					Map<String, Object> row = new HashMap<String, Object>();
 					for (int i = 1; i <= numColumns; ++i) {
 						String name = meta.getColumnName(i);
-												
-						if(meta.getColumnTypeName(i).equals("TINYINT")){
+
+						if (meta.getColumnTypeName(i).equals("TINYINT")) {
 							value = rs.getInt(i);
-							
-						}else{
+
+						} else {
 							value = rs.getObject(i);
 						}
-						
+
 						row.put(name, value);
 					}
 					results.add(row);
 				}
 			}
 		} finally {
-			//close(rs);
+			// close(rs);
 		}
 
 		return results;
 	}
 
-	public List<Map<String, Object>> query(String sql)
-			throws SQLException {
+	public List<Map<String, Object>> query(String sql) throws SQLException {
 		List<Map<String, Object>> results = null;
-
+		if (Con == null)
+			return null;
 		ResultSet rs = null;
 		stmt = Con.createStatement();
 		rs = stmt.executeQuery(sql);
 		results = map(rs);
 		rs.close();
 		stmt.close();
-		
+
 		return results;
 	}
 
-	public List<Map<String, Object>> FetchAll(String sql) throws SQLException  {
+	public List<Map<String, Object>> FetchAll(String sql) throws SQLException {
 		return query(sql);
 	}
-	
+
 	public Map<String, Object> FetchOne(String sql) {
 		Map<String, Object> results = null;
 		List<Map<String, Object>> fetlist = null;
@@ -140,14 +139,16 @@ public class DBSQL {
 
 	public long update(String sql) throws SQLException {
 		long numRowsUpdated = 0;
-	
+		if (Con == null){
+			return -1;
+		}
 		stmt = Con.createStatement();
 		numRowsUpdated = stmt.executeUpdate(sql,
 				Statement.RETURN_GENERATED_KEYS);
-		
+
 		Con.commit();
 		stmt.close();
-		
+
 		return numRowsUpdated;
 	}
 

@@ -37,6 +37,7 @@ import com.lib.surface.About;
 import com.lib.surface.article;
 import com.lib.surface.home;
 import com.lib.surface.jsonapi;
+import com.lib.thread.testThread;
 
 public class ModuleBindClass extends PObject{
 	
@@ -46,6 +47,7 @@ public class ModuleBindClass extends PObject{
 	protected List<Object> iCoreList = null;
 	protected List<Object> PermList = null;
 	protected List<Object> ManagerList = null;
+	protected List<Object> ThreadList = null;
 	
 	public ModuleBindClass() {
 		// TODO Auto-generated constructor stub
@@ -91,7 +93,6 @@ public class ModuleBindClass extends PObject{
 		 *  common start
 		 */
 		ModuleList = new ArrayList<Object>();
-		//common
 		ModuleList.add(Footer.class);
 		ModuleList.add(Header.class);
 		ModuleList.add(SurfaceFooter.class);
@@ -125,6 +126,12 @@ public class ModuleBindClass extends PObject{
 		/*
 		 * manager end
 		 */
+		
+		/**
+		 * Thread start
+		 */
+		ThreadList = new ArrayList<>();
+		ThreadList.add(testThread.class);
 	}
 	
 	

@@ -56,7 +56,9 @@ public abstract class BaseLang extends ACLControl implements BaseLangInterface {
 		LibLang libLan = (LibLang) injector.getInstance(Key.get(
 				LibLang.class, Names.named(stdsName)));
 		
-		return libLan._Lang(key);
+		String lan = libLan._Lang(key);
+		if(lan==null) return "lang key:"+key+" is not exist!";
+		return lan;
 	}
 	
 	

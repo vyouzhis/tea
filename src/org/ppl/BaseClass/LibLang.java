@@ -22,8 +22,11 @@ public class LibLang extends PObject implements BaseLangInterface {
 	public void LangConfig() {
 		String LibName = SliceName(stdClass);
 		Config mConfig = new Config(globale_config.Config);
-
-		String path = "properties/lang/" + mConfig.GetValue("Languages")
+		String region = cookieAct.GetCookie(globale_config.CookieRegion); 
+		if(region==null){
+			region = mConfig.GetValue("Languages");
+		}
+		String path = "properties/lang/" + region
 				+ selfPath + "/" + LibName.substring(1) + ".properties";
 
 		CLang = new Config(path);
