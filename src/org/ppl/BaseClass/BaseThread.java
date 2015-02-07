@@ -7,7 +7,4 @@ public abstract class BaseThread extends PObject {
 	public abstract boolean isRun();
 	public abstract boolean Stop();
 	
-	public void name() {
-		
-	}
 }
