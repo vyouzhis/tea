@@ -7,7 +7,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import org.ppl.BaseClass.BaseThread;
-import org.ppl.BaseClass.LibLang;
 import org.ppl.Module.ModuleBind;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.Config;
@@ -59,6 +58,10 @@ public class ServletApplicationLifeListener extends PObject implements
 	private void InitPackList() {
 		Config mConfig = new Config(globale_config.Config);
 		String packs = mConfig.GetValue("base.packs");
+		if (packs==null) {
+			echo("error !");
+			return;
+		}
 		List<String> pList = JSON.parseObject(packs, List.class);
 		for (String p : pList) {
 			String ps = this.getClass().getResource("/").getPath() + p;			

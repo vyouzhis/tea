@@ -1,8 +1,5 @@
 package org.ppl.Module;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.BaseSurface;
@@ -32,6 +29,7 @@ public class ModuleBind extends PObject implements Module {
 		for (String ps : ucl.getPackList()) {
 			try {
 				Class<?> clazz = Class.forName(ps);
+				
 				if (clazz.getSuperclass().equals(BaseSurface.class)) {
 					Class<? extends BaseSurface> cls = (Class<? extends BaseSurface>) Class
 							.forName(ps);
