@@ -34,8 +34,8 @@ public class ServletApplicationLifeListener extends PObject implements
 	public void contextInitialized(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 		HikariConnectionPool.getInstance();
-
-		mConfig = new Config(globale_config.Config);
+		InitPackList();
+		mConfig = new Config(globale_config.Config);		
 		int autorun = mConfig.GetInt("autorun");
 //		if (autorun == 1) {
 //			Auto();
@@ -51,6 +51,18 @@ public class ServletApplicationLifeListener extends PObject implements
 			BaseThread libLan = (BaseThread) injector.getInstance(Key.get(
 					BaseThread.class, Names.named(rl)));
 			libLan.Run();
+		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void InitPackList() {
+		Config mConfig = new Config(globale_config.Config);
+		String packs = mConfig.GetValue("base.packs");
+		List<String> pList = JSON.parseObject(packs, List.class);
+		for (String p : pList) {
+			String ps = this.getClass().getResource("/").getPath() + p;			
+			findPack(ps);
 		}
 
 	}

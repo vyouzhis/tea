@@ -14,6 +14,7 @@ import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 
+import com.alibaba.fastjson.JSON;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -31,12 +32,11 @@ public class RouterMapConfig extends PObject {
 	private List<String> pum = null;
 
 	public RouterMapConfig() {
-		// TODO Auto-generated constructor stub
-
+		// TODO Auto-generated constructor stub		
 		RMC = new ArrayList<String>();
-		pum = PermUrlMap();		
+		pum = PermUrlMap();
 		ParserMap();
-		
+
 	}
 
 	public void map(String key) {
@@ -51,10 +51,11 @@ public class RouterMapConfig extends PObject {
 
 				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 				Injector injector = Guice.createInjector(new ModuleBind());
-				 
+
 				BaseClass = BaseName.split("\\.");
-				if(BaseClass.length != 2) return;
-				
+				if (BaseClass.length != 2)
+					return;
+
 				switch (BaseClass[0]) {
 				case "Permission":
 					Permission home = (Permission) injector.getInstance(Key
@@ -66,9 +67,9 @@ public class RouterMapConfig extends PObject {
 					isAjax = home.isAjax();
 					break;
 				case "BaseSurface":
-					BaseSurface Shome = (BaseSurface) injector.getInstance(Key.get(
-							BaseSurface.class, Names.named(BaseClass[1])));
-					
+					BaseSurface Shome = (BaseSurface) injector.getInstance(Key
+							.get(BaseSurface.class, Names.named(BaseClass[1])));
+
 					Shome.SetCon(hcp.GetCon(0));
 					Shome.Show();
 					htmlCon = Shome.getHtml();
@@ -77,7 +78,7 @@ public class RouterMapConfig extends PObject {
 				case "BaseiCore":
 					BaseiCore ihome = (BaseiCore) injector.getInstance(Key.get(
 							BaseiCore.class, Names.named(BaseClass[1])));
-					
+
 					ihome.SetCon(hcp.GetCon(0));
 					ihome.Show();
 					htmlCon = ihome.getHtml();
@@ -86,12 +87,12 @@ public class RouterMapConfig extends PObject {
 				default:
 					return;
 				}
-								 											
+
 				NullMap = false;
 			}
 		}
 	}
-	
+
 	public boolean routing() {
 		return NullMap;
 	}
@@ -99,7 +100,7 @@ public class RouterMapConfig extends PObject {
 	public String getHtml() {
 		return htmlCon;
 	}
-	
+
 	public String setContentType() {
 		if (isAjax) {
 			return "application/json";
@@ -119,7 +120,7 @@ public class RouterMapConfig extends PObject {
 		String mMthod = null;
 
 		List<String> lu = ucl.getUcls();
-		
+
 		// System.out.println("getUcls: " + lu.size());
 		for (int i = 0; i < lu.size(); i++) {
 			RMC.clear();
@@ -181,8 +182,9 @@ public class RouterMapConfig extends PObject {
 				if (m.find()) {
 					if (m.group().equals(UrlServlet[j])) {
 						RMC.add(m.group());
-//						System.out.println("Found value: " + BaseName + " arg:"
-//								+ m.group());
+						// System.out.println("Found value: " + BaseName +
+						// " arg:"
+						// + m.group());
 					} else {
 						RMC.clear();
 						break;
@@ -218,13 +220,13 @@ public class RouterMapConfig extends PObject {
 		if (ucl.getUcls() == null) {
 			for (Object um : mConfig.getKey()) {
 				uri = um.toString();
-				if(uri.substring(uri.length()-4).equals(".uri")){
-					ucl.setUcls(uri.substring(0,uri.length()-4));
+				if (uri.substring(uri.length() - 4).equals(".uri")) {
+					ucl.setUcls(uri.substring(0, uri.length() - 4));
 				}
-				
+
 			}
 		}
-		
+
 		for (int i = 0; i < pum.size(); i++) {
 			ucl.setUcls(pum.get(i));
 		}
@@ -234,7 +236,7 @@ public class RouterMapConfig extends PObject {
 	private String GetMapMethod(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String method = mConfig.GetValue(key + ".method");
-		if (method == null) {			
+		if (method == null) {
 			if (pum.contains(key)) {
 				return "POST|GET";
 			}
@@ -246,7 +248,7 @@ public class RouterMapConfig extends PObject {
 	private String GetMapUri(String key) {
 		Config mConfig = new Config(globale_config.UrlMap);
 		String uri = mConfig.GetValue(key + ".uri");
-		if (uri == null) {			
+		if (uri == null) {
 			if (pum.contains(key)) {
 				return key + "/(read|create|edit|remove|search)";
 			}
@@ -254,4 +256,6 @@ public class RouterMapConfig extends PObject {
 
 		return uri;
 	}
+
+	
 }

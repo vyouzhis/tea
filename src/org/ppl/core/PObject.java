@@ -129,5 +129,29 @@ public class PObject extends DBSQL {
 
 		return pum;
 	}
+	
+	public void findPack(String path) {
+		UrlClassList ucl = UrlClassList.getInstance();
+		File directory = new File(path);
+		File[] fList = directory.listFiles();
+		String[] pack = path.split("classes");
+		if(pack.length != 2)return;
+		String pn = pack[1].replace("/", ".");
+		pn = pn.replace("\\", ".");
+		
+		if(!pn.substring(pn.length()-1, pn.length()).equals(".")){
+			pn = pn+".";
+		}
+		pn = pn.substring(1);
+		
+		for (File file : fList) {
+			if (file.isFile()) {
+				String lib = file.getName().split("\\.")[0];				
+				ucl.setPackList(pn+lib);				
+			} else if (file.isDirectory()) {				
+				findPack(file.getAbsolutePath());
+			}
+		}
+	}
 
 }

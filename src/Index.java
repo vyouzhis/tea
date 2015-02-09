@@ -13,6 +13,8 @@ import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.common.ShowMessage;
+import org.ppl.etc.Config;
+import org.ppl.etc.globale_config;
 
 @WebServlet(value = "/")
 public class Index extends HttpServlet {

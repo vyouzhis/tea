@@ -9,6 +9,7 @@ import org.ppl.common.PorG;
 public class UrlClassList {
 	static UrlClassList ucl = null;
 	private List<String> ucls = null;
+	private List<String> packList = null;
 	private Map<String, List<String>> PackClassList = null;
 
 	public static UrlClassList getInstance() {
@@ -27,8 +28,9 @@ public class UrlClassList {
 		if (this.ucls == null) {
 			this.ucls = new ArrayList<String>();
 		}
-		if (!this.ucls.contains(libName))
+		if (!this.ucls.contains(libName)){
 			this.ucls.add(libName);
+		}		
 	}
 	
 	public String Url() {
@@ -67,6 +69,17 @@ public class UrlClassList {
 
 	public void setPackClassList(Map<String, List<String>> packClassList) {
 		PackClassList = packClassList;
+	}
+	
+	public List<String> getPackList() {
+		return packList;
+	}
+	
+	public void setPackList(String pack) {
+		if(this.packList == null){
+			this.packList = new ArrayList<>();
+		}
+		packList.add(pack);
 	}
 
 }
