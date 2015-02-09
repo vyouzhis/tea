@@ -37,9 +37,9 @@ public class ServletApplicationLifeListener extends PObject implements
 
 		mConfig = new Config(globale_config.Config);
 		int autorun = mConfig.GetInt("autorun");
-		if (autorun == 1) {
-			Auto();
-		}
+//		if (autorun == 1) {
+//			Auto();
+//		}
 	}
 
 	@SuppressWarnings("unchecked")

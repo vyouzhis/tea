@@ -67,12 +67,12 @@ public class ModuleBindClass extends PObject{
 		SurfaceList = new ArrayList<Object>();
 		//lib
 		SurfaceList.add(About.class);
-		SurfaceList.add(article.class);
-		SurfaceList.add(home.class);
+		//SurfaceList.add(article.class);
+		//SurfaceList.add(home.class);
 		SurfaceList.add(jsonapi.class);
-		SurfaceList.add(Register.class);
-		SurfaceList.add(Register_ok.class);
-		SurfaceList.add(icore_login.class);
+		//SurfaceList.add(Register.class);
+		//SurfaceList.add(Register_ok.class);
+		//SurfaceList.add(icore_login.class);
 		/**
 		 * surface end
 		 */

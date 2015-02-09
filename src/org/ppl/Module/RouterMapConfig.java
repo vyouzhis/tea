@@ -218,9 +218,6 @@ public class RouterMapConfig extends PObject {
 		if (ucl.getUcls() == null) {
 			for (Object um : mConfig.getKey()) {
 				uri = um.toString();
-//				if (uri.length > 2 && uri[2].equals("uri")) {
-//					ucl.setUcls(uri[1]);
-//				}
 				if(uri.substring(uri.length()-4).equals(".uri")){
 					ucl.setUcls(uri.substring(0,uri.length()-4));
 				}
