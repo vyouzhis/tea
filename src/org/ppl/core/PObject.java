@@ -153,5 +153,10 @@ public class PObject extends DBSQL {
 			}
 		}
 	}
+	
+	public void TellPostMan(String address, Object message) {
+		globale_config.RapidListQueue.put(address, message);
+		globale_config.RapidListQueue.notify();
+	}
 
 }

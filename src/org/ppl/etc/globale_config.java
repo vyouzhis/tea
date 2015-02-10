@@ -1,5 +1,8 @@
 package org.ppl.etc;
 
+import java.util.List;
+import java.util.Map;
+
 public class globale_config {
 	public static globale_config config = null;
 	
@@ -27,6 +30,9 @@ public class globale_config {
 	
 	//cookie user info
 	public static String Uinfo = "iCore";
+	
+	//listQueue
+	public static Map<String, Object> RapidListQueue;
 		
 	public static globale_config getInstance() {
 		if (config == null) {

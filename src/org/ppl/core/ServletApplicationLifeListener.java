@@ -1,5 +1,6 @@
 package org.ppl.core;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContextEvent;
@@ -36,6 +37,8 @@ public class ServletApplicationLifeListener extends PObject implements
 		InitPackList();
 		mConfig = new Config(globale_config.Config);		
 		int autorun = mConfig.GetInt("autorun");
+		
+		globale_config.RapidListQueue = new HashMap<String, Object>();
 //		if (autorun == 1) {
 //			Auto();
 //		}
