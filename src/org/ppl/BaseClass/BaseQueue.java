@@ -1,10 +1,11 @@
 package org.ppl.BaseClass;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BaseQueue {
-	private Map<String, Object> queue;
+	private Map<String, List<Object>> queue;
 	private int maxQueue;
 	static BaseQueue source;
 
@@ -18,7 +19,7 @@ public class BaseQueue {
 	
 	public BaseQueue(int max) {
 		// TODO Auto-generated constructor stub
-		queue = new HashMap<String, Object>();
+		queue = new HashMap<>();
 		maxQueue = max;
 	}
 

@@ -39,9 +39,11 @@ public class ServletApplicationLifeListener extends PObject implements
 		int autorun = mConfig.GetInt("autorun");
 		
 		globale_config.RapidListQueue = new HashMap<String, Object>();
-//		if (autorun == 1) {
-//			Auto();
-//		}
+		if (autorun == 1) {
+			Thread dt = new Thread(new RapidThread(), "dt_");		
+			dt.start();
+		}
+				
 	}
 
 	@SuppressWarnings("unchecked")

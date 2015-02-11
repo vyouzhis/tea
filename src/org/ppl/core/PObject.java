@@ -2,6 +2,7 @@ package org.ppl.core;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,9 +155,13 @@ public class PObject extends DBSQL {
 		}
 	}
 	
-	public void TellPostMan(String address, Object message) {
+	public synchronized void TellPostMan(String address, Object message) {
 		globale_config.RapidListQueue.put(address, message);
-		globale_config.RapidListQueue.notify();
+		synchronized (globale_config.RapidListQueue) {
+			//message.setText("Notifier took a nap for 3 seconds");
+			System.out.println("Notifier is notifying waiting thread to wake up at " + new Date());
+			globale_config.RapidListQueue.notify();
+		}
 	}
 
 }

@@ -42,7 +42,12 @@ public class home extends BaseSurface {
 		setRoot("countries", countries);
 
 		setRoot("fun", this);
-
+		List<String> msg = new ArrayList<>();
+		msg.add("1111");
+		msg.add("2222");
+		// thread Daemon
+		TellPostMan("testThread", msg);
+		
 		super.View();
 	}
 
