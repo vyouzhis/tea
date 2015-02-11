@@ -42,6 +42,10 @@ public class ProjectPath {
 
 	public void SaveFile(String name, byte[] val) {
 		URI u = DataDir();
+		if(name==null)return;
+		if (val == null) {
+			return ;
+		}
 		String f = u.getPath() + name;
 		try {
 

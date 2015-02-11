@@ -23,8 +23,8 @@ public class BaseQueue {
 		maxQueue = max;
 	}
 
-	public void in(Object o) {
-
+	public void in(String key, Object o) {
+		queue.get(key).add(o);
 	}
 
 	public Object out() {

@@ -48,6 +48,11 @@ public class home extends BaseSurface {
 		// thread Daemon
 		TellPostMan("testThread", msg);
 		
+		List<String> msg2 = new ArrayList<>();
+		msg2.add("aaaa");
+		msg2.add("bbb");
+		TellPostMan("testThread", msg2);
+		
 		super.View();
 	}
 

@@ -35,54 +35,56 @@ public class RouterMapConfig extends PObject {
 		// TODO Auto-generated constructor stub		
 		RMC = new ArrayList<String>();
 		pum = PermUrlMap();
+				
 		ParserMap();
-
 	}
-
+	
 	public void map(String key) {
 		servletPath = key.trim();
 	}
 
 	public void match() {
-		String[] BaseClass;
+		String[] BaseClass;		
 		if (matchRouter()) {
 			if (BaseName != null && RMC.size() > 0) {
 				porg.UrlServlet(RMC);
-
-				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+				
 				Injector injector = Guice.createInjector(new ModuleBind());
 
 				BaseClass = BaseName.split("\\.");
-				if (BaseClass.length != 2)
+				if (BaseClass.length != 2){
+					
 					return;
+				}
 
 				switch (BaseClass[0]) {
 				case "Permission":
 					Permission home = (Permission) injector.getInstance(Key
 							.get(Permission.class, Names.named(BaseClass[1])));
-					home.SetCon(hcp.GetCon(0));
+					home.SetCon();
 					home.Show();
 					htmlCon = home.getHtml();
 					// System.out.println(htmlCon);
 					isAjax = home.isAjax();
+					home.free();
 					break;
 				case "BaseSurface":
 					BaseSurface Shome = (BaseSurface) injector.getInstance(Key
 							.get(BaseSurface.class, Names.named(BaseClass[1])));
-
-					Shome.SetCon(hcp.GetCon(0));
+					Shome.SetCon();
 					Shome.Show();
 					htmlCon = Shome.getHtml();
 					isAjax = Shome.isAjax();
+					Shome.free();
 					break;
 				case "BaseiCore":
 					BaseiCore ihome = (BaseiCore) injector.getInstance(Key.get(
 							BaseiCore.class, Names.named(BaseClass[1])));
-
-					ihome.SetCon(hcp.GetCon(0));
+					ihome.SetCon();
 					ihome.Show();
 					htmlCon = ihome.getHtml();
 					isAjax = ihome.isAjax();
+					ihome.free();
 					break;
 				default:
 					return;
@@ -90,6 +92,7 @@ public class RouterMapConfig extends PObject {
 
 				NullMap = false;
 			}
+						
 		}
 	}
 
@@ -256,6 +259,6 @@ public class RouterMapConfig extends PObject {
 
 		return uri;
 	}
-
+	
 	
 }

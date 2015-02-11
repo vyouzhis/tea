@@ -1,8 +1,5 @@
 package org.ppl.core;
 
-import java.util.Date;
-import java.util.Map;
-
 import org.ppl.BaseClass.BaseThread;
 import org.ppl.BaseClass.LibThread;
 import org.ppl.Module.ModuleBind;
@@ -26,24 +23,27 @@ public class RapidThread extends LibThread {
 		while (true) {
 			synchronized (globale_config.RapidListQueue) {
 				try {
-					System.out.println("Waiter is waiting for the notifier at " + new Date());
 					globale_config.RapidListQueue.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("listqueue!");
-			for (Map.Entry<String, Object> entry : globale_config.RapidListQueue.entrySet()) {
-				//System.out.println(entry.getKey() + "/" + entry.getValue());
-				System.out.println("key:"+entry.getKey());
+			
+			for (String key : globale_config.RapidListQueue.keySet()) {
+
 				Injector injector = Guice.createInjector(new ModuleBind());
-				BaseThread rapid = (BaseThread) injector.getInstance(Key
-						.get(BaseThread.class, Names.named(entry.getKey())));
-				rapid.postMsg(entry.getValue());
-				rapid.Run();
+				BaseThread rapid = (BaseThread) injector.getInstance(Key.get(
+						BaseThread.class, Names.named(key)));
+				
+				while(globale_config.RapidListQueue.get(key).size()>0) {
+					
+					Object o = globale_config.RapidListQueue.get(key).pop();					
+					rapid.mailbox(o);
+					rapid.Run();
+					
+				}				
 				
 			}
-
 		}
 	}
 }

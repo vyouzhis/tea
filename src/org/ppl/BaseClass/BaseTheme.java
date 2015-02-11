@@ -9,11 +9,6 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 	protected String header_html = "";
 	protected String footer_html = "";
 
-	public BaseTheme() {
-		// TODO Auto-generated constructor stub
-		// echo(super.stdClass+":baseTheme");
-	}
-
 	public abstract void Show();
 
 	public void setHtml(String Con) {
@@ -25,7 +20,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 		if (isAutoHtml) {
 			common();
 		}
-
+		
 		return header_html + html + footer_html;
 	}
 
@@ -43,11 +38,13 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 			SurfaceHeader header = new SurfaceHeader();
 			header.filter();
 			header_html = header.getHtml();
+			
 		}
 		if (footer_html.length() == 0) {
 			SurfaceFooter footer = new SurfaceFooter();			
 			footer.filter();
 			footer_html = footer.getHtml();
+			
 		}
 	}
 }

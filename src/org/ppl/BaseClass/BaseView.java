@@ -6,7 +6,6 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ppl.common.PorG;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.ProjectPath;
@@ -21,8 +20,14 @@ import freemarker.template.TemplateException;
 public class BaseView extends BaseLang{
 	protected String html="";
 	private Map<String, Object> root;
+	
+	public BaseView() {
+		// TODO Auto-generated constructor stub
 		
+	}
+	
 	public void View() {
+		
 		if (root == null) {
 			echo("root is null");
 			return;

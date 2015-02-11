@@ -1,6 +1,7 @@
 package org.ppl.core;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletContextEvent;
@@ -38,7 +39,7 @@ public class ServletApplicationLifeListener extends PObject implements
 		mConfig = new Config(globale_config.Config);		
 		int autorun = mConfig.GetInt("autorun");
 		
-		globale_config.RapidListQueue = new HashMap<String, Object>();
+		globale_config.RapidListQueue = new HashMap<String, LinkedList<Object>>();
 		if (autorun == 1) {
 			Thread dt = new Thread(new RapidThread(), "dt_");		
 			dt.start();
@@ -65,6 +66,7 @@ public class ServletApplicationLifeListener extends PObject implements
 		String packs = mConfig.GetValue("base.packs");
 		if (packs==null) {
 			echo("error !");
+			System.exit(-1);
 			return;
 		}
 		List<String> pList = JSON.parseObject(packs, List.class);

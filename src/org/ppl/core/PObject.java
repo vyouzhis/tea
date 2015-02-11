@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +24,11 @@ public class PObject extends DBSQL {
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-	
+			
 	public void echo(Object o) {
 		System.out.println(o);
 	}
-
+	
 	protected void GetSubClassName(String subClassname) {
 		stdClass = subClassname;
 	}
@@ -155,11 +156,17 @@ public class PObject extends DBSQL {
 		}
 	}
 	
-	public synchronized void TellPostMan(String address, Object message) {
-		globale_config.RapidListQueue.put(address, message);
+	public void TellPostMan(String ThreadName, Object message) {
+		if(globale_config.RapidListQueue.containsKey(ThreadName)){
+			globale_config.RapidListQueue.get(ThreadName).push(message);
+		}else {
+			LinkedList<Object> l = new LinkedList<Object>();
+			l.add(message);
+			globale_config.RapidListQueue.put(ThreadName, l);
+		}
 		synchronized (globale_config.RapidListQueue) {
 			//message.setText("Notifier took a nap for 3 seconds");
-			System.out.println("Notifier is notifying waiting thread to wake up at " + new Date());
+			//System.out.println("Notifier is notifying waiting thread to wake up at " + new Date());
 			globale_config.RapidListQueue.notify();
 		}
 	}

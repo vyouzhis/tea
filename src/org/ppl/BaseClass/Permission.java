@@ -94,10 +94,12 @@ public class Permission extends BaseTheme {
 		Header header = new Header();
 		header.filter();
 		header_html = header.getHtml();
-
+		
+		
 		Footer footer = new Footer();
 		footer.filter();
 		footer_html = footer.getHtml();
+	
 	}
 
 	public String GetName() {
@@ -139,6 +141,7 @@ public class Permission extends BaseTheme {
 		ShowMessage ms = ShowMessage.getInstance();
 		String res = ms.SetMsg(ok_url, msg, 3000);
 		super.setHtml(res);
+		super.isAutoHtml = false;
 	}
 
 }

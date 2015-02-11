@@ -33,7 +33,7 @@ public class Index extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-			
+		
 		PorG porg = PorG.getInstance();
 		porg.Init(req, res);
 		porg.setContext_Path(req.getContextPath());
@@ -65,9 +65,7 @@ public class Index extends HttpServlet {
 
 		//SystemInfo(req, res);			
 	}
-	
-	
-	
+		
 	private void SystemInfo(HttpServletRequest req, HttpServletResponse res) {
 		PrintWriter out = null;
 		try {

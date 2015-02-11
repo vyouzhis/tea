@@ -1,8 +1,7 @@
 package org.ppl.db;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.ppl.etc.Config;
 
@@ -13,8 +12,8 @@ public class HikariConnectionPool {
 	static HikariConnectionPool source;
 	public HikariDataSource ds = null;
 	private Config mConfig = null;
-	private List<Connection> Con = null;
-
+	private LinkedList<Connection> Con = null;
+	
 	public static HikariConnectionPool getInstance() {
 		if (source == null) {
 			source = new HikariConnectionPool();
@@ -22,7 +21,7 @@ public class HikariConnectionPool {
 
 		return source;
 	}
-	
+
 	public HikariConnectionPool() {
 		// TODO Auto-generated constructor stub
 		mConfig = new Config("properties/mysql.properties");
@@ -32,9 +31,9 @@ public class HikariConnectionPool {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		HikariConfig config = new HikariConfig();
-		//System.out.println(mConfig.GetValue("database.url"));
+		// System.out.println(mConfig.GetValue("database.url"));
 		config.setJdbcUrl(mConfig.GetValue("database.url"));
 		config.setUsername(mConfig.GetValue("database.username"));
 		config.setPassword(mConfig.GetValue("database.password"));
@@ -43,21 +42,24 @@ public class HikariConnectionPool {
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.addDataSourceProperty("useServerPrepStmts", "true");
-		
+
 		ds = new HikariDataSource(config);
-		ds.setMaximumPoolSize(2);
-		Connect();		
+		ds.setMaximumPoolSize(mConfig.GetInt("database.MaximumPoolSize"));
+
+		Con = new LinkedList<Connection>();
+		Connect();
 	}
 
 	private void Connect() {
 
 		try {
-			Con = new ArrayList<Connection>();
+			Connection con;
 			for (int i = 0; i < ds.getMaximumPoolSize(); i++) {
-				Con.add(ds.getConnection());
-				Con.get(i).setAutoCommit(false);
+				con = ds.getConnection();
+				con.setAutoCommit(false);
+				Con.push(con);
 			}
-
+			System.out.println("init Con size:"+Con.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -65,8 +67,24 @@ public class HikariConnectionPool {
 		}
 
 	}
-	
-	public Connection GetCon(int i) {
-		return Con.get(i);
+
+	public Connection GetCon() {
+		Connection con = null;
+		synchronized (this) {
+			System.out.println("Con size:"+Con.size());
+			if(Con.size()>0){
+				con = Con.pop();
+			}else{
+				System.out.println("MaximumPoolSize is limit");
+			}
+		}
+		return con;
+	}
+
+	public void free(Connection con) {
+		System.out.println("free con");
+		synchronized (this) {
+			Con.add(con);
+		}
 	}
 }

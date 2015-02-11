@@ -18,10 +18,12 @@ public class DBSQL {
 	private Statement stmt = null;
 
 	public DBSQL() {
+
 	}
 
-	public void SetCon(Connection MainCon) {
-		Con = MainCon;
+	public void SetCon() {
+		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+		Con = hcp.GetCon();
 	}
 
 	public void end() {
@@ -35,18 +37,21 @@ public class DBSQL {
 		}
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-
-	}
-
-	public static DBSQL getInstance() {
-		if (dataSource == null) {
-			dataSource = new DBSQL();
+	public void free() {
+		if (Con != null) {
+			HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+			hcp.free(Con);
+			Con = null;
 		}
-
-		return dataSource;
 	}
+
+	// public static DBSQL getInstance() {
+	// if (dataSource == null) {
+	// dataSource = new DBSQL();
+	// }
+	//
+	// return dataSource;
+	// }
 
 	public Connection createConnection(String driver, String url,
 			String username, String password) throws ClassNotFoundException,
@@ -104,6 +109,8 @@ public class DBSQL {
 
 	public List<Map<String, Object>> query(String sql) throws SQLException {
 		List<Map<String, Object>> results = null;
+	
+		
 		if (Con == null)
 			return null;
 		ResultSet rs = null;
@@ -112,7 +119,8 @@ public class DBSQL {
 		results = map(rs);
 		rs.close();
 		stmt.close();
-
+		
+		
 		return results;
 	}
 
@@ -139,7 +147,9 @@ public class DBSQL {
 
 	public long update(String sql) throws SQLException {
 		long numRowsUpdated = 0;
-		if (Con == null){
+		
+		
+		if (Con == null) {
 			return -1;
 		}
 		stmt = Con.createStatement();
@@ -148,7 +158,7 @@ public class DBSQL {
 
 		Con.commit();
 		stmt.close();
-
+		
 		return numRowsUpdated;
 	}
 

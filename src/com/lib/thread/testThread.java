@@ -26,7 +26,7 @@ public class testThread extends BaseThread {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void postMsg(Object o) {
+	public void mailbox(Object o) {
 		// TODO Auto-generated method stub
 		
 		List<String> s = (List<String>) o;

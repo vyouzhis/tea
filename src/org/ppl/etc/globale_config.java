@@ -1,6 +1,6 @@
 package org.ppl.etc;
 
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class globale_config {
@@ -32,7 +32,7 @@ public class globale_config {
 	public static String Uinfo = "iCore";
 	
 	//listQueue
-	public static Map<String, Object> RapidListQueue;
+	public static Map<String, LinkedList<Object>> RapidListQueue;
 		
 	public static globale_config getInstance() {
 		if (config == null) {

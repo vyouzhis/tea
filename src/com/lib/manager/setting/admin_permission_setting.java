@@ -77,6 +77,7 @@ public class admin_permission_setting extends Permission implements
 		ShowMessage ms = ShowMessage.getInstance();
 		String res = ms.SetMsg(ok_url, _CLang("ok_save"), 3000);
 		super.setHtml(res);
+		super.isAutoHtml = false;
 	}
 
 	@Override
