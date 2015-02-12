@@ -11,8 +11,11 @@ public class ACLBase extends ACLInit {
 		String format = "SELECT uid FROM `"+ mConfig.GetValue("db_pre_rule")
 				+ "user_info` WHERE uid =%d and cm='%s' LIMIT 1";
 		String sql = String.format(format, uid, cm);
+		
 		Map<String, Object> res = FetchOne(sql);
-		if(res != null && res.get("uid")!=null) return true;
+		if(res != null && res.get("uid")!=null){
+			return true;
+		}
 		else {
 			aclLogout();
 			return false;

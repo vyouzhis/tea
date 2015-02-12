@@ -6,9 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.BaseClass.BaseThread;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.Permission;
 import org.ppl.core.PObject;
+import org.ppl.db.DBManager;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
@@ -35,7 +37,7 @@ public class RouterMapConfig extends PObject {
 		// TODO Auto-generated constructor stub		
 		RMC = new ArrayList<String>();
 		pum = PermUrlMap();
-				
+		
 		ParserMap();
 	}
 	
@@ -52,48 +54,57 @@ public class RouterMapConfig extends PObject {
 				Injector injector = Guice.createInjector(new ModuleBind());
 
 				BaseClass = BaseName.split("\\.");
-				if (BaseClass.length != 2){
-					
+				if (BaseClass.length != 2){					
 					return;
 				}
-
+				DBManager hcp = DBManager.getInstance();
+				hcp.init();
 				switch (BaseClass[0]) {
 				case "Permission":
 					Permission home = (Permission) injector.getInstance(Key
 							.get(Permission.class, Names.named(BaseClass[1])));
-					home.SetCon();
+					
 					home.Show();
 					htmlCon = home.getHtml();
 					// System.out.println(htmlCon);
 					isAjax = home.isAjax();
-					home.free();
+					
 					break;
 				case "BaseSurface":
 					BaseSurface Shome = (BaseSurface) injector.getInstance(Key
 							.get(BaseSurface.class, Names.named(BaseClass[1])));
-					Shome.SetCon();
+					
 					Shome.Show();
 					htmlCon = Shome.getHtml();
 					isAjax = Shome.isAjax();
-					Shome.free();
+					
 					break;
 				case "BaseiCore":
 					BaseiCore ihome = (BaseiCore) injector.getInstance(Key.get(
 							BaseiCore.class, Names.named(BaseClass[1])));
-					ihome.SetCon();
+					
 					ihome.Show();
 					htmlCon = ihome.getHtml();
 					isAjax = ihome.isAjax();
-					ihome.free();
+					
 					break;
 				default:
+					hcp.free();
 					return;
 				}
-
+				hcp.free();
+				
 				NullMap = false;
 			}
 						
 		}
+		
+	}
+	public <T> T ShowClass(Class<T> clazz, String names) {
+		Injector injector = Guice.createInjector(new ModuleBind());
+		T ihome = (T) injector.getInstance(Key.get(
+				clazz, Names.named(names)));
+		return ihome;
 	}
 
 	public boolean routing() {

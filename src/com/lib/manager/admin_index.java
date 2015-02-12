@@ -21,7 +21,7 @@ public class admin_index extends Permission {
 			return;
 		String update = porg.getKey("update");
 		
-		if(CheckRole()==-1 && update==null){
+		if(FoundRole()==-1 && update==null){
 			ShowMessage sm = ShowMessage.getInstance();
 			sm.forward("?update=1");
 		}
@@ -32,7 +32,7 @@ public class admin_index extends Permission {
 		super.View();
 	}
 
-	public int CheckRole() {
+	public int FoundRole() {
 		
 		String role = aclfetchMyRole();
 		

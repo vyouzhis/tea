@@ -99,6 +99,7 @@ public class my_profile extends Permission {
 	private void SaveLogo() throws FileNotFoundException {
 		String name = porg.getUpload_name().get("user_logo_file").toString();
 		byte[] val = porg.getUpload_string().get("user_logo_file");
+		if(val.length<1)return;
 		ProjectPath pp = ProjectPath.getInstance();
 		pp.SaveFile(name, val);
 

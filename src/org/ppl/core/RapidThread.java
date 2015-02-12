@@ -3,6 +3,7 @@ package org.ppl.core;
 import org.ppl.BaseClass.BaseThread;
 import org.ppl.BaseClass.LibThread;
 import org.ppl.Module.ModuleBind;
+import org.ppl.db.DBManager;
 import org.ppl.etc.globale_config;
 
 import com.google.inject.Guice;
@@ -39,10 +40,9 @@ public class RapidThread extends LibThread {
 					
 					Object o = globale_config.RapidListQueue.get(key).pop();					
 					rapid.mailbox(o);
-					rapid.Run();
-					
+					rapid.Run();					
 				}				
-				
+				rapid.free();
 			}
 		}
 	}

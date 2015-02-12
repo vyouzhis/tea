@@ -18,6 +18,7 @@ public class ACLInit extends PObject {
 	public ACLInit() {
 		// TODO Auto-generated constructor stub
 		mConfig = new Config(globale_config.Config);
+		SetCon();
 	}
 
 	public int aclGetUid() {
@@ -145,6 +146,8 @@ public class ACLInit extends PObject {
 			if (role != null) {
 				UserSess.put("main_role", role.get("mainrole").toString());
 				UserSess.put("sub_role", role.get("subrole").toString());
+			}else {
+				return -3;
 			}
 
 			String json = JSON.toJSONString(UserSess);

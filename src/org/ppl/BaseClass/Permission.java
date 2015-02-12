@@ -30,6 +30,7 @@ public class Permission extends BaseTheme {
 			res = ms.SetMsg(bad_url, _CLang("error_login"), 3000);
 			isAutoHtml = false;
 			super.setHtml(res);
+			echo("login_module error");
 			return -1;
 		}
 
@@ -38,6 +39,7 @@ public class Permission extends BaseTheme {
 			res = ms.SetMsg(bad_url, _CLang("error_role"), 3000);
 			super.setHtml(res);
 			isAutoHtml = false;
+			echo("checkRole error");
 			return -1;
 		}
 
@@ -47,6 +49,7 @@ public class Permission extends BaseTheme {
 			isAutoHtml = false;
 			super.setHtml(res);
 			aclLogout();
+			echo("CheckOntime error");
 			return -1;
 		}
 
@@ -91,7 +94,7 @@ public class Permission extends BaseTheme {
 	}
 
 	private void common() {
-		Header header = new Header();
+		Header header = new Header();		
 		header.filter();
 		header_html = header.getHtml();
 		

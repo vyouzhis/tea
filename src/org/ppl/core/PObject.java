@@ -158,7 +158,7 @@ public class PObject extends DBSQL {
 	
 	public void TellPostMan(String ThreadName, Object message) {
 		if(globale_config.RapidListQueue.containsKey(ThreadName)){
-			globale_config.RapidListQueue.get(ThreadName).push(message);
+			globale_config.RapidListQueue.get(ThreadName).add(message);
 		}else {
 			LinkedList<Object> l = new LinkedList<Object>();
 			l.add(message);

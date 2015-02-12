@@ -1,5 +1,8 @@
 package com.lib.icore;
 
+import java.sql.SQLException;
+import java.util.Map;
+
 import org.ppl.BaseClass.BaseiCore;
 
 public class icore_test extends BaseiCore {
@@ -18,6 +21,21 @@ public class icore_test extends BaseiCore {
 			
 			return ;
 		}
+		
+		String sql = "select * from web_user limit 1";
+		Map<String, Object> res = FetchOne(sql);
+		echo(res);
+		sql = "update web_user set alias='h@hh.com' where id=1 limit 1;";
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//rollback();
+		sql = "select * from web_user limit 1";
+		res = FetchOne(sql);
+		echo(res);
 		super.View();
 	}
 }

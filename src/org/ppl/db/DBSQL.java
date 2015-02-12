@@ -1,7 +1,6 @@
 package org.ppl.db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -18,12 +17,17 @@ public class DBSQL {
 	private Statement stmt = null;
 
 	public DBSQL() {
-
+		
 	}
 
 	public void SetCon() {
-		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
-		Con = hcp.GetCon();
+		DBManager hcp = DBManager.getInstance();
+		Con = hcp.getCon();
+	}
+	
+	public void ThreadSetCon() {
+		HikariConnectionPool hcp = HikariConnectionPool.getInstance();				
+		Con = hcp.GetCon();		
 	}
 
 	public void end() {
@@ -39,12 +43,22 @@ public class DBSQL {
 
 	public void free() {
 		if (Con != null) {
+			try {
+				Con.commit();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 			hcp.free(Con);
 			Con = null;
+			System.out.println("dbmanager free");
+		}else{
+		
+			System.out.println("dbmanager free error");
 		}
 	}
-
+	
 	// public static DBSQL getInstance() {
 	// if (dataSource == null) {
 	// dataSource = new DBSQL();
@@ -53,23 +67,11 @@ public class DBSQL {
 	// return dataSource;
 	// }
 
-	public Connection createConnection(String driver, String url,
-			String username, String password) throws ClassNotFoundException,
-			SQLException {
-		Class.forName(driver);
-		if ((username == null) || (password == null)
-				|| (username.trim().length() == 0)
-				|| (password.trim().length() == 0)) {
-			return DriverManager.getConnection(url);
-		} else {
-			return DriverManager.getConnection(url, username, password);
-		}
-	}
-
-	public void rollback(Connection connection) {
-		try {
-			if (connection != null) {
-				connection.rollback();
+	public void rollback() {
+		
+		try { 
+			if (Con != null) {
+				Con.rollback();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,18 +111,18 @@ public class DBSQL {
 
 	public List<Map<String, Object>> query(String sql) throws SQLException {
 		List<Map<String, Object>> results = null;
-	
-		
-		if (Con == null)
+			
+		if (Con == null){
+			System.out.println("con sql:"+sql);
 			return null;
+		}
 		ResultSet rs = null;
 		stmt = Con.createStatement();
 		rs = stmt.executeQuery(sql);
 		results = map(rs);
 		rs.close();
 		stmt.close();
-		
-		
+				
 		return results;
 	}
 
@@ -147,19 +149,27 @@ public class DBSQL {
 
 	public long update(String sql) throws SQLException {
 		long numRowsUpdated = 0;
-		
-		
+				
 		if (Con == null) {
+			System.out.println("con sql:"+sql);
 			return -1;
 		}
 		stmt = Con.createStatement();
 		numRowsUpdated = stmt.executeUpdate(sql,
 				Statement.RETURN_GENERATED_KEYS);
 
-		Con.commit();
-		stmt.close();
+		//Con.commit();
 		
 		return numRowsUpdated;
+	}
+	
+	public void CommitDB() {
+		try {
+			Con.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

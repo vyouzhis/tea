@@ -13,6 +13,7 @@ import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.common.ShowMessage;
+import org.ppl.db.DBManager;
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 
@@ -33,7 +34,7 @@ public class Index extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+				
 		PorG porg = PorG.getInstance();
 		porg.Init(req, res);
 		porg.setContext_Path(req.getContextPath());
@@ -55,6 +56,7 @@ public class Index extends HttpServlet {
 		rmc.setMehtod(req.getMethod());
 				
 		rmc.match();
+				
 		if(rmc.routing()){
 			res.getWriter().println("not class <br /> 404");
 		}else{
@@ -62,7 +64,7 @@ public class Index extends HttpServlet {
 			
 			res.getWriter().println(rmc.getHtml());
 		}
-
+		
 		//SystemInfo(req, res);			
 	}
 		

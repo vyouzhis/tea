@@ -45,7 +45,7 @@ public class HikariConnectionPool {
 
 		ds = new HikariDataSource(config);
 		ds.setMaximumPoolSize(mConfig.GetInt("database.MaximumPoolSize"));
-
+		
 		Con = new LinkedList<Connection>();
 		Connect();
 	}
@@ -70,7 +70,7 @@ public class HikariConnectionPool {
 
 	public Connection GetCon() {
 		Connection con = null;
-		synchronized (this) {
+		synchronized (Con) {
 			System.out.println("Con size:"+Con.size());
 			if(Con.size()>0){
 				con = Con.pop();
@@ -83,7 +83,7 @@ public class HikariConnectionPool {
 
 	public void free(Connection con) {
 		System.out.println("free con");
-		synchronized (this) {
+		synchronized (Con) {
 			Con.add(con);
 		}
 	}

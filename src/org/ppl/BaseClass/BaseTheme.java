@@ -1,5 +1,7 @@
 package org.ppl.BaseClass;
 
+import org.ppl.db.DBManager;
+
 import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
 
@@ -25,6 +27,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 	}
 
 	public boolean isAjax() {
+		
 		return ajax;
 	}
 
