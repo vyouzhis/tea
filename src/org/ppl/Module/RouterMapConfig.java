@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseSurface;
-import org.ppl.BaseClass.BaseThread;
+import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.Permission;
 import org.ppl.core.PObject;

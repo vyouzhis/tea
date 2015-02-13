@@ -3,9 +3,9 @@ package com.lib.thread;
 import java.util.List;
 import java.util.Map;
 
-import org.ppl.BaseClass.BaseThread;
+import org.ppl.BaseClass.BaseRapidThread;
 
-public class testThread extends BaseThread {
+public class testThread extends BaseRapidThread {
 
 	@Override
 	public void Run() {

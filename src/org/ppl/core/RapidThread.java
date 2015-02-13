@@ -1,9 +1,8 @@
 package org.ppl.core;
 
-import org.ppl.BaseClass.BaseThread;
+import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.BaseClass.LibThread;
 import org.ppl.Module.ModuleBind;
-import org.ppl.db.DBManager;
 import org.ppl.etc.globale_config;
 
 import com.google.inject.Guice;
@@ -20,7 +19,7 @@ public class RapidThread extends LibThread {
 		ListQueue();
 	}
 
-	private void ListQueue() {
+	public void ListQueue() {
 		while (true) {
 			synchronized (globale_config.RapidListQueue) {
 				try {
@@ -33,8 +32,8 @@ public class RapidThread extends LibThread {
 			for (String key : globale_config.RapidListQueue.keySet()) {
 
 				Injector injector = Guice.createInjector(new ModuleBind());
-				BaseThread rapid = (BaseThread) injector.getInstance(Key.get(
-						BaseThread.class, Names.named(key)));
+				BaseRapidThread rapid = (BaseRapidThread) injector.getInstance(Key.get(
+						BaseRapidThread.class, Names.named(key)));
 				
 				while(globale_config.RapidListQueue.get(key).size()>0) {
 					

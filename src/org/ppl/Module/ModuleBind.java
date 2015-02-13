@@ -1,9 +1,10 @@
 package org.ppl.Module;
 
+import org.ppl.BaseClass.BaseCronThread;
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.BaseSurface;
-import org.ppl.BaseClass.BaseThread;
+import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.LibLang;
 import org.ppl.BaseClass.Permission;
@@ -54,14 +55,19 @@ public class ModuleBind extends PObject implements Module {
 					Class<? extends BasePrograma> cls = (Class<? extends BasePrograma>) Class
 							.forName(ps);
 					 Add(BasePrograma.class, cls);
-				}else if (clazz.getSuperclass().equals(BaseThread.class)) {
-					Class<? extends BaseThread> cls = (Class<? extends BaseThread>) Class
+				}				
+				else if (clazz.getSuperclass().equals(BaseRapidThread.class)) {
+					Class<? extends BaseRapidThread> cls = (Class<? extends BaseRapidThread>) Class
 							.forName(ps);
-					 Add(BaseThread.class, cls);
-				}else if (clazz.getSuperclass().equals(BaseThread.class)) {
-					Class<? extends BaseThread> cls = (Class<? extends BaseThread>) Class
+					 Add(BaseRapidThread.class, cls);
+				}else if (clazz.getSuperclass().equals(BaseRapidThread.class)) {
+					Class<? extends BaseRapidThread> cls = (Class<? extends BaseRapidThread>) Class
 							.forName(ps);
-					 Add(BaseThread.class, cls);
+					 Add(BaseRapidThread.class, cls);
+				}else if (clazz.getSuperclass().equals(BaseCronThread.class)) {
+					Class<? extends BaseCronThread> cls = (Class<? extends BaseCronThread>) Class
+							.forName(ps);
+					 Add(BaseCronThread.class, cls);
 				}
 				
 				

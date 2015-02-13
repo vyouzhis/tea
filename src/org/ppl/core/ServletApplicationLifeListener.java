@@ -8,7 +8,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.ppl.BaseClass.BaseThread;
+import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.Module.ModuleBind;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.Config;
@@ -53,8 +53,8 @@ public class ServletApplicationLifeListener extends PObject implements
 		List<String> runList = JSON.parseObject(runJson, List.class);
 		Injector injector = Guice.createInjector(new ModuleBind());
 		for (String rl : runList) {
-			BaseThread libLan = (BaseThread) injector.getInstance(Key.get(
-					BaseThread.class, Names.named(rl)));
+			BaseRapidThread libLan = (BaseRapidThread) injector.getInstance(Key.get(
+					BaseRapidThread.class, Names.named(rl)));
 			libLan.Run();
 		}
 
