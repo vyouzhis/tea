@@ -7,13 +7,13 @@ public class loopThread extends BaseCronThread{
 	@Override
 	public void Run() {
 		// TODO Auto-generated method stub
-		
+		echo("i am a loop thread!");
 	}
 
 	@Override
 	public int minute() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 5;
 	}
 
 	@Override

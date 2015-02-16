@@ -43,6 +43,9 @@ public class ServletApplicationLifeListener extends PObject implements
 		if (autorun == 1) {
 			Thread dt = new Thread(new RapidThread(), "dt_");		
 			dt.start();
+			
+			Thread cron = new Thread(new CronThread(), "cron_");		
+			cron.start();
 		}
 				
 	}
