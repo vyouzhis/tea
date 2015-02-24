@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DBSQL {
+import org.ppl.core.PObject;
+
+public class DBSQL extends PObject {
 
 	public static DBSQL dataSource = null;
 	private Connection Con = null;
@@ -59,14 +61,6 @@ public class DBSQL {
 		}
 	}
 	
-	// public static DBSQL getInstance() {
-	// if (dataSource == null) {
-	// dataSource = new DBSQL();
-	// }
-	//
-	// return dataSource;
-	// }
-
 	public void rollback() {
 		
 		try { 
@@ -158,8 +152,6 @@ public class DBSQL {
 		numRowsUpdated = stmt.executeUpdate(sql,
 				Statement.RETURN_GENERATED_KEYS);
 
-		//Con.commit();
-		
 		return numRowsUpdated;
 	}
 	

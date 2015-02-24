@@ -10,6 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.ppl.core.PObject;
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 /**
@@ -20,12 +21,12 @@ import org.ppl.etc.globale_config;
  *		mail.setSubject("测试 tomcat 发邮件 ");
  *		mail.To("vyouzhi@163.com,929398015@qq.com");
  */
-public class MailSender {
+public class MailSender extends PObject {
 	private String Subject;
 	private String Text;
 	private boolean Tls = true;
 	Session session;
-	Config mConfig = new Config(globale_config.Mail);
+	
 
 	public void sendEmail(String mailaddr, RecipientType type) {
 
@@ -36,17 +37,17 @@ public class MailSender {
 			connectionProperties.put("mail.smtp.starttls.enable", "true");
 		}
 		connectionProperties.put("mail.smtp.host",
-				mConfig.GetValue("smtp.host"));
+				mailConfig.GetValue("smtp.host"));
 		connectionProperties.put("mail.smtp.port",
-				mConfig.GetValue("smtp.port"));
+				mailConfig.GetValue("smtp.port"));
 
 		// Create the session
 		session = Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() { // Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
-						Config mConfig = new Config(globale_config.Mail);
-						return new PasswordAuthentication(mConfig
-								.GetValue("smtp.from"), mConfig
+						
+						return new PasswordAuthentication(mailConfig
+								.GetValue("smtp.from"), mailConfig
 								.GetValue("smtp.passwd"));
 					}
 				});
@@ -55,7 +56,7 @@ public class MailSender {
 			// Create the message
 			Message message = new MimeMessage(session);
 			// Set sender
-			message.setFrom(new InternetAddress(mConfig.GetValue("smtp.from")));
+			message.setFrom(new InternetAddress(mailConfig.GetValue("smtp.from")));
 			// Set the recipients
 
 			message.setRecipients(type, InternetAddress.parse(mailaddr));

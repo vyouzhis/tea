@@ -57,7 +57,7 @@ public class admin_permission_list extends Permission implements
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
-		Config mConfig = new Config(globale_config.Config);
+		
 		String format = "SELECT id,gname,mainrole FROM `"
 				+ mConfig.GetValue("db_pre_rule")
 				+ "group` where uid=%d and status=1;";

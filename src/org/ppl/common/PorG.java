@@ -15,10 +15,11 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.ppl.core.PObject;
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 
-public class PorG {
+public class PorG extends PObject {
 	static PorG source;
 	private HttpServletRequest request;
 	//private HttpServletResponse response;
@@ -67,7 +68,7 @@ public class PorG {
 
 	@SuppressWarnings({ "unused" })
 	private void ParserParame() {
-		Config mConfig = new Config(globale_config.Config);
+		
 		long maxFileSize = Integer.valueOf(mConfig.GetInt("maxFileSize"));
 		
 		int maxMemSize = mConfig.GetInt("maxMemSize");

@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ppl.etc.Config;
-import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
 
 public class SystemLog extends PObject {
 
 	public String Log(int uid) {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String format = "INSERT INTO `tea`.`" + mConfig.GetValue("db_pre_rule")
 				+ "log` " + "(`lid`, `uid`, `action`, `ip`, `ctime`)"
 				+ " VALUES ('%s', '%d', '%s', '%s', '%d');";

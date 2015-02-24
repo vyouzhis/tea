@@ -1,8 +1,8 @@
 package org.ppl.BaseClass;
 
-import org.ppl.core.PObject;
+import org.ppl.db.DBSQL;
 
-public abstract class BaseCronThread extends PObject{
+public abstract class BaseCronThread extends DBSQL{
 	public BaseCronThread() {
 		// TODO Auto-generated constructor stub
 		ThreadSetCon();

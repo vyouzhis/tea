@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
+import org.ppl.core.PObject;
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 
@@ -24,7 +25,7 @@ import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.WriteConcern;
 
-public class MGDB {
+public class MGDB extends PObject {
 	public static MGDB dataSource = null;
 	private MongoClient mongoClient = null;
 	private DB db = null;
@@ -85,7 +86,7 @@ public class MGDB {
 
 	@SuppressWarnings("deprecation")
 	public MGDB() {
-		Config mConfig = new Config(globale_config.Mongo);
+		
 		//Mongo m;
 		try {
 			MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder()
@@ -99,10 +100,10 @@ public class MGDB {
 	                .threadsAllowedToBlockForConnectionMultiplier(5000);
 	                
 			MongoClientOptions options = optionsBuilder.build();
-			mongoClient = new MongoClient(mConfig.GetValue("database.host"),
+			mongoClient = new MongoClient(mgConfig.GetValue("database.host"),
 					options);
 			
-			db = mongoClient.getDB(mConfig.GetValue("database.dbname"));
+			db = mongoClient.getDB(mgConfig.GetValue("database.dbname"));
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

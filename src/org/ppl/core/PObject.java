@@ -2,7 +2,6 @@ package org.ppl.core;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,13 +17,27 @@ import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.TimeClass;
 
-public class PObject extends DBSQL {
+public class PObject {
 	protected String stdClass = null;
 	private String BindName = null;
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-			
+	protected Config myConfig;
+	protected Config mConfig;
+	protected Config uConfig;
+	protected Config mgConfig;
+	protected Config mailConfig;
+	
+	public PObject() {
+		// TODO Auto-generated constructor stub
+		mConfig = new Config(globale_config.Config);
+		myConfig = new Config(globale_config.Mysql);
+		uConfig = new Config(globale_config.UrlMap);
+		mgConfig = new Config(globale_config.Mongo);
+		mailConfig = new Config(globale_config.Mail);
+	}
+	
 	public void echo(Object o) {
 		System.out.println(o);
 	}

@@ -3,15 +3,16 @@ package org.ppl.db;
 import java.sql.Connection;
 import java.util.LinkedList;
 
+import org.ppl.core.PObject;
 import org.ppl.etc.Config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class HikariConnectionPool {
+public class HikariConnectionPool extends PObject {
 	static HikariConnectionPool source;
 	public HikariDataSource ds = null;
-	private Config mConfig = null;
+	
 	private LinkedList<Connection> Con = null;
 	
 	public static HikariConnectionPool getInstance() {
@@ -24,7 +25,7 @@ public class HikariConnectionPool {
 
 	public HikariConnectionPool() {
 		// TODO Auto-generated constructor stub
-		mConfig = new Config("properties/mysql.properties");
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -34,9 +35,9 @@ public class HikariConnectionPool {
 
 		HikariConfig config = new HikariConfig();
 		// System.out.println(mConfig.GetValue("database.url"));
-		config.setJdbcUrl(mConfig.GetValue("database.url"));
-		config.setUsername(mConfig.GetValue("database.username"));
-		config.setPassword(mConfig.GetValue("database.password"));
+		config.setJdbcUrl(myConfig.GetValue("database.url"));
+		config.setUsername(myConfig.GetValue("database.username"));
+		config.setPassword(myConfig.GetValue("database.password"));
 
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -44,7 +45,7 @@ public class HikariConnectionPool {
 		config.addDataSourceProperty("useServerPrepStmts", "true");
 
 		ds = new HikariDataSource(config);
-		ds.setMaximumPoolSize(mConfig.GetInt("database.MaximumPoolSize"));
+		ds.setMaximumPoolSize(myConfig.GetInt("database.MaximumPoolSize"));
 		
 		Con = new LinkedList<Connection>();
 		Connect();

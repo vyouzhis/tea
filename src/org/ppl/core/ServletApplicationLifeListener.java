@@ -23,8 +23,7 @@ import com.google.inject.name.Names;
 @WebListener
 public class ServletApplicationLifeListener extends PObject implements
 		ServletContextListener {
-	private Config mConfig;
-
+	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
@@ -36,7 +35,7 @@ public class ServletApplicationLifeListener extends PObject implements
 		// TODO Auto-generated method stub
 		HikariConnectionPool.getInstance();
 		InitPackList();
-		mConfig = new Config(globale_config.Config);		
+			
 		int autorun = mConfig.GetInt("autorun");
 		
 		globale_config.RapidListQueue = new HashMap<String, LinkedList<Object>>();
@@ -65,7 +64,7 @@ public class ServletApplicationLifeListener extends PObject implements
 	
 	@SuppressWarnings("unchecked")
 	private void InitPackList() {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String packs = mConfig.GetValue("base.packs");
 		if (packs==null) {
 			echo("error !");

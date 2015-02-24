@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ppl.db.DBSQL;
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
@@ -12,12 +13,12 @@ import org.ppl.io.TimeClass;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class ACLInit extends PObject {
-	protected Config mConfig = null;
+public class ACLInit extends DBSQL {
+	
 
 	public ACLInit() {
 		// TODO Auto-generated constructor stub
-		mConfig = new Config(globale_config.Config);
+		
 		SetCon();
 	}
 
@@ -71,7 +72,7 @@ public class ACLInit extends PObject {
 	}
 
 	private void ErrorPWD(String name) {
-		Config mConfig = new Config(globale_config.Config);
+		
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 		
@@ -89,7 +90,7 @@ public class ACLInit extends PObject {
 	}
 
 	public int aclLogin(String name, String passwd, String get_salt) {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String format = "select uid, cm, passwd,nickname,phone,email,ltime,error,gid  from "
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info WHERE  name='%s' limit 1";

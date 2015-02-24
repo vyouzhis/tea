@@ -89,7 +89,7 @@ public class user_profile extends Permission implements BasePerminterface {
 	}
 
 	private void getUserInfo(String uid) {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String sql = "SELECT * FROM `" + mConfig.GetValue("db_pre_rule")
 				+ "user_info`  WHERE uid=" + uid;
 
@@ -108,7 +108,7 @@ public class user_profile extends Permission implements BasePerminterface {
 	@Override
 	public void create(Object arg) {
 		// TODO Auto-generated method stub
-		Config mConfig = new Config(globale_config.Config);
+		
 		String nickname = porg.getKey("nickname");
 		String username = porg.getKey("username");
 		String email = porg.getKey("email");
@@ -149,7 +149,7 @@ public class user_profile extends Permission implements BasePerminterface {
 	public void edit(Object arg) {
 		// TODO Auto-generated method stub
 
-		Config mConfig = new Config(globale_config.Config);
+		
 		String nickname = porg.getKey("nickname");
 		String username = porg.getKey("username");
 		String email = porg.getKey("email");

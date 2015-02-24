@@ -50,8 +50,7 @@ public class user_list extends Permission implements BasePerminterface {
 	@Override
 	public void read(Object arg) {
 		// TODO Auto-generated method stub
-
-		Config mConfig = new Config(globale_config.Config);
+		
 		String sql = "SELECT uid,name,nickname,email,"
 				+ "from_unixtime(ctime) as ctime , from_unixtime(ltime) as ltime FROM "
 				+ "`" + mConfig.GetValue("db_pre_rule")

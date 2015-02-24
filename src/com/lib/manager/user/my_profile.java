@@ -54,7 +54,7 @@ public class my_profile extends Permission {
 	}
 
 	private String editMyProfile() {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String nickname = porg.getKey("nickname");
 		String email = porg.getKey("email");
 		String phone = porg.getKey("phone");

@@ -140,8 +140,7 @@ public class admin_permission_setting extends Permission implements
 	}
 
 	private void def() {
-
-		Config mConfig = new Config(globale_config.Config);
+		
 		String subRole = mConfig.GetValue(globale_config.SubRole);
 		JSONObject subJson = JSON.parseObject(subRole);
 		Map<String, String> subMap = new HashMap<String, String>();
@@ -203,8 +202,7 @@ public class admin_permission_setting extends Permission implements
 		role_pg.remove("gid");
 
 		String MainRole = TreatMainRole();
-
-		Config mConfig = new Config(globale_config.Config);
+		
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 		String format = "UPDATE `tea`.`"
@@ -225,7 +223,7 @@ public class admin_permission_setting extends Permission implements
 	}
 
 	private String TreatSubRole() {
-		Config mConfig = new Config(globale_config.Config);
+		
 		String subRole = mConfig.GetValue(globale_config.SubRole);
 		JSONObject subJson = JSON.parseObject(subRole);
 		List<String> subList = new ArrayList<String>();
@@ -274,8 +272,7 @@ public class admin_permission_setting extends Permission implements
 	}
 
 	private void getGroupUser(String gid) {
-		Config mConfig = new Config(globale_config.Config);
-
+		
 		String format = "SELECT nickname,email FROM `"
 				+ mConfig.GetValue("db_pre_rule")
 				+ "user_info` where gid=%s and status=1 and isdelete=0;";

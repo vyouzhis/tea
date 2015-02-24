@@ -71,8 +71,7 @@ public class ACLControl extends ACLRole {
 	}
 
 	public boolean CheckOntime() {
-				
-		Config mConfig = new Config(globale_config.Config);
+						
 		String time = SessAct.GetSession(mConfig.GetValue(globale_config.Ontime));
 		if(time==null)return false;
 		

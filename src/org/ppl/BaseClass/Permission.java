@@ -17,7 +17,7 @@ public class Permission extends BaseTheme {
 	private int Action = 0; // default 0 is menu, 1 is action
 
 	protected int Init() {
-		Config mConfig = new Config(globale_config.Config);
+		
 		UrlClassList ucl = UrlClassList.getInstance();
 		String bad_url = "";
 		ShowMessage ms = ShowMessage.getInstance();

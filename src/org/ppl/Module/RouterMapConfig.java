@@ -228,11 +228,11 @@ public class RouterMapConfig extends PObject {
 
 	private void ParserMap() {
 		String uri = null;
-		Config mConfig = new Config(globale_config.UrlMap);
+		
 		ucl = UrlClassList.getInstance();
 
 		if (ucl.getUcls() == null) {
-			for (Object um : mConfig.getKey()) {
+			for (Object um : uConfig.getKey()) {
 				uri = um.toString();
 				if (uri.substring(uri.length() - 4).equals(".uri")) {
 					ucl.setUcls(uri.substring(0, uri.length() - 4));
@@ -248,8 +248,8 @@ public class RouterMapConfig extends PObject {
 	}
 
 	private String GetMapMethod(String key) {
-		Config mConfig = new Config(globale_config.UrlMap);
-		String method = mConfig.GetValue(key + ".method");
+		
+		String method = uConfig.GetValue(key + ".method");
 		if (method == null) {
 			if (pum.contains(key)) {
 				return "POST|GET";
@@ -260,8 +260,8 @@ public class RouterMapConfig extends PObject {
 	}
 
 	private String GetMapUri(String key) {
-		Config mConfig = new Config(globale_config.UrlMap);
-		String uri = mConfig.GetValue(key + ".uri");
+		
+		String uri = uConfig.GetValue(key + ".uri");
 		if (uri == null) {
 			if (pum.contains(key)) {
 				return key + "/(read|create|edit|remove|search)";
