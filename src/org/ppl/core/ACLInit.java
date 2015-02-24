@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ppl.db.DBSQL;
-import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.TimeClass;
@@ -15,7 +14,6 @@ import com.alibaba.fastjson.JSONObject;
 
 public class ACLInit extends DBSQL {
 	
-
 	public ACLInit() {
 		// TODO Auto-generated constructor stub
 		

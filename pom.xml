@@ -4,8 +4,8 @@
 	<groupId>tea</groupId>
 	<artifactId>tea</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tea_wake</name>
-	<description>Behavior Analysis</description>
+	<name>tea_framework</name>
+	<description>a java web framework</description>
 
 	<!-- build -->
 	<build>

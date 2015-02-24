@@ -76,13 +76,15 @@ public class CronThread extends LibThread {
 				
 				if(day == 0 && hour == 0 && sleepTime < now){
 					cron.Run();
-					
+					cron.free();
 					cronMap.put(key, now+minu*60);
 				}else if (day==0 && hour == nowHour && sleepTime < now) {
 					cron.Run();
+					cron.free();
 					cronMap.put(key, now+minu*60+hour*60*60);
 				}else if (day == nowDay && sleepTime < now) {
 					cron.Run();
+					cron.free();
 					cronMap.put(key, now+hour*60*60+minu*60+86400);
 				}
 //				else {

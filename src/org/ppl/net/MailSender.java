@@ -11,8 +11,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.ppl.core.PObject;
-import org.ppl.etc.Config;
-import org.ppl.etc.globale_config;
 /**
  * 
  * @author jsb-015

@@ -6,17 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ppl.BaseClass.BaseSurface;
-import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.Permission;
 import org.ppl.core.PObject;
 import org.ppl.db.DBManager;
-import org.ppl.db.HikariConnectionPool;
-import org.ppl.etc.Config;
-import org.ppl.etc.UrlClassList;
-import org.ppl.etc.globale_config;
 
-import com.alibaba.fastjson.JSON;
+import org.ppl.etc.UrlClassList;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -230,7 +226,7 @@ public class RouterMapConfig extends PObject {
 		String uri = null;
 		
 		ucl = UrlClassList.getInstance();
-
+		
 		if (ucl.getUcls() == null) {
 			for (Object um : uConfig.getKey()) {
 				uri = um.toString();

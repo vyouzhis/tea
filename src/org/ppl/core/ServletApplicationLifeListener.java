@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebListener;
 import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.Module.ModuleBind;
 import org.ppl.db.HikariConnectionPool;
-import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 
 import com.alibaba.fastjson.JSON;
@@ -34,6 +33,7 @@ public class ServletApplicationLifeListener extends PObject implements
 	public void contextInitialized(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 		HikariConnectionPool.getInstance();
+				
 		InitPackList();
 			
 		int autorun = mConfig.GetInt("autorun");

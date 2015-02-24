@@ -8,20 +8,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bson.types.ObjectId;
 import org.ppl.core.PObject;
-import org.ppl.etc.Config;
-import org.ppl.etc.globale_config;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.WriteConcern;
 

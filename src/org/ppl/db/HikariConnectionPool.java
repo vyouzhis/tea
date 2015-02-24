@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.util.LinkedList;
 
 import org.ppl.core.PObject;
-import org.ppl.etc.Config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -72,7 +71,7 @@ public class HikariConnectionPool extends PObject {
 	public Connection GetCon() {
 		Connection con = null;
 		synchronized (Con) {
-			//System.out.println("Con size:"+Con.size());
+			System.out.println("Con size:"+Con.size());
 			if(Con.size()>0){
 				con = Con.pop();
 			}else{

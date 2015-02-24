@@ -10,7 +10,6 @@ import java.util.Map;
 import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
-import org.ppl.db.DBSQL;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
@@ -20,23 +19,26 @@ import org.ppl.io.TimeClass;
 public class PObject {
 	protected String stdClass = null;
 	private String BindName = null;
+	protected Config myConfig = new Config(globale_config.Mysql);
+	protected Config mConfig = new Config(globale_config.Config);
+	protected Config uConfig = new Config(globale_config.UrlMap);
+	protected Config mgConfig = new Config(globale_config.Mongo);
+	protected Config mailConfig = new Config(globale_config.Mail);
+	
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-	protected Config myConfig;
-	protected Config mConfig;
-	protected Config uConfig;
-	protected Config mgConfig;
-	protected Config mailConfig;
 	
-	public PObject() {
-		// TODO Auto-generated constructor stub
-		mConfig = new Config(globale_config.Config);
-		myConfig = new Config(globale_config.Mysql);
-		uConfig = new Config(globale_config.UrlMap);
-		mgConfig = new Config(globale_config.Mongo);
-		mailConfig = new Config(globale_config.Mail);
-	}
+	
+	
+//	public PObject() {
+//		// TODO Auto-generated constructor stub
+//		mConfig = new Config(globale_config.Config);
+//		myConfig = new Config(globale_config.Mysql);
+//		uConfig = new Config(globale_config.UrlMap);
+//		mgConfig = new Config(globale_config.Mongo);
+//		mailConfig = new Config(globale_config.Mail);
+//	}
 	
 	public void echo(Object o) {
 		System.out.println(o);

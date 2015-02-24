@@ -4,9 +4,8 @@ import java.sql.SQLException;
 
 import org.ppl.common.ShowMessage;
 import org.ppl.core.SystemLog;
-import org.ppl.etc.Config;
+
 import org.ppl.etc.UrlClassList;
-import org.ppl.etc.globale_config;
 
 import com.lib.common.Footer;
 import com.lib.common.Header;

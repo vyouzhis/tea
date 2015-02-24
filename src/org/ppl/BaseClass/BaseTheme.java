@@ -1,7 +1,5 @@
 package org.ppl.BaseClass;
 
-import org.ppl.db.DBManager;
-
 import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
 

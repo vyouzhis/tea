@@ -4,9 +4,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ppl.core.PObject;
+import org.ppl.etc.Config;
+import org.ppl.etc.globale_config;
 
-public class CookieAction extends PObject {
+public class CookieAction{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private static CookieAction source;
@@ -24,7 +25,7 @@ public class CookieAction extends PObject {
 	public void init(HttpServletRequest req,HttpServletResponse res) {
 		request = req;
 		response = res;	
-		
+		Config mConfig = new Config(globale_config.Config);
 		Path = mConfig.GetValue("cookie.path");
 		TimeOut = mConfig.GetInt("cookie.timeout");
 	}
