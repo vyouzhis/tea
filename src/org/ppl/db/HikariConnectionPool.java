@@ -59,7 +59,7 @@ public class HikariConnectionPool {
 				con.setAutoCommit(false);
 				Con.push(con);
 			}
-			System.out.println("init Con size:"+Con.size());
+			//System.out.println("init Con size:"+Con.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -71,7 +71,7 @@ public class HikariConnectionPool {
 	public Connection GetCon() {
 		Connection con = null;
 		synchronized (Con) {
-			System.out.println("Con size:"+Con.size());
+			//System.out.println("Con size:"+Con.size());
 			if(Con.size()>0){
 				con = Con.pop();
 			}else{
@@ -82,7 +82,7 @@ public class HikariConnectionPool {
 	}
 
 	public void free(Connection con) {
-		System.out.println("free con");
+		//System.out.println("free con");
 		synchronized (Con) {
 			Con.add(con);
 		}

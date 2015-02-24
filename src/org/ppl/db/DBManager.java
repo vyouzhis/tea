@@ -22,7 +22,7 @@ public class DBManager {
 	public void init() {
 		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 		Con = hcp.GetCon();
-		System.out.println("dbmanager init");
+		//System.out.println("dbmanager init");
 	}
 	
 	public void free() {
@@ -36,10 +36,11 @@ public class DBManager {
 			HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 			hcp.free(Con);
 			Con = null;
-			System.out.println("dbmanager free");
-		}else{
-		
-			System.out.println("dbmanager free error");
+			//System.out.println("dbmanager free");
 		}
+//		else{
+//		
+//			System.out.println("dbmanager free error");
+//		}
 	}
 }
