@@ -47,8 +47,7 @@ public class CronThread extends LibThread {
 				e.printStackTrace();
 			}
 		}
-		
-		
+				
 		while (true) {
 			try {
 				Thread.sleep(60 * cronDelay * 1000);
@@ -57,11 +56,10 @@ public class CronThread extends LibThread {
 				e.printStackTrace();
 			}
 			int now = (int)tc.time();
-			//String min = tc.TimeStamptoDate(tc.time(), "mm");
+			
 			int nowHour = Integer.valueOf(tc.TimeStamptoDate(tc.time(), "hh"));
 			int nowDay = Integer.valueOf(tc.TimeStamptoDate(tc.time(), "dd"));
-			//System.out.println("day:" + nowDay + " hour:" + nowHour + " min:" );
-			
+						
 			for (String key:cronMap.keySet()) {
 				Injector injector = Guice
 						.createInjector(new ModuleBind());
@@ -73,23 +71,23 @@ public class CronThread extends LibThread {
 				int day = cron.day();
 				
 				int sleepTime = cronMap.get(key);
-				
-				if(day == 0 && hour == 0 && sleepTime < now){
-					cron.Run();
-					cron.free();
-					cronMap.put(key, now+minu*60);
-				}else if (day==0 && hour == nowHour && sleepTime < now) {
-					cron.Run();
-					cron.free();
-					cronMap.put(key, now+minu*60+hour*60*60);
-				}else if (day == nowDay && sleepTime < now) {
-					cron.Run();
-					cron.free();
-					cronMap.put(key, now+hour*60*60+minu*60+86400);
+				int newTime = 0;
+				if(day == 0 && hour == 0 && sleepTime < now){					
+					newTime = now+minu*60;
+				}else if (day==0 && hour == nowHour && sleepTime < now) {					
+					newTime = now+minu*60+hour*60*60;
+				}else if (day == nowDay && sleepTime < now) {					
+					newTime =  now+hour*60*60+minu*60+86400;
 				}
-//				else {
-//					System.out.println("not cron trak");
-//				}
+				else {
+					cron.free();
+					System.out.println(key);
+					continue;
+				}
+				
+				cronMap.put(key, newTime);
+				cron.Run();
+				cron.free();
 				
 			}
 			

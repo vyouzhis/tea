@@ -81,9 +81,9 @@ public class HikariConnectionPool extends PObject {
 		return con;
 	}
 
-	public void free(Connection con) {
-		//System.out.println("free con");
+	public void free(Connection con) {		
 		synchronized (Con) {
+			System.out.println("free con");
 			Con.add(con);
 		}
 	}

@@ -22,7 +22,6 @@ public class DBManager {
 	public void init() {
 		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 		Con = hcp.GetCon();
-		//System.out.println("dbmanager init");
 	}
 	
 	public void free() {
