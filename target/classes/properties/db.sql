@@ -61,3 +61,14 @@ CREATE TABLE IF NOT EXISTS `web_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `web_article`;
+CREATE TABLE IF NOT EXISTS `web_article` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auth` varchar(32) NOT NULL COMMENT 'article auth',
+  `title` char(100) NOT NULL COMMENT 'article title',
+  `cont` text NOT NULL COMMENT 'cont',
+  `img` varchar(100) NOT NULL,  
+  `ctime` int(11) NULL DEFAULT '0' COMMENT 'create time',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
