@@ -3,6 +3,7 @@ package com.lib.icore;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
+import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
 
 public class icore_login_action extends BaseiCore {
@@ -21,6 +22,8 @@ public class icore_login_action extends BaseiCore {
 		UrlClassList ucl = UrlClassList.getInstance();
 		ShowMessage ms = ShowMessage.getInstance();
 		isAutoHtml=false;
+		
+		echo(SessAct.GetSession(globale_config.KaptchSes));
 		
 		if (super.Init() == 0) {
 			String ok_url = ucl.BuildUrl("icore", tc.time() + "");

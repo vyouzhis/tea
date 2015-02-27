@@ -54,6 +54,13 @@
 									</section>
 									
 									<section>
+										<label class="input captcha">
+												<img id="kaptchaImage" onclick="changeCode()" width="100" height="32" alt="Captcha" src="/tea/captcha_image"><!-- src should be pointed to your php captcha code -->
+												<input type="text" id="captcha" name="captcha" maxlength="6">
+											</label>
+									</section>
+									
+									<section>
 										<label class="checkbox"><input type="checkbox" name="checkbox-inline"><i></i>Keep me logged in</label>
 									</section>
 
@@ -100,6 +107,5 @@
 
 				</div>
 			</section>
-
 
 			

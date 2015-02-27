@@ -17,7 +17,7 @@ public class globale_config {
 	
 	//Kaptch
 	public static String Kaptch = PropertiesPath+"kaptch"+ext;
-	
+	public static String KaptchSes = "KAPTCH";
 	//session
 	public static String SessSalt = "session.salt";
 	public static String Ontime = "session.ontime";

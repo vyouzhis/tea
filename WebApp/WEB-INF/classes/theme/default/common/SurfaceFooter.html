@@ -128,6 +128,14 @@
 			$("#passwd_login").val($.md5(md_login+salt));
 		}
 	}
+	
+	function changeCode() {
+		$('#kaptchaImage').attr(
+				'src',
+				'/tea/captcha_image?'
+						+ Math.floor(Math.random() * 100)).fadeIn();		
+	}
+	
 </script>
 </#if>
 </body>

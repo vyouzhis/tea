@@ -56,7 +56,7 @@ public class KaptchaAction extends PObject {
 
 		// store the text in the session
 
-		SessAct.SetSession("dd", capText);
+		SessAct.SetSession(globale_config.KaptchSes, capText);
 
 		// create the image with the text
 		BufferedImage bi = producer.createImage(capText);
