@@ -15,6 +15,9 @@ public class globale_config {
 	public static String UrlMap = PropertiesPath+"UrlMap"+ext;
 	public static String Mail = PropertiesPath+"mail"+ext;
 	
+	//Kaptch
+	public static String Kaptch = PropertiesPath+"kaptch"+ext;
+	
 	//session
 	public static String SessSalt = "session.salt";
 	public static String Ontime = "session.ontime";

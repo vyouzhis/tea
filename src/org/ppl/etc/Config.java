@@ -22,6 +22,10 @@ public class Config {
 			e1.printStackTrace();
 		}
 	}
+	
+	public Properties getPro() {
+		return p;
+	}
 
 	public String GetValue(String key) {
 		String val = p.getProperty(key);

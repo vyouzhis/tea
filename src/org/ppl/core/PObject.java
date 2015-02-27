@@ -28,18 +28,7 @@ public class PObject {
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-	
-	
-	
-//	public PObject() {
-//		// TODO Auto-generated constructor stub
-//		mConfig = new Config(globale_config.Config);
-//		myConfig = new Config(globale_config.Mysql);
-//		uConfig = new Config(globale_config.UrlMap);
-//		mgConfig = new Config(globale_config.Mongo);
-//		mailConfig = new Config(globale_config.Mail);
-//	}
-	
+			
 	public void echo(Object o) {
 		System.out.println(o);
 	}

@@ -22,7 +22,7 @@ import org.ppl.etc.globale_config;
 public class PorG  {
 	static PorG source;
 	private HttpServletRequest request;
-	//private HttpServletResponse response;
+	private HttpServletResponse response;
 	private Map<String, String> sporg;
 	private String Context_Path;
 	private String mehtod = null;
@@ -54,9 +54,13 @@ public class PorG  {
 
 	public void Init(HttpServletRequest req, HttpServletResponse res) {
 		request = req;
-		//response = res;
+		response = res;
 		sporg = new HashMap<String, String>();
 		ParserParame();
+	}
+	
+	public HttpServletResponse getHsr() {
+		return response;
 	}
 
 	public String getKey(String key) {
