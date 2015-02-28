@@ -58,7 +58,7 @@
 									</li>
 								-->
 								<ul id="topMain" class="nav nav-pills nav-main colored"><!-- "colored" class = colored active menu -->
-									<li class="mega-menu dropdown active">
+									<li class="mega-menu dropdown <#if SurfaceMenu==''> active </#if> ">
 										<a href="/tea">
 											HOME <span>welcome</span>
 										</a>
@@ -71,7 +71,7 @@
 										<a href="Product_List.html">Products <span>recent news</span></a>
 										
 									</li>
-									<li class="dropdown">
+									<li class="dropdown <#if SurfaceMenu=='icore'||SurfaceMenu=='user_info'> active </#if>">
 										<a class="dropdown-toggle" href="#">User <span>Profile</span></a>
 										<ul class="dropdown-menu">		
 										<#if uid??>

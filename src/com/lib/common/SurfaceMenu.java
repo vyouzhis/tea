@@ -1,5 +1,7 @@
 package com.lib.common;
 
+import java.util.List;
+
 import org.ppl.BaseClass.BaseModule;
 
 public class SurfaceMenu extends BaseModule{
@@ -17,6 +19,8 @@ public class SurfaceMenu extends BaseModule{
 		if(igetUid()>0){
 			setRoot("uid", igetUid());
 		}
+		List<String> rmc = porg.getRmc();
+		setRoot("SurfaceMenu", rmc.get(0));
 		super.View();
 	}
 
