@@ -13,14 +13,17 @@ public class BaseiCore extends BaseSurface {
 
 	protected int Init() {
 		String method = porg.getMehtod();
-
+		int h = isLogin();
+		
+		if(h != -1) return 0;
+		
 		if (method.toLowerCase().equals("get")) {
-			if (isLogin() == -1) {
+			if (h == -1) {
 				iLogout();
 
 				return -1;
 			}
-		} else {
+		} else {			
 			String username = porg.getKey("username");
 			String passwd = porg.getKey("passwd_login");
 			if (iLogin(username, passwd) == -1) {
