@@ -22,5 +22,6 @@ public class icore_logout extends BaseiCore {
 		String url = ucl.BuildUrl("login", "");
 		
 		ms.ShowMsg(url);
+		
 	}
 }

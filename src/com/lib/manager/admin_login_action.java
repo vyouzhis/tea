@@ -1,8 +1,6 @@
 package com.lib.manager;
 
 import org.ppl.BaseClass.Permission;
-import org.ppl.common.PorG;
-import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 
 public class admin_login_action extends Permission {
@@ -30,13 +28,13 @@ public class admin_login_action extends Permission {
 		String ok_url = ucl.BuildUrl("admin_index", "");
 		
 		if(passwd == null || salt == null || email == null){
-			Bad(bad_url,super._CLang("error_passwd"));
+			TipMessage(bad_url,super._CLang("error_passwd"));
 			return;
 		}
 		
 		boolean isSalt = checkSalt(salt);
 		if(isSalt==false){
-			Bad(bad_url,super._CLang("error_salt"));
+			TipMessage(bad_url,super._CLang("error_salt"));
 			return;
 		}
 		
@@ -44,17 +42,17 @@ public class admin_login_action extends Permission {
 		
 		switch (i) {
 		case 0:
-			Bad(ok_url,super._CLang("welcome"));
+			TipMessage(ok_url,super._CLang("welcome"));
 			return;			
 		case -1:			
-			Bad(bad_url,super._CLang("error_notexist"));
+			TipMessage(bad_url,super._CLang("error_notexist"));
 			return;
 		case -2:			
-			Bad(bad_url,super._CLang("error_passwd"));
+			TipMessage(bad_url,super._CLang("error_passwd"));
 			return;
 		
 		default:
-			Bad(bad_url,super._CLang("error_nothing"));
+			TipMessage(bad_url,super._CLang("error_nothing"));
 			return;
 		}
 	}
@@ -63,15 +61,8 @@ public class admin_login_action extends Permission {
 		aclLogout();
 		UrlClassList ucl = UrlClassList.getInstance();
 		String bad_url = ucl.BuildUrl("admin_login", "");
-		Bad(bad_url, super._CLang("bye"));
+		TipMessage(bad_url, super._CLang("bye"));
 		return;
 	}
 	
-	private void Bad(String url, String msg) {
-		
-		ShowMessage ms = ShowMessage.getInstance();				
-		String res = ms.SetMsg(url, msg, 3000);
-		
-		super.setHtml(res);
-	}
 }

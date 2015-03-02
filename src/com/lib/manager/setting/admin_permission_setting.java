@@ -9,16 +9,13 @@ import java.util.Map.Entry;
 
 import org.ppl.BaseClass.BasePerminterface;
 import org.ppl.BaseClass.Permission;
-import org.ppl.common.PorG;
 import org.ppl.common.ShowMessage;
-import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mongodb.util.Hash;
 
 public class admin_permission_setting extends Permission implements
 		BasePerminterface {

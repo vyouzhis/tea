@@ -1,5 +1,7 @@
 package org.ppl.BaseClass;
 
+import org.ppl.common.ShowMessage;
+
 import com.lib.common.SurfaceHeader;
 import com.lib.common.SurfaceFooter;
 
@@ -20,12 +22,12 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 		if (isAutoHtml) {
 			common();
 		}
-		
+
 		return header_html + html + footer_html;
 	}
 
 	public boolean isAjax() {
-		
+
 		return ajax;
 	}
 
@@ -34,18 +36,24 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 	}
 
 	private void common() {
-		
+
 		if (header_html.length() == 0) {
 			SurfaceHeader header = new SurfaceHeader();
 			header.filter();
 			header_html = header.getHtml();
-			
+
 		}
 		if (footer_html.length() == 0) {
-			SurfaceFooter footer = new SurfaceFooter();			
+			SurfaceFooter footer = new SurfaceFooter();
 			footer.filter();
 			footer_html = footer.getHtml();
-			
+
 		}
+	}
+
+	public void TipMessage(String url, String msg) {
+		ShowMessage ms = ShowMessage.getInstance();
+		this.html = ms.SetMsg(url, msg, 3000);
+		isAutoHtml = false;
 	}
 }

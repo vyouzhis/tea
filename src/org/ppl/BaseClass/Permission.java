@@ -140,10 +140,8 @@ public class Permission extends BaseTheme {
 		UrlClassList ucl = UrlClassList.getInstance();
 		String ok_url = ucl.read("user_list");
 
-		ShowMessage ms = ShowMessage.getInstance();
-		String res = ms.SetMsg(ok_url, msg, 3000);
-		super.setHtml(res);
-		super.isAutoHtml = false;
+		TipMessage(ok_url, msg);
+		
 	}
 
 }

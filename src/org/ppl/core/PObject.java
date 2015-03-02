@@ -174,5 +174,5 @@ public class PObject {
 			globale_config.RapidListQueue.notify();
 		}
 	}
-
+		
 }

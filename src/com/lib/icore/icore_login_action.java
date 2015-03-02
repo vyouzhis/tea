@@ -1,7 +1,6 @@
 package com.lib.icore;
 
 import org.ppl.BaseClass.BaseiCore;
-import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
@@ -20,20 +19,17 @@ public class icore_login_action extends BaseiCore {
 		// TODO Auto-generated method stub
 		TimeClass tc = TimeClass.getInstance();
 		UrlClassList ucl = UrlClassList.getInstance();
-		ShowMessage ms = ShowMessage.getInstance();
-		isAutoHtml=false;
-		
+			
 		echo(SessAct.GetSession(globale_config.KaptchSes));
 		
 		if (super.Init() == 0) {
 			String ok_url = ucl.BuildUrl("icore", tc.time() + "");
-			String res = ms.SetMsg(ok_url, _CLang("ok_welcome"), 3000);
-			super.setHtml(res);
+			
+			TipMessage(ok_url, _CLang("ok_welcome"));
 		} else {
 			String err_url = ucl.BuildUrl("login", "");
-			String res = ms.SetMsg(err_url, _CLang("error_passwd_or_name"),
-					3000);
-			super.setHtml(res);
+			
+			TipMessage(err_url, _CLang("error_passwd_or_name"));
 		}
 	}
 }
