@@ -174,5 +174,10 @@ public class PObject {
 			globale_config.RapidListQueue.notify();
 		}
 	}
+	
+	public int time() {
+		TimeClass tc = TimeClass.getInstance();
+		return (int)tc.time();
+	}
 		
 }
