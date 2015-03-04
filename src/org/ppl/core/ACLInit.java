@@ -75,7 +75,7 @@ public class ACLInit extends DBSQL {
 		int now = (int) tc.time();
 		
 		String format = "UPDATE `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info` SET `error` = `error`+1, `ltime`=%d WHERE `name` = '%s' LIMIT 1";
 		
 		String sql = String.format(format, now, name);
@@ -90,7 +90,7 @@ public class ACLInit extends DBSQL {
 	public int aclLogin(String name, String passwd, String get_salt) {
 		
 		String format = "select uid, cm, passwd,nickname,phone,email,ltime,error,gid  from "
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info WHERE  name='%s' limit 1";
 		String sql = String.format(format, name);
 		Encrypt en = Encrypt.getInstance();
@@ -112,7 +112,7 @@ public class ACLInit extends DBSQL {
 			if(now-ltime < delay && error >2)return -3;
 			
 			String new_cm = en.MD5(now + "");
-			format = "UPDATE " + mConfig.GetValue("db_pre_rule")
+			format = "UPDATE " + DB_PRE
 					+ "user_info SET `cm` = '%s', `ltime`=%d, `error`=0 WHERE `uid`='%d';";
 			sql = String.format(format, new_cm, now, res.get("uid"));
 
@@ -136,8 +136,8 @@ public class ACLInit extends DBSQL {
 					+ "");
 
 			format = "SELECT g.mainrole,g.subrole FROM "
-					+ mConfig.GetValue("db_pre_rule") + "user_info u, "
-					+ mConfig.GetValue("db_pre_rule")
+					+ DB_PRE + "user_info u, "
+					+ DB_PRE
 					+ "group g where u.gid =  g.id and u.uid=%s LIMIT 1";
 			sql = String.format(format, res.get("uid").toString());
 

@@ -17,7 +17,10 @@ public class DBSQL extends PObject {
 	public static DBSQL dataSource = null;
 	private Connection Con = null;
 	private Statement stmt = null;
-
+	protected String DB_NAME = mConfig.GetValue("db.name");
+	protected String DB_PRE = mConfig.GetValue("db.rule.ext");
+	protected String DB_WEB_PRE = mConfig.GetValue("db.WEB.ext");
+	
 	public DBSQL() {
 		
 	}

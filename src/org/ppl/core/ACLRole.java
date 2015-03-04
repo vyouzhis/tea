@@ -68,7 +68,7 @@ public class ACLRole extends ACLBase {
 		}
 		String MainRole = JSON.toJSONString(AdminRole);
 
-		String format = "SELECT id FROM `role_group`  where id=" + gid;
+		String format = "SELECT id FROM `"+DB_PRE+"group`  where id=" + gid;
 		Map<String, Object> res;
 		res = FetchOne(format);
 		TimeClass tc = TimeClass.getInstance();
@@ -76,7 +76,7 @@ public class ACLRole extends ACLBase {
 		String sql = "";
 		if (res == null) {
 			format = "INSERT INTO `tea`.`"
-					+ mConfig.GetValue("db_pre_rule")
+					+ DB_PRE
 					+ "group` "
 					+ "(`id`,`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
 					+ " VALUES (%d,'%s', '%s',  '%s', '%s', %d, %d, %d);";
@@ -84,7 +84,7 @@ public class ACLRole extends ACLBase {
 					MainRole, "", uid, now, now);
 
 		} else {
-			format = "UPDATE `tea`.`" + mConfig.GetValue("db_pre_rule")
+			format = "UPDATE `tea`.`" + DB_PRE
 					+ "group` SET " + " `mainrole` = '%s',  `etime` = '%d' "
 					+ "WHERE `role_group`.`id` = %d;";
 

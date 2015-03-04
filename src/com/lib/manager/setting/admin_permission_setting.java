@@ -99,7 +99,7 @@ public class admin_permission_setting extends Permission implements
 	@SuppressWarnings("unchecked")
 	private void getGroupMainRole(String gid) {
 		String sql = "SELECT gname, gdesc, mainrole, subrole FROM `"
-				+ mConfig.GetValue("db_pre_rule") + "group` where id=" + gid;
+				+ DB_PRE + "group` where id=" + gid;
 		Map<String, Object> res = FetchOne(sql);
 		setRoot("group_name", res.get("gname"));
 		setRoot("group_desc", res.get("gdesc"));
@@ -170,7 +170,7 @@ public class admin_permission_setting extends Permission implements
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 		String format = "INSERT INTO `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "group` "
 				+ "(`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
 				+ " VALUES ('%s', '%s',  '%s', '%s', %d, %d, %d);";
@@ -203,7 +203,7 @@ public class admin_permission_setting extends Permission implements
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 		String format = "UPDATE `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "group` SET "
 				+ "`gname` = '%s', `gdesc` = '%s', `mainrole` = '%s', `subrole` = '%s', `etime` = '%d' "
 				+ "WHERE `role_group`.`id` = %s;";
@@ -271,7 +271,7 @@ public class admin_permission_setting extends Permission implements
 	private void getGroupUser(String gid) {
 		
 		String format = "SELECT nickname,email FROM `"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info` where gid=%s and status=1 and isdelete=0;";
 		String sql = String.format(format, gid);
 		List<Map<String, Object>> res = null;

@@ -73,7 +73,7 @@ public class user_profile extends Permission implements BasePerminterface {
 	private void ListGroup() {
 		int gid = aclGetUid();
 		String sql = "SELECT id,gname,gdesc FROM `"
-				+ mConfig.GetValue("db_pre_rule") + "group` where uid=" + gid;
+				+ DB_PRE + "group` where uid=" + gid;
 		List<Map<String, Object>> res = null;
 
 		try {
@@ -90,7 +90,7 @@ public class user_profile extends Permission implements BasePerminterface {
 
 	private void getUserInfo(String uid) {
 		
-		String sql = "SELECT * FROM `" + mConfig.GetValue("db_pre_rule")
+		String sql = "SELECT * FROM `" + DB_PRE
 				+ "user_info`  WHERE uid=" + uid;
 
 		Map<String, Object> res;
@@ -129,7 +129,7 @@ public class user_profile extends Permission implements BasePerminterface {
 		int now = (int) tc.time();
 
 		String format = "INSERT INTO `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info` "
 				+ "(`name`, `passwd`, `cm`, `nickname`, `email`, `ctime`, `ltime`,  `gid`, `cid`,`phone`)"
 				+ " VALUES ( '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s')";
@@ -172,7 +172,7 @@ public class user_profile extends Permission implements BasePerminterface {
 		int now = (int) tc.time();
 
 		String format = "UPDATE `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info` SET `name` = '%s', `nickname` = '%s',`email`='%s',`etime`='%d',`phone`='%s' ,`gid` = '%s'"
 				+ pwd + " WHERE `role_user_info`.`uid` = %s";
 		String sql = String.format(format, username, nickname, email, now,

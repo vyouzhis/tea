@@ -75,7 +75,7 @@ public class my_profile extends Permission {
 		int now = (int) tc.time();
 
 		String format = "UPDATE `tea`.`"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "user_info` SET `nickname` = '%s',`email`='%s',`etime`='%d',`phone`='%s'"
 				+ pwd + " WHERE `uid` = %s";
 		String sql = String.format(format, nickname, email, now, phone,

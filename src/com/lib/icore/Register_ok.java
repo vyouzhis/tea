@@ -32,7 +32,7 @@ public class Register_ok extends BaseSurface {
 	private void AddUser(String login, String passwd) {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int)tc.time();
-		String format = "INSERT INTO `tea`.`web_user`" +
+		String format = "INSERT INTO `"+DB_WEB_PRE+"user`" +
 				" (`login`, `password`, `alias`, `email`, `ctime`) VALUES " +
 				"( '%s', '%s', '%s', '%s',  '%d');";
 		

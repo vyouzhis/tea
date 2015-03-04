@@ -55,7 +55,7 @@ public class admin_permission_list extends Permission implements
 		// TODO Auto-generated method stub
 		
 		String format = "SELECT id,gname,mainrole FROM `"
-				+ mConfig.GetValue("db_pre_rule")
+				+ DB_PRE
 				+ "group` where uid=%d and status=1;";
 		String sql = String.format(format, aclGetUid());
 		List<Map<String, Object>> res = null;

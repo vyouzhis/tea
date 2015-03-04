@@ -8,7 +8,7 @@ public class ACLBase extends ACLInit {
 		int uid = aclGetUid();
 		String cm = aclgetCM();
 		
-		String format = "SELECT uid FROM `"+ mConfig.GetValue("db_pre_rule")
+		String format = "SELECT uid FROM `"+ DB_PRE
 				+ "user_info` WHERE uid =%d and cm='%s' LIMIT 1";
 		String sql = String.format(format, uid, cm);
 		

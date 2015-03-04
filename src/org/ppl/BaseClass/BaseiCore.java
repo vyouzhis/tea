@@ -61,7 +61,7 @@ public class BaseiCore extends BaseSurface {
 			return -1;
 		}
 
-		String format = "SELECT * FROM `web_user` where login='%s' limit 1;";
+		String format = "SELECT * FROM `"+DB_WEB_PRE+"user` where login='%s' limit 1;";
 		String sql = String.format(format, login);
 
 		Map<String, Object> res;

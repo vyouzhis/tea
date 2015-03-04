@@ -53,7 +53,7 @@ public class user_list extends Permission implements BasePerminterface {
 		
 		String sql = "SELECT uid,name,nickname,email,"
 				+ "from_unixtime(ctime) as ctime , from_unixtime(ltime) as ltime FROM "
-				+ "`" + mConfig.GetValue("db_pre_rule")
+				+ "`" + DB_PRE
 				+ "user_info` where cid=" + aclGetUid();
 
 		List<Map<String, Object>> res;
