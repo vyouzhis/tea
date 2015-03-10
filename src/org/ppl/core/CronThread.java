@@ -67,7 +67,10 @@ public class CronThread extends LibThread {
 						.getInstance(Key.get(BaseCronThread.class,
 								Names.named(key)));
 				boolean isStop = cron.isStop();
-				if(isStop == false) continue;
+				if(isStop == false) {
+					cron.free();
+					continue;
+				}
 				
 				int minu = cron.minute();
 				int hour = cron.hour();
