@@ -28,4 +28,10 @@ public class loopTen extends BaseCronThread {
 		echo("10 minu!!");
 	}
 
+	@Override
+	public boolean isStop() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

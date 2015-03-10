@@ -66,6 +66,9 @@ public class CronThread extends LibThread {
 				BaseCronThread cron = (BaseCronThread) injector
 						.getInstance(Key.get(BaseCronThread.class,
 								Names.named(key)));
+				boolean isStop = cron.isStop();
+				if(isStop == false) continue;
+				
 				int minu = cron.minute();
 				int hour = cron.hour();
 				int day = cron.day();

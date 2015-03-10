@@ -11,4 +11,5 @@ public abstract class BaseCronThread extends DBSQL{
 	public abstract int hour();
 	public abstract int day();
 	public abstract void Run();
+	public abstract boolean isStop();
 }
