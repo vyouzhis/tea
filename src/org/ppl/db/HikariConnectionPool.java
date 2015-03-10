@@ -62,7 +62,7 @@ public class HikariConnectionPool extends PObject {
 			//System.out.println("init Con size:"+Con.size());
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			echo(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 
@@ -75,7 +75,7 @@ public class HikariConnectionPool extends PObject {
 			if(Con.size()>0){
 				con = Con.pop();
 			}else{
-				System.out.println("MaximumPoolSize is limit");
+				echo("MaximumPoolSize is limit");
 			}
 		}
 		return con;
@@ -83,7 +83,7 @@ public class HikariConnectionPool extends PObject {
 
 	public void free(Connection con) {		
 		synchronized (Con) {
-			System.out.println("free con");
+			echo("free con");
 			Con.add(con);
 		}
 	}

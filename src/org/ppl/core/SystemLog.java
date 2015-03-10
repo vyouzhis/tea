@@ -10,7 +10,7 @@ public class SystemLog extends PObject {
 
 	public String Log(int uid) {
 		
-		String format = "INSERT INTO `tea`.`" + mConfig.GetValue("db_pre_rule")
+		String format = "INSERT INTO `tea`.`" + mConfig.GetValue("db.rule.ext")
 				+ "log` " + "(`lid`, `uid`, `action`, `ip`, `ctime`)"
 				+ " VALUES ('%s', '%d', '%s', '%s', '%d');";
 

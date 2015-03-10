@@ -94,8 +94,7 @@ public class ACLInit extends DBSQL {
 				+ "user_info WHERE  name='%s' limit 1";
 		String sql = String.format(format, name);
 		Encrypt en = Encrypt.getInstance();
-		TimeClass tc = TimeClass.getInstance();
-
+		
 		Map<String, Object> res = FetchOne(sql);
 
 		if (res != null) {
@@ -106,7 +105,7 @@ public class ACLInit extends DBSQL {
 			
 			int ltime = Integer.valueOf(res.get("ltime").toString());
 			int error = Integer.valueOf(res.get("error").toString());
-			int now = (int) tc.time();
+			int now = time();
 			
 			int delay = mConfig.GetInt(globale_config.TimeDelay);
 			if(now-ltime < delay && error >2)return -3;

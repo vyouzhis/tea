@@ -19,7 +19,7 @@ public class DBSQL extends PObject {
 	private Statement stmt = null;
 	protected String DB_NAME = mConfig.GetValue("db.name");
 	protected String DB_PRE = mConfig.GetValue("db.rule.ext");
-	protected String DB_WEB_PRE = mConfig.GetValue("db.WEB.ext");
+	protected String DB_WEB_PRE = mConfig.GetValue("db.web.ext");
 	
 	public DBSQL() {
 		
@@ -57,10 +57,9 @@ public class DBSQL extends PObject {
 			HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 			hcp.free(Con);
 			Con = null;
-			System.out.println("dbmanager free");
+			echo("dbmanager free");
 		}else{
-		
-			System.out.println("dbmanager free error");
+			echo("dbmanager free error");
 		}
 	}
 	
@@ -110,7 +109,7 @@ public class DBSQL extends PObject {
 		List<Map<String, Object>> results = null;
 			
 		if (Con == null){
-			System.out.println("con sql:"+sql);
+			echo("con sql:"+sql);
 			return null;
 		}
 		ResultSet rs = null;
@@ -148,7 +147,7 @@ public class DBSQL extends PObject {
 		long numRowsUpdated = 0;
 				
 		if (Con == null) {
-			System.out.println("con sql:"+sql);
+			echo("con sql:"+sql);
 			return -1;
 		}
 		stmt = Con.createStatement();
