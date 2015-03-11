@@ -79,7 +79,9 @@ public class UrlClassList {
 		if(this.packList == null){
 			this.packList = new ArrayList<>();
 		}
-		packList.add(pack);
+		if(!packList.contains(pack)){
+			packList.add(pack);
+		}
 	}
 
 }

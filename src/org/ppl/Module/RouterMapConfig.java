@@ -265,7 +265,4 @@ public class RouterMapConfig extends PObject {
 		}
 
 		return uri;
-	}
-	
-	
-}
+	}}

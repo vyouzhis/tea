@@ -26,11 +26,11 @@ public class ModuleBind extends PObject implements Module {
 		this.binder = binder;
 		
 		UrlClassList ucl = UrlClassList.getInstance();
-
+		
 		for (String ps : ucl.getPackList()) {
 			try {
 				Class<?> clazz = Class.forName(ps);
-				
+								
 				if (clazz.getSuperclass().equals(BaseSurface.class)) {
 					Class<? extends BaseSurface> cls = (Class<? extends BaseSurface>) Class
 							.forName(ps);
@@ -60,10 +60,7 @@ public class ModuleBind extends PObject implements Module {
 					Class<? extends BaseRapidThread> cls = (Class<? extends BaseRapidThread>) Class
 							.forName(ps);
 					 Add(BaseRapidThread.class, cls);
-				}else if (clazz.getSuperclass().equals(BaseRapidThread.class)) {
-					Class<? extends BaseRapidThread> cls = (Class<? extends BaseRapidThread>) Class
-							.forName(ps);
-					 Add(BaseRapidThread.class, cls);
+			
 				}else if (clazz.getSuperclass().equals(BaseCronThread.class)) {
 					Class<? extends BaseCronThread> cls = (Class<? extends BaseCronThread>) Class
 							.forName(ps);
