@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
@@ -69,10 +71,8 @@ public class PObject {
 	
 	public boolean checkSalt(String salt) {
 
-		Config mConfig = new Config(globale_config.Config);
 		Encrypt ec = Encrypt.getInstance();
-		TimeClass tc = TimeClass.getInstance();
-		String new_salt = ec.MD5(String.valueOf(tc.time()));
+		String new_salt = ec.MD5(String.valueOf(time()));
 
 		String sess_salt = SessAct.GetSession(mConfig
 				.GetValue(globale_config.SessSalt));
@@ -178,6 +178,22 @@ public class PObject {
 	public int time() {
 		TimeClass tc = TimeClass.getInstance();
 		return (int)tc.time();
+	}
+	
+	public long myThreadId() {
+		return Thread.currentThread().getId();
+	}
+	
+	public  boolean validateEmailAddress(String emailAddress) {
+		 Pattern regexPattern;
+		 Matcher regMatcher;
+	    regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+	    regMatcher   = regexPattern.matcher(emailAddress);
+	    if(regMatcher.matches()){
+	        return true;
+	    } else {
+	    return false;
+	    }
 	}
 		
 }

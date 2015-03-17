@@ -9,7 +9,7 @@ import org.ppl.BaseClass.BaseSurface;
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.BaseClass.Permission;
 import org.ppl.core.PObject;
-import org.ppl.db.DBManager;
+import org.ppl.db.HikariConnectionPool;
 
 import org.ppl.etc.UrlClassList;
 
@@ -53,8 +53,8 @@ public class RouterMapConfig extends PObject {
 				if (BaseClass.length != 2){					
 					return;
 				}
-				DBManager hcp = DBManager.getInstance();
-				hcp.init();
+				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+				hcp.GetCon();
 				switch (BaseClass[0]) {
 				case "Permission":
 					Permission home = (Permission) injector.getInstance(Key

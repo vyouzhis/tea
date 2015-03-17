@@ -1,9 +1,11 @@
 package org.ppl.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import org.ppl.core.PObject;
+import org.ppl.etc.globale_config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -11,9 +13,9 @@ import com.zaxxer.hikari.HikariDataSource;
 public class HikariConnectionPool extends PObject {
 	static HikariConnectionPool source;
 	public HikariDataSource ds = null;
-	
-	private LinkedList<Connection> Con = null;
-	
+
+	private LinkedList<Connection> ConList = null;
+
 	public static HikariConnectionPool getInstance() {
 		if (source == null) {
 			source = new HikariConnectionPool();
@@ -24,7 +26,8 @@ public class HikariConnectionPool extends PObject {
 
 	public HikariConnectionPool() {
 		// TODO Auto-generated constructor stub
-		
+		String className = this.getClass().getCanonicalName();
+		super.GetSubClassName(className);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -33,7 +36,7 @@ public class HikariConnectionPool extends PObject {
 		}
 
 		HikariConfig config = new HikariConfig();
-		// System.out.println(mConfig.GetValue("database.url"));
+		// echo(mConfig.GetValue("database.url"));
 		config.setJdbcUrl(myConfig.GetValue("database.url"));
 		config.setUsername(myConfig.GetValue("database.username"));
 		config.setPassword(myConfig.GetValue("database.password"));
@@ -45,8 +48,8 @@ public class HikariConnectionPool extends PObject {
 
 		ds = new HikariDataSource(config);
 		ds.setMaximumPoolSize(myConfig.GetInt("database.MaximumPoolSize"));
-		
-		Con = new LinkedList<Connection>();
+
+		ConList = new LinkedList<>();
 		Connect();
 	}
 
@@ -57,9 +60,9 @@ public class HikariConnectionPool extends PObject {
 			for (int i = 0; i < ds.getMaximumPoolSize(); i++) {
 				con = ds.getConnection();
 				con.setAutoCommit(false);
-				Con.push(con);
+
+				ConList.add(con);
 			}
-			//System.out.println("init Con size:"+Con.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			echo(e.getClass().getName() + ": " + e.getMessage());
@@ -68,23 +71,48 @@ public class HikariConnectionPool extends PObject {
 
 	}
 
-	public Connection GetCon() {
-		Connection con = null;
-		synchronized (Con) {
-			System.out.println("Con size:"+Con.size());
-			if(Con.size()>0){
-				con = Con.pop();
-			}else{
-				echo("MaximumPoolSize is limit");
+	public void GetCon() {
+
+		synchronized (ConList) {
+			while (ConList.isEmpty()) {
+				echo("Conlist +++++++++ size empty");
+				try {
+					ConList.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				echo("Conlist ======= size:" + ConList.size());
 			}
+			long tid = myThreadId();
+			echo("tid:" + tid);
+
+			globale_config.GDB.put(tid, ConList.pop());
+
 		}
-		return con;
+	
 	}
 
-	public void free(Connection con) {		
-		synchronized (Con) {
-			echo("free con");
-			Con.add(con);
+	public void free() {
+		synchronized (ConList) {
+			long tid = myThreadId();
+			echo("free tid:" + tid);
+			Connection con = globale_config.GDB.get(tid);
+			if (con != null) {
+				
+				try {
+					con.commit();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				ConList.add(con);
+				globale_config.GDB.put(tid, null);
+			}
+			ConList.notify();
+			echo("free ConList size:" + ConList.size());
+
 		}
 	}
 }

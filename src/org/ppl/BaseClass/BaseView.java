@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ppl.core.ACLControl;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.ProjectPath;
@@ -17,7 +18,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-public class BaseView extends BaseLang{
+public class BaseView extends ACLControl{
 	protected String html="";
 	private Map<String, Object> root;
 	

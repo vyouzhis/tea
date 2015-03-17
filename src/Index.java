@@ -13,9 +13,6 @@ import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
 import org.ppl.common.ShowMessage;
-import org.ppl.db.DBManager;
-import org.ppl.etc.Config;
-import org.ppl.etc.globale_config;
 
 @WebServlet(value = "/")
 public class Index extends HttpServlet {
@@ -24,50 +21,51 @@ public class Index extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private String mutex = "";
+
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
 		System.out.println("init http");
 	}
-	
+
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-				
-		PorG porg = PorG.getInstance();
-		porg.Init(req, res);
-		porg.setContext_Path(req.getContextPath());
-		porg.setMehtod(req.getMethod());
-		
-		ShowMessage sm = ShowMessage.getInstance();
-		sm.Init(req, res);
-				
-		HttpSession session = req.getSession(true);
-		SessionAction sa = SessionAction.getInstance();
-		sa.init(session);					
-		
-		CookieAction ca = CookieAction.getInstance();
-		ca.init(req, res);
-		
-		RouterMapConfig rmc = new RouterMapConfig();
-		
-		rmc.map(req.getServletPath());
-		rmc.setMehtod(req.getMethod());
-				
-		rmc.match();
-				
-		if(rmc.routing()){
-			res.getWriter().println("not class <br /> 404");
-		}else{
-			res.setContentType(rmc.setContentType());
-			
-			res.getWriter().println(rmc.getHtml());
+		synchronized (mutex) {
+			PorG porg = PorG.getInstance();
+			porg.Init(req, res);
+			porg.setContext_Path(req.getContextPath());
+			porg.setMehtod(req.getMethod());
+
+			ShowMessage sm = ShowMessage.getInstance();
+			sm.Init(req, res);
+
+			HttpSession session = req.getSession(true);
+			SessionAction sa = SessionAction.getInstance();
+			sa.init(session);
+
+			CookieAction ca = CookieAction.getInstance();
+			ca.init(req, res);
+
+			RouterMapConfig rmc = new RouterMapConfig();
+
+			rmc.map(req.getServletPath());
+			rmc.setMehtod(req.getMethod());
+
+			rmc.match();
+
+			if (rmc.routing()) {
+				res.getWriter().println("not class <br /> 404");
+			} else {
+				res.setContentType(rmc.setContentType());
+
+				res.getWriter().println(rmc.getHtml());
+			}
 		}
-		
-		//SystemInfo(req, res);			
+		// SystemInfo(req, res);
 	}
-		
+
 	private void SystemInfo(HttpServletRequest req, HttpServletResponse res) {
 		PrintWriter out = null;
 		try {
@@ -81,38 +79,38 @@ public class Index extends HttpServlet {
 		out.println(req.getParameter("id") + "<br />");
 		System.out.println("id:" + req.getParameter("id"));
 
-		//System.out.println("addr:" +req.getr);
-					
+		// System.out.println("addr:" +req.getr);
+
 		String url = req.getRequestURL().toString();
 		String uri = req.getRequestURI();
-		
-		String scheme = req.getScheme();
-        String serverName = req.getServerName();
-        int portNumber = req.getServerPort();
-        String contextPath = req.getContextPath();
-        String servletPath = req.getServletPath();
-        String pathInfo = req.getPathInfo();
-        String query = req.getQueryString();
-        String mehtod = req.getMethod();
-        String ip = req.getRemoteHost();
 
-        res.setContentType("text/html");
-        
-        out.print("Url: " + url + "<br />");
-        out.print("Uri: " + uri + "<br />");
-        out.print("Scheme: " + scheme + "<br />");
-        out.print("Server Name: " + serverName + "<br />");
-        out.print("Port: " + portNumber + "<br />");
-        out.print("Context Path: " + contextPath + "<br />");
-        out.print("Servlet Path: " + servletPath + "<br />");
-        out.print("Path Info: " + pathInfo + "<br />");
-        out.print("mehtod: " + mehtod + "<br />");
-        out.print("Query: " + query);
-        out.print("ip: " + ip);
-		
+		String scheme = req.getScheme();
+		String serverName = req.getServerName();
+		int portNumber = req.getServerPort();
+		String contextPath = req.getContextPath();
+		String servletPath = req.getServletPath();
+		String pathInfo = req.getPathInfo();
+		String query = req.getQueryString();
+		String mehtod = req.getMethod();
+		String ip = req.getRemoteHost();
+
+		res.setContentType("text/html");
+
+		out.print("Url: " + url + "<br />");
+		out.print("Uri: " + uri + "<br />");
+		out.print("Scheme: " + scheme + "<br />");
+		out.print("Server Name: " + serverName + "<br />");
+		out.print("Port: " + portNumber + "<br />");
+		out.print("Context Path: " + contextPath + "<br />");
+		out.print("Servlet Path: " + servletPath + "<br />");
+		out.print("Path Info: " + pathInfo + "<br />");
+		out.print("mehtod: " + mehtod + "<br />");
+		out.print("Query: " + query);
+		out.print("ip: " + ip);
+
 		out.close();
 	}
-	
+
 	public void destroy() {
 		// TODO Auto-generated method stub
 		super.destroy();

@@ -10,29 +10,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ppl.core.PObject;
+import org.ppl.BaseClass.BaseLang;
+import org.ppl.etc.globale_config;
 
-public class DBSQL extends PObject {
+public class DBSQL extends BaseLang {
 
 	public static DBSQL dataSource = null;
-	private Connection Con = null;
+	// private Connection ConDB = null;
+	// private int ConId = -1;
 	private Statement stmt = null;
 	protected String DB_NAME = mConfig.GetValue("db.name");
 	protected String DB_PRE = mConfig.GetValue("db.rule.ext");
 	protected String DB_WEB_PRE = mConfig.GetValue("db.web.ext");
-	
+
 	public DBSQL() {
-		
+
 	}
 
 	public void SetCon() {
-		DBManager hcp = DBManager.getInstance();
-		Con = hcp.getCon();
+
 	}
-	
+
 	public void ThreadSetCon() {
-		HikariConnectionPool hcp = HikariConnectionPool.getInstance();				
-		Con = hcp.GetCon();		
+
+		// ConDB = hcp.GetCon();
+		// long tid = myThreadId();
+		// globale_config.GDB.put(tid, hcp.GetCon());
 	}
 
 	public void end() {
@@ -47,27 +50,16 @@ public class DBSQL extends PObject {
 	}
 
 	public void free() {
-		if (Con != null) {
-			try {
-				Con.commit();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			HikariConnectionPool hcp = HikariConnectionPool.getInstance();
-			hcp.free(Con);
-			Con = null;
-			echo("dbmanager free");
-		}else{
-			echo("dbmanager free error");
-		}
+		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+		hcp.free();
 	}
-	
+
 	public void rollback() {
-		
-		try { 
-			if (Con != null) {
-				Con.rollback();
+		long tid = myThreadId();
+		Connection ConDB = globale_config.GDB.get(tid);
+		try {
+			if (ConDB != null) {
+				ConDB.rollback();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,18 +99,21 @@ public class DBSQL extends PObject {
 
 	public List<Map<String, Object>> query(String sql) throws SQLException {
 		List<Map<String, Object>> results = null;
-			
-		if (Con == null){
-			echo("con sql:"+sql);
+		long tid = myThreadId();
+		
+		Connection ConDB = globale_config.GDB.get(tid);
+
+		if (ConDB == null) {
+			echo("con sql:" + sql);
 			return null;
 		}
 		ResultSet rs = null;
-		stmt = Con.createStatement();
+		stmt = ConDB.createStatement();
 		rs = stmt.executeQuery(sql);
 		results = map(rs);
 		rs.close();
 		stmt.close();
-				
+
 		return results;
 	}
 
@@ -145,21 +140,25 @@ public class DBSQL extends PObject {
 
 	public long update(String sql) throws SQLException {
 		long numRowsUpdated = 0;
-				
-		if (Con == null) {
-			echo("con sql:"+sql);
+		long tid = myThreadId();
+		
+		Connection ConDB = globale_config.GDB.get(tid);
+		if (ConDB == null) {
+			echo("con sql:" + sql);
 			return -1;
 		}
-		stmt = Con.createStatement();
+		stmt = ConDB.createStatement();
 		numRowsUpdated = stmt.executeUpdate(sql,
 				Statement.RETURN_GENERATED_KEYS);
 
 		return numRowsUpdated;
 	}
-	
+
 	public void CommitDB() {
+		long tid = myThreadId();
+		Connection ConDB = globale_config.GDB.get(tid);
 		try {
-			Con.commit();
+			ConDB.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

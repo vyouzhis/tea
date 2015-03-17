@@ -17,7 +17,6 @@ public class ACLInit extends DBSQL {
 	public ACLInit() {
 		// TODO Auto-generated constructor stub
 		
-		SetCon();
 	}
 
 	public int aclGetUid() {

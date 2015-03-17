@@ -19,6 +19,14 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
+/*
+ * Thread safe are (when we do not use SingleThreadModel):
+ * - request, response parameters, local parameters (inside doXXX() method)
+ *
+ * Thread safe are (when we use SingleThreadModel):
+ * - request, response parameters, local parameters (inside doXXX() method), instance parameters (inside servlet class) 
+ * 
+ */
 @WebListener
 public class ServletApplicationLifeListener extends PObject implements
 		ServletContextListener {
@@ -33,7 +41,8 @@ public class ServletApplicationLifeListener extends PObject implements
 	public void contextInitialized(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 		HikariConnectionPool.getInstance();
-				
+		globale_config.GDB = new HashMap<>();
+		
 		InitPackList();
 			
 		int autorun = mConfig.GetInt("autorun");
@@ -76,7 +85,8 @@ public class ServletApplicationLifeListener extends PObject implements
 			String ps = this.getClass().getResource("/").getPath() + p;			
 			findPack(ps);
 		}
-
+		
+		globale_config.injector = Guice.createInjector(new ModuleBind());
 	}
 
 }

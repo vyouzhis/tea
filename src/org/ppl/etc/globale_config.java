@@ -1,7 +1,10 @@
 package org.ppl.etc;
 
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.Map;
+
+import com.google.inject.Injector;
 
 public class globale_config {
 	public static globale_config config = null;
@@ -33,6 +36,10 @@ public class globale_config {
 	
 	//cookie user info
 	public static String Uinfo = "iCore";
+	
+	public static Injector injector = null;
+	
+	public static Map<Long, Connection> GDB = null;
 	
 	//listQueue
 	public static Map<String, LinkedList<Object>> RapidListQueue;

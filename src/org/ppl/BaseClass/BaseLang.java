@@ -2,13 +2,14 @@ package org.ppl.BaseClass;
 
 import org.ppl.Module.ModuleBind;
 import org.ppl.core.ACLControl;
+import org.ppl.core.PObject;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
-public abstract class BaseLang extends ACLControl implements BaseLangInterface {
+public abstract class BaseLang extends PObject implements BaseLangInterface {
 	private String StdName=null;
 		
 	public void setStdName(String stdName) {

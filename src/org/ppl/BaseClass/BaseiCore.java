@@ -37,23 +37,14 @@ public class BaseiCore extends BaseSurface {
 	}
 
 	public void iLogout() {
-		UrlClassList ucl = UrlClassList.getInstance();
-		String bad_url = "";
-		ShowMessage ms = ShowMessage.getInstance();
-		String res = "";
-		bad_url = ucl.BuildUrl("login", "");
-
-		res = ms.SetMsg(bad_url, _CLang("error_login"), 3000);
-		isAutoHtml = false;
-		super.setHtml(res);
 
 		cookieAct.DelCookie(globale_config.Uinfo);
 	}
 
 	public int iLogin(String login, String pwd) {
-		if (login.length() < 1)
+		if (login==null || login.length() < 1)
 			return -1;
-		if (pwd.length() < 1)
+		if (pwd==null || pwd.length() < 1)
 			return -1;
 
 		String user_salt = porg.getKey("salt");
