@@ -97,17 +97,19 @@ public class ACLInit extends DBSQL {
 		Map<String, Object> res = FetchOne(sql);
 
 		if (res != null) {
-			if (!passwd.equals(en.MD5(res.get("passwd") + get_salt))) {
-				ErrorPWD(name);
-				return -2;
-			}
-			
 			int ltime = Integer.valueOf(res.get("ltime").toString());
 			int error = Integer.valueOf(res.get("error").toString());
 			int now = time();
 			
 			int delay = mConfig.GetInt(globale_config.TimeDelay);
-			if(now-ltime < delay && error >2)return -3;
+			if(now-ltime < delay && error >2) return -3;
+			
+			String pwd = en.MD5(res.get("passwd") + get_salt);
+			
+			if (!passwd.equals(pwd)) {
+				ErrorPWD(name);
+				return -2;
+			}
 			
 			String new_cm = en.MD5(now + "");
 			format = "UPDATE " + DB_PRE
@@ -144,7 +146,7 @@ public class ACLInit extends DBSQL {
 				UserSess.put("main_role", role.get("mainrole").toString());
 				UserSess.put("sub_role", role.get("subrole").toString());
 			}else {
-				return -3;
+				return -4;
 			}
 
 			String json = JSON.toJSONString(UserSess);

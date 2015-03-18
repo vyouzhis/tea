@@ -31,16 +31,16 @@ public class RapidThread extends LibThread {
 			
 			for (String key : globale_config.RapidListQueue.keySet()) {
 
-				Injector injector = Guice.createInjector(new ModuleBind());
+				Injector injector = globale_config.injector;
 				BaseRapidThread rapid = (BaseRapidThread) injector.getInstance(Key.get(
 						BaseRapidThread.class, Names.named(key)));
 				
-				while(globale_config.RapidListQueue.get(key).size()>0) {
+				//while(globale_config.RapidListQueue.get(key).size()>0) {
 					
 					Object o = globale_config.RapidListQueue.get(key).pop();					
 					rapid.mailbox(o);
 					rapid.Run();					
-				}				
+				//}				
 				rapid.free();
 			}
 		}

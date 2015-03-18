@@ -42,17 +42,22 @@ public class admin_login_action extends Permission {
 		
 		switch (i) {
 		case 0:
-			TipMessage(ok_url,super._CLang("welcome"));
+			TipMessage(ok_url,_CLang("welcome"));
 			return;			
 		case -1:			
-			TipMessage(bad_url,super._CLang("error_notexist"));
+			TipMessage(bad_url,_CLang("error_notexist"));
 			return;
 		case -2:			
-			TipMessage(bad_url,super._CLang("error_passwd"));
+			TipMessage(bad_url,_CLang("error_passwd"));
 			return;
-		
+		case -3:
+			TipMessage(bad_url,_CLang("error_errcount"));
+			return;
+		case -4:
+			TipMessage(bad_url,_CLang("error_role"));
+			return;
 		default:
-			TipMessage(bad_url,super._CLang("error_nothing"));
+			TipMessage(bad_url,_CLang("error_nothing"));
 			return;
 		}
 	}
