@@ -6,12 +6,11 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BaseModule;
 import org.ppl.BaseClass.Permission;
-import org.ppl.Module.ModuleBind;
 import org.ppl.etc.UrlClassList;
+import org.ppl.etc.globale_config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
@@ -105,7 +104,7 @@ public class Menu extends BaseModule {
 	}
 	
 	private int isMenu(String lib) {
-		Injector injector = Guice.createInjector(new ModuleBind());
+		Injector injector = globale_config.injector;
 		Permission home = (Permission) injector.getInstance(Key.get(Permission.class, Names.named(lib)));
 		return home.getAction();
 	}

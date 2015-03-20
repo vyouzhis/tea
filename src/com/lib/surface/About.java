@@ -1,5 +1,6 @@
 package com.lib.surface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.BaseClass.BaseTheme;
 import org.ppl.common.PorG;
+import org.ppl.io.TimeClass;
 
 public class About extends BaseSurface{
 	private String className = null;
@@ -39,6 +41,15 @@ public class About extends BaseSurface{
 		if(fn!=null)
 			setRoot("fn", "get fn:"+fn);
 		//pG.getFile();
+		
+		TimeClass tClass = TimeClass.getInstance();
+		
+		
+		Map<String, String> msg = new HashMap<>();
+		
+		
+		msg.put("+++time","msg time:"+tClass.TimeFormat("yyyy-MM-dd HH:mm:ss"));
+		TellPostMan("rapi_two", msg);
 		
 		super.View();
 	}

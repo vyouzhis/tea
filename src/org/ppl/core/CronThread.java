@@ -5,13 +5,11 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BaseCronThread;
 import org.ppl.BaseClass.LibThread;
-import org.ppl.Module.ModuleBind;
 import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
@@ -19,6 +17,9 @@ import com.google.inject.name.Names;
 public class CronThread extends LibThread {
 	private Map<String, Integer> cronMap;
 	
+	/**
+	 * @since cron thread run
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -26,6 +27,9 @@ public class CronThread extends LibThread {
 		ListQueue();
 	}
 
+	/**
+	 * @since cron thread list module queue
+	 */
 	@Override
 	public void ListQueue() {
 		// TODO Auto-generated method stub
@@ -61,8 +65,7 @@ public class CronThread extends LibThread {
 			int nowDay = Integer.valueOf(tc.TimeStamptoDate(tc.time(), "dd"));
 						
 			for (String key:cronMap.keySet()) {
-				Injector injector = Guice
-						.createInjector(new ModuleBind());
+				Injector injector = globale_config.injector;
 				BaseCronThread cron = (BaseCronThread) injector
 						.getInstance(Key.get(BaseCronThread.class,
 								Names.named(key)));

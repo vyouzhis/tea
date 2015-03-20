@@ -19,6 +19,9 @@ import com.google.inject.name.Names;
 
 public class ACLControl extends ACLRole {
 
+	/**
+	 * @since manager acl load class lib
+	 */
 	public void aclLoadLib() {
 		Injector injector = Guice.createInjector(new ModuleBind());
 		UrlClassList ucl = UrlClassList.getInstance();
@@ -47,6 +50,11 @@ public class ACLControl extends ACLRole {
 		}
 	}
 
+	/**
+	 * @since main menu name
+	 * @param value
+	 * @return
+	 */
 	public String IndexName(String value) {
 
 		if (value.matches("(.*)_index")) {
@@ -58,6 +66,11 @@ public class ACLControl extends ACLRole {
 		return "not has lan key";
 	}
 
+	/**
+	 * @since lib info
+	 * @param value
+	 * @return
+	 */
 	public Map<String, String> LibInfo(String value) {
 		Injector injector = Guice.createInjector(new ModuleBind());
 		Map<String, String> info = new HashMap<String, String>();
@@ -69,6 +82,10 @@ public class ACLControl extends ACLRole {
 		return info;
 	}
 
+	/**
+	 * @since who login time out, def: session.ontime
+	 * @return
+	 */
 	public boolean CheckOntime() {
 						
 		String time = SessAct.GetSession(mConfig.GetValue(globale_config.Ontime));

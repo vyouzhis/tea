@@ -1,18 +1,17 @@
 package com.lib.thread;
 
-import java.util.List;
 import java.util.Map;
 
 import org.ppl.BaseClass.BaseRapidThread;
 
-public class testThread extends BaseRapidThread {
-
+public class rapi_two extends BaseRapidThread {
+	private Map<String, String> ml;
 	@Override
 	public void Run() {
 		// TODO Auto-generated method stub
-		String sql = "select * from web_user limit 1";
-		Map<String, Object> res = FetchOne(sql);
-		echo(res);
+		for (String key:ml.keySet()) {
+			echo("key:"+key +"  val:"+ml.get(key));
+		}
 		
 		long millis = (long)randomWithRange(1, 10)*1000;
 		
@@ -36,15 +35,12 @@ public class testThread extends BaseRapidThread {
 		return false;
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
+	@Override
 	public void mailbox(Object o) {
 		// TODO Auto-generated method stub
-		
-		List<String> s = (List<String>) o;
-		for(String k:s){
-			echo(k);
-		}
+		ml = (Map<String, String>)o;
+				
 	}
 	
 	private int randomWithRange(int min, int max)

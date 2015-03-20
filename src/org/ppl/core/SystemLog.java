@@ -8,6 +8,11 @@ import org.ppl.io.TimeClass;
 
 public class SystemLog extends PObject {
 
+	/**
+	 * @since log to db, and return log sql
+	 * @param uid
+	 * @return
+	 */
 	public String Log(int uid) {
 		
 		String format = "INSERT INTO `tea`.`" + mConfig.GetValue("db.rule.ext")

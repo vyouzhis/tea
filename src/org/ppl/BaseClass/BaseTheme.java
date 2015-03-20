@@ -53,7 +53,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 
 	public void TipMessage(String url, String msg) {
 		ShowMessage ms = ShowMessage.getInstance();
-		this.html = ms.SetMsg(url, msg, 3000);
+		this.html = ms.SetMsg(url, msg, 30000);
 		isAutoHtml = false;
 	}
 }

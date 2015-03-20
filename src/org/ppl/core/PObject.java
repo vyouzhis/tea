@@ -30,21 +30,38 @@ public class PObject {
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-			
+	
+	/**
+	 * @since echo
+	 * @param o
+	 */
 	public void echo(Object o) {
 		System.out.println(o);
 	}
 	
+	/**
+	 * @GetSubClassName tell SubClassName to mainClass
+	 * @param subClassname
+	 */
 	protected void GetSubClassName(String subClassname) {
 		stdClass = subClassname;
 	}
 
+	/**
+	 * @since slice pack name for . 
+	 * @param k
+	 * @return
+	 */
 	public String SliceName(String k) {
 		String[] name = k.split("\\.");
 		String cName = name[name.length - 1];
 		return cName;
 	}
 
+	/**
+	 * @since get bind name
+	 * @return
+	 */
 	public String getBindName() {
 		if (BindName == null) {
 			BindName = stdClass;
@@ -53,10 +70,18 @@ public class PObject {
 		return BindName;
 	}
 
+	/**
+	 * @since set bind name
+	 * @param bindName
+	 */
 	public void setBindName(String bindName) {
 		BindName = bindName;
 	}
 
+	/**
+	 * @since create one salt encry
+	 * @return String
+	 */
 	public String getSalt() {
 		TimeClass tc = TimeClass.getInstance();
 		Encrypt ec = Encrypt.getInstance();
@@ -69,6 +94,11 @@ public class PObject {
 		return salt;
 	}
 	
+	/**
+	 * @since check the last salt
+	 * @param salt
+	 * @return boolean
+	 */
 	public boolean checkSalt(String salt) {
 
 		Encrypt ec = Encrypt.getInstance();
@@ -88,6 +118,11 @@ public class PObject {
 		return false;
 	}
 
+	/**
+	 * @since find pack list 
+	 * @param directoryName
+	 * @return List<String>
+	 */
 	public List<String> PermFileList(String directoryName) {
 		List<String> fl = new ArrayList<String>();
 		File directory = new File(directoryName);
@@ -126,6 +161,10 @@ public class PObject {
 		return fl;
 	}
 
+	/**
+	 * @since fine url map
+	 * @return 
+	 */
 	public List<String> PermUrlMap() {
 		Config mConfig = new Config(globale_config.Config);
 		String path = this.getClass().getResource("/").getPath()
@@ -136,6 +175,10 @@ public class PObject {
 		return pum;
 	}
 	
+	/**
+	 * @since find class pack
+	 * @param path
+	 */
 	public void findPack(String path) {
 		UrlClassList ucl = UrlClassList.getInstance();
 		File directory = new File(path);
@@ -160,30 +203,52 @@ public class PObject {
 		}
 	}
 	
+	/**
+	 * @since tell post man do something
+	 * @param ThreadName
+	 * @param message
+	 */
 	public void TellPostMan(String ThreadName, Object message) {
-		if(globale_config.RapidListQueue.containsKey(ThreadName)){
-			globale_config.RapidListQueue.get(ThreadName).add(message);
-		}else {
-			LinkedList<Object> l = new LinkedList<Object>();
-			l.add(message);
-			globale_config.RapidListQueue.put(ThreadName, l);
-		}
+
 		synchronized (globale_config.RapidListQueue) {
-			//message.setText("Notifier took a nap for 3 seconds");
-			//System.out.println("Notifier is notifying waiting thread to wake up at " + new Date());
+			if (globale_config.RapidListQueue.containsKey(ThreadName)) {
+				globale_config.RapidListQueue.get(ThreadName).add(message);
+				echo("tellpostman exists");
+			} else {
+				LinkedList<Object> m = new LinkedList<Object>();
+				m.add(message);
+				globale_config.RapidListQueue.put(ThreadName, m);
+				echo(" tellpostman new ");
+			}
+			// message.setText("Notifier took a nap for 3 seconds");
+			// System.out.println("Notifier is notifying waiting thread to wake up at "
+			// + new Date());
 			globale_config.RapidListQueue.notify();
 		}
 	}
 	
+	/**
+	 * @since time
+	 * @return
+	 */
 	public int time() {
 		TimeClass tc = TimeClass.getInstance();
 		return (int)tc.time();
 	}
 	
+	/**
+	 * @since thread id
+	 * @return
+	 */
 	public long myThreadId() {
 		return Thread.currentThread().getId();
 	}
 	
+	/**
+	 * @since check email
+	 * @param emailAddress
+	 * @return
+	 */
 	public  boolean validateEmailAddress(String emailAddress) {
 		 Pattern regexPattern;
 		 Matcher regMatcher;

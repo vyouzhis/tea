@@ -31,11 +31,7 @@ public class DBSQL extends BaseLang {
 
 	}
 
-	public void ThreadSetCon() {
-
-		// ConDB = hcp.GetCon();
-		// long tid = myThreadId();
-		// globale_config.GDB.put(tid, hcp.GetCon());
+	public void ThreadSetCon() {		
 	}
 
 	public void end() {

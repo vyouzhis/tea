@@ -4,6 +4,10 @@ import java.util.Map;
 
 public class ACLBase extends ACLInit {
 
+	/**
+	 * @since manager acl check who is access 
+	 * @return
+	 */
 	public boolean aclCheckAccess() {
 		int uid = aclGetUid();
 		String cm = aclgetCM();

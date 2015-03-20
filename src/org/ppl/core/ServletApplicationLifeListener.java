@@ -8,16 +8,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.ppl.BaseClass.BaseRapidThread;
 import org.ppl.Module.ModuleBind;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.globale_config;
 
 import com.alibaba.fastjson.JSON;
 import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.name.Names;
 
 /*
  * Thread safe are (when we do not use SingleThreadModel):
@@ -57,20 +53,9 @@ public class ServletApplicationLifeListener extends PObject implements
 		}
 				
 	}
-
-	@SuppressWarnings("unchecked")
-	private void Auto() {
-		String runJson = mConfig.GetValue("rum.module");
-		List<String> runList = JSON.parseObject(runJson, List.class);
-		Injector injector = Guice.createInjector(new ModuleBind());
-		for (String rl : runList) {
-			BaseRapidThread libLan = (BaseRapidThread) injector.getInstance(Key.get(
-					BaseRapidThread.class, Names.named(rl)));
-			libLan.Run();
-		}
-
-	}
-	
+	/**
+	 * @since Init pack list
+	 */
 	@SuppressWarnings("unchecked")
 	private void InitPackList() {
 		

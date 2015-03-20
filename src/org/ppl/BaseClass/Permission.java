@@ -2,7 +2,6 @@ package org.ppl.BaseClass;
 
 import java.sql.SQLException;
 
-import org.ppl.common.ShowMessage;
 import org.ppl.core.SystemLog;
 
 import org.ppl.etc.UrlClassList;
@@ -19,34 +18,28 @@ public class Permission extends BaseTheme {
 		
 		UrlClassList ucl = UrlClassList.getInstance();
 		String bad_url = "";
-		ShowMessage ms = ShowMessage.getInstance();
-		String res = "";
+		
 		boolean i = aclCheckAccess();
 		if (!stdClass.equals(mConfig.GetValue("login_module")) && i == false) {
 
 			bad_url = ucl.BuildUrl("admin_login", "");
 
-			res = ms.SetMsg(bad_url, _CLang("error_login"), 3000);
-			isAutoHtml = false;
-			super.setHtml(res);
+			TipMessage(bad_url,  _CLang("error_login"));
 			echo("login_module error");
 			return -1;
 		}
 
 		if (checkRole() == false) {
-			bad_url = ucl.BuildUrl("admin_index", "");
-			res = ms.SetMsg(bad_url, _CLang("error_role"), 3000);
-			super.setHtml(res);
-			isAutoHtml = false;
+			bad_url = ucl.BuildUrl("admin_index", "");			
+			TipMessage(bad_url, _CLang("error_role"));
 			echo("checkRole error");
 			return -1;
 		}
 
 		if (CheckOntime() == false) {
 			bad_url = ucl.BuildUrl("admin_index", "");
-			res = ms.SetMsg(bad_url, _CLang("error_timeout"), 3000);
-			isAutoHtml = false;
-			super.setHtml(res);
+		
+			TipMessage(bad_url, _CLang("error_timeout"));
 			aclLogout();
 			echo("CheckOntime error");
 			return -1;

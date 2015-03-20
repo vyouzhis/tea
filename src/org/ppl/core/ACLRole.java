@@ -13,6 +13,10 @@ import com.alibaba.fastjson.JSONObject;
 
 public class ACLRole extends ACLBase {
 
+	/**
+	 * @since manager acl check role
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean checkRole() {
 		List<String> rmc = porg.getRmc();
@@ -47,9 +51,24 @@ public class ACLRole extends ACLBase {
 		return false;
 	}
 
+	/**
+	 * @since manager acl role update
+	 * @return
+	 */
 	public int RoleUpdate() {
 		int uid = aclGetUid();
 		int gid = aclGetGid();
+		return InitGroup(uid, gid);
+	}
+
+	
+	/**
+	 * 
+	 * @param uid
+	 * @param gid
+	 * @return
+	 */
+	public int InitGroup(int uid, int gid) {
 		if (uid != 1)
 			return -1;
 		Map<String, Map<String, String>> AdminRole = new HashMap<String, Map<String, String>>();
@@ -71,8 +90,8 @@ public class ACLRole extends ACLBase {
 		String format = "SELECT id FROM `"+DB_PRE+"group`  where id=" + gid;
 		Map<String, Object> res;
 		res = FetchOne(format);
-		TimeClass tc = TimeClass.getInstance();
-		int now = (int) tc.time();
+		
+		int now = time();
 		String sql = "";
 		if (res == null) {
 			format = "INSERT INTO `tea`.`"

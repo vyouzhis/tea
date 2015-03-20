@@ -75,18 +75,14 @@ public class HikariConnectionPool extends PObject {
 
 		synchronized (ConList) {
 			while (ConList.isEmpty()) {
-				echo("Conlist +++++++++ size empty");
 				try {
 					ConList.wait();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				echo("Conlist ======= size:" + ConList.size());
 			}
 			long tid = myThreadId();
-			echo("tid:" + tid);
-
 			globale_config.GDB.put(tid, ConList.pop());
 
 		}
@@ -96,7 +92,7 @@ public class HikariConnectionPool extends PObject {
 	public void free() {
 		synchronized (ConList) {
 			long tid = myThreadId();
-			echo("free tid:" + tid);
+			
 			Connection con = globale_config.GDB.get(tid);
 			if (con != null) {
 				

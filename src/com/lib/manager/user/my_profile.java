@@ -1,16 +1,10 @@
 package com.lib.manager.user;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
 import java.sql.SQLException;
 
 import org.ppl.BaseClass.Permission;
-import org.ppl.etc.Config;
 import org.ppl.etc.UrlClassList;
-import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.ProjectPath;
 import org.ppl.io.TimeClass;

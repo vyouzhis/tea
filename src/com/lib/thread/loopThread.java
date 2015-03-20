@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BaseCronThread;
 
-public class loopThread extends BaseCronThread{
+public class loopThread extends BaseCronThread {
 
 	@Override
 	public void Run() {
@@ -16,10 +16,10 @@ public class loopThread extends BaseCronThread{
 	public int minute() {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM `test_thread` limit 1";
-		Map<String, Object> res ;
+		Map<String, Object> res;
 		res = FetchOne(sql);
-		
-		if(res!=null){
+		echo(res);
+		if (res != null) {
 			return Integer.valueOf(res.get("minute").toString());
 		}
 		return 1;
@@ -41,13 +41,15 @@ public class loopThread extends BaseCronThread{
 	public boolean isStop() {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM `test_thread` limit 1";
-		Map<String, Object> res ;
+		Map<String, Object> res;
 		res = FetchOne(sql);
-		int flag = Integer.valueOf(res.get("minute").toString());
-		if(flag == 1){
-			return false;
+		echo(res);
+		if (res != null) {
+			int flag = Integer.valueOf(res.get("minute").toString());
+			if (flag == 1) {
+				return false;
+			}
 		}
-		
 		return true;
 	}
 

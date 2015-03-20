@@ -2,8 +2,6 @@ package org.ppl.BaseClass;
 
 import java.util.Map;
 
-import org.ppl.common.ShowMessage;
-import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 
@@ -11,6 +9,10 @@ import com.alibaba.fastjson.JSON;
 
 public class BaseiCore extends BaseSurface {
 
+	/**
+	 * @since user core init, return 0 is login, -1 logout
+	 * @return
+	 */
 	protected int Init() {
 		String method = porg.getMehtod();
 		int h = isLogin();
@@ -36,11 +38,20 @@ public class BaseiCore extends BaseSurface {
 		return 0;
 	}
 
+	/**
+	 * @since user core logout
+	 */
 	public void iLogout() {
 
 		cookieAct.DelCookie(globale_config.Uinfo);
 	}
 
+	/**
+	 * @since user core login
+	 * @param login
+	 * @param pwd
+	 * @return
+	 */
 	public int iLogin(String login, String pwd) {
 		if (login==null || login.length() < 1)
 			return -1;
