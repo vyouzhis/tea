@@ -128,7 +128,7 @@ public class user_profile extends Permission implements BasePerminterface {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 
-		String format = "INSERT INTO `tea`.`"
+		String format = "INSERT INTO `"
 				+ DB_PRE
 				+ "user_info` "
 				+ "(`name`, `passwd`, `cm`, `nickname`, `email`, `ctime`, `ltime`,  `gid`, `cid`,`phone`)"
@@ -171,7 +171,7 @@ public class user_profile extends Permission implements BasePerminterface {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 
-		String format = "UPDATE `tea`.`"
+		String format = "UPDATE `"
 				+ DB_PRE
 				+ "user_info` SET `name` = '%s', `nickname` = '%s',`email`='%s',`etime`='%d',`phone`='%s' ,`gid` = '%s'"
 				+ pwd + " WHERE `role_user_info`.`uid` = %s";

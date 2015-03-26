@@ -68,7 +68,7 @@ public class my_profile extends Permission {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 
-		String format = "UPDATE `tea`.`"
+		String format = "UPDATE `"
 				+ DB_PRE
 				+ "user_info` SET `nickname` = '%s',`email`='%s',`etime`='%d',`phone`='%s'"
 				+ pwd + " WHERE `uid` = %s";

@@ -111,7 +111,7 @@ public class ACLInit extends DBSQL {
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
 
-		String format = "UPDATE `tea`.`"
+		String format = "UPDATE `"
 				+ DB_PRE
 				+ "user_info` SET `error` = `error`+1, `ltime`=%d WHERE `name` = '%s' LIMIT 1";
 
@@ -263,7 +263,7 @@ public class ACLInit extends DBSQL {
 		int now = time();
 		String sql = "";
 		if (res == null) {
-			format = "INSERT INTO `tea`.`"
+			format = "INSERT INTO `"
 					+ DB_PRE
 					+ "group` "
 					+ "(`id`,`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
@@ -272,7 +272,7 @@ public class ACLInit extends DBSQL {
 					MainRole, "", uid, now, now);
 
 		} else {
-			format = "UPDATE `tea`.`" + DB_PRE
+			format = "UPDATE `" + DB_PRE
 					+ "group` SET " + " `mainrole` = '%s',  `etime` = '%d' "
 					+ "WHERE `role_group`.`id` = %d;";
 

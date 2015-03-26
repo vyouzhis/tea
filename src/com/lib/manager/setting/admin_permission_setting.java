@@ -170,7 +170,7 @@ public class admin_permission_setting extends Permission implements
 
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
-		String format = "INSERT INTO `tea`.`"
+		String format = "INSERT INTO `"
 				+ DB_PRE
 				+ "group` "
 				+ "(`gname`, `gdesc`, `mainrole`, `subrole`,`uid`,`ctime`, `etime`)"
@@ -203,7 +203,7 @@ public class admin_permission_setting extends Permission implements
 		
 		TimeClass tc = TimeClass.getInstance();
 		int now = (int) tc.time();
-		String format = "UPDATE `tea`.`"
+		String format = "UPDATE `"
 				+ DB_PRE
 				+ "group` SET "
 				+ "`gname` = '%s', `gdesc` = '%s', `mainrole` = '%s', `subrole` = '%s', `etime` = '%d' "
