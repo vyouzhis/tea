@@ -7,12 +7,10 @@ import java.util.Map.Entry;
 
 import org.ppl.BaseClass.BasePrograma;
 import org.ppl.BaseClass.Permission;
-import org.ppl.Module.ModuleBind;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.TimeClass;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
@@ -23,7 +21,7 @@ public class ACLControl extends ACLRole {
 	 * @since manager acl load class lib
 	 */
 	public void aclLoadLib() {
-		Injector injector = Guice.createInjector(new ModuleBind());
+		Injector injector = globale_config.injector;
 		UrlClassList ucl = UrlClassList.getInstance();
 		Map<String, List<String>> PackClassList;
 		PackClassList = ucl.getPackClassList();
@@ -58,7 +56,7 @@ public class ACLControl extends ACLRole {
 	public String IndexName(String value) {
 
 		if (value.matches("(.*)_index")) {
-			Injector injector = Guice.createInjector(new ModuleBind());
+			Injector injector = globale_config.injector;
 			BasePrograma Index = (BasePrograma) injector.getInstance(Key.get(
 					BasePrograma.class, Names.named(value)));
 			return Index._CLang(value);
@@ -72,7 +70,7 @@ public class ACLControl extends ACLRole {
 	 * @return
 	 */
 	public Map<String, String> LibInfo(String value) {
-		Injector injector = Guice.createInjector(new ModuleBind());
+		Injector injector = globale_config.injector;
 		Map<String, String> info = new HashMap<String, String>();
 
 		Permission home = (Permission) injector.getInstance(Key.get(

@@ -12,6 +12,7 @@ import org.ppl.core.PObject;
 import org.ppl.db.HikariConnectionPool;
 
 import org.ppl.etc.UrlClassList;
+import org.ppl.etc.globale_config;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -47,7 +48,7 @@ public class RouterMapConfig extends PObject {
 			if (BaseName != null && RMC.size() > 0) {
 				porg.UrlServlet(RMC);
 				
-				Injector injector = Guice.createInjector(new ModuleBind());
+				Injector injector = globale_config.injector;
 
 				BaseClass = BaseName.split("\\.");
 				if (BaseClass.length != 2){					
@@ -95,12 +96,6 @@ public class RouterMapConfig extends PObject {
 						
 		}
 		
-	}
-	public <T> T ShowClass(Class<T> clazz, String names) {
-		Injector injector = Guice.createInjector(new ModuleBind());
-		T ihome = (T) injector.getInstance(Key.get(
-				clazz, Names.named(names)));
-		return ihome;
 	}
 
 	public boolean routing() {

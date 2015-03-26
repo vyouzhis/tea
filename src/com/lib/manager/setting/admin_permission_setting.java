@@ -83,7 +83,7 @@ public class admin_permission_setting extends Permission implements
 		UrlClassList ucl = UrlClassList.getInstance();
 		Map<String, List<String>> PackClassList;
 		PackClassList = ucl.getPackClassList();
-
+		
 		setRoot("action_url", ucl.create(SliceName(stdClass)));
 
 		if (porg.getKey("gid") != null) {
@@ -92,7 +92,8 @@ public class admin_permission_setting extends Permission implements
 			setRoot("action_url", ucl.edit(SliceName(stdClass)));
 			getGroupUser(porg.getKey("gid"));
 		}
-
+		String Json = aclfetchMyRole();
+		echo(Json);
 		setRoot("Pack_Class_List", PackClassList);
 	}
 

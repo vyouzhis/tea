@@ -56,6 +56,9 @@ public class admin_login_action extends Permission {
 		case -4:
 			TipMessage(bad_url,_CLang("error_role"));
 			return;
+		case -5:
+			TipMessage(bad_url, _CLang("ok_init_role"));
+			return;
 		default:
 			TipMessage(bad_url,_CLang("error_nothing"));
 			return;
