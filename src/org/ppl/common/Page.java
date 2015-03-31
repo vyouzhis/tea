@@ -4,7 +4,8 @@ public class Page {
 
 	public String s_page(String url, int total, int page, int limit, String para) {
 		if(para.length()>0) para = '&'+para;
-		int ceil = (int)Math.ceil(total/limit);
+		double tol_page = (double)total/(double)limit;
+		int ceil = (int)Math.ceil(tol_page);
 		int st=0;
 		int ceil_limit=0;
 		String spage, npage, ppage;

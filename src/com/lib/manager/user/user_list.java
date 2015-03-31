@@ -52,7 +52,7 @@ public class user_list extends Permission implements BasePerminterface {
 		// TODO Auto-generated method stub
 		
 		String sql = "SELECT uid,name,nickname,email,"
-				+ "from_unixtime(ctime) as ctime , from_unixtime(ltime) as ltime FROM "
+				+ "ctime , ltime FROM "
 				+ "`" + DB_PRE
 				+ "user_info` where cid=" + aclGetUid();
 

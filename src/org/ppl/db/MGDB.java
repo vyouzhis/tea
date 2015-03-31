@@ -3,9 +3,9 @@ package org.ppl.db;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.ppl.core.PObject;
@@ -17,8 +17,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.ReadPreference;
-import com.mongodb.WriteConcern;
+import com.mongodb.util.JSON;
 
 public class MGDB extends PObject {
 	public static MGDB dataSource = null;
@@ -67,27 +66,23 @@ public class MGDB extends PObject {
 	private int DBOffset = 0;
 	private int DBLimit = 30;
 
-	private int DESC = 1;
-	private int ASC = -1;
+//	private int DESC = 1;
+//	private int ASC = -1;
 
 	private DBCollection DBLink = null;
 	private BasicDBObject DBColumn = null;
 	private BasicDBObject DBWhere = null;
-	private BasicDBObject DBArray = null;
-	private List<Object>  DBAList = null;
 	private BasicDBObject DBSort = null;
-	private DBCursor DBCursor = null;	
-	private List<String> ColList = null;
+	private DBCursor dbCursor = null;	
+	
+	private String ErrorMsg = "";
 
-	@SuppressWarnings("deprecation")
 	public MGDB() {
 		
 		//Mongo m;
 		try {
 			MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder()
-	                .acceptableLatencyDifference(10000)
-	                .writeConcern(WriteConcern.REPLICA_ACKNOWLEDGED)
-	                .readPreference(ReadPreference.secondaryPreferred())
+	                .acceptableLatencyDifference(10000)	               
 	                .connectionsPerHost(1000)
 	                .connectTimeout(15000)
 	                .maxWaitTime(30000)
@@ -118,10 +113,7 @@ public class MGDB extends PObject {
 
 	public Set<String> CollectionList() {
 		Set<String> set = db.getCollectionNames();
-		/*
-		 * for (String string:set) { DBCollection coll =
-		 * db.getCollection(string); System.out.println(string); }
-		 */
+
 		return set;
 	}
 
@@ -131,59 +123,8 @@ public class MGDB extends PObject {
 			return r.toArray()[i].toString();
 		return null;
 	}
-	
-	public void SetColumn(String Column) {
-		if (DBColumn == null)
-			DBColumn = new BasicDBObject();
-		if (ColList == null)
-			ColList = new ArrayList<String>();
-		DBColumn.append(Column, 1);
-		ColList.add(Column);
-	}
 
-	public void EditWhere(HashMap<String, Object> wMap) {
-		if (DBWhere == null)
-			DBWhere = new BasicDBObject();
-
-		if (wMap == null)
-			return;
-		for (Entry<String, Object> entry : wMap.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			DBWhere.append(key, value);
-		}
-		
-	}
 	
-	public void norArray(String Col, String Operator, Object key) {
-		if (DBArray == null){
-			DBArray = new BasicDBObject();
-			DBAList = new ArrayList<Object>();
-		}
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		
-		conditions.put(Operator, key);
-				
-		DBArray.append(Col, conditions);
-		DBAList.add(DBArray);
-	}
-	
-	public void norWhere() {
-		if (DBWhere == null)
-			DBWhere = new BasicDBObject();
-		
-		DBWhere.append(nor, DBAList);
-	}
-	
-	public void SetSort(List<String> sList, int i) {
-		if(DBSort == null)
-			DBSort = new BasicDBObject();
-		
-		for (String pro : sList) {		
-			DBSort.append(pro, i);
-		}
-	}
-
 	public void setLimit(int dInt) {
 		DBLimit = dInt;
 	}
@@ -191,86 +132,85 @@ public class MGDB extends PObject {
 	public int GetLimit() {
 		return DBLimit;
 	}
+	
+	public void JsonWhere(String json) {
+		DBWhere = (BasicDBObject) JSON
+				.parse(json);
+	}
+	
+	public void JsonColumn(String json) {
+		DBColumn = (BasicDBObject) JSON
+				.parse(json);
+	}
 
+	public void JsonSort(String json) {
+		DBSort = (BasicDBObject) JSON.parse(json);
+	}
+	
 	public Integer FetchCont() {
 		//System.out.println("FetchCont DBWhere:"+DBWhere);
 		Integer count =  DBLink.find(DBWhere, DBColumn).count();
 		return count;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Object> Distinct(String field) {
+		List<Object> list=DBLink.distinct(field);
+		return list;
+	}
+	
 	public Boolean FetchList() {
-		//System.out.println("DBWhere:"+DBWhere);
-		//System.out.println("DBColumn:"+DBColumn);
-		// DBCursor = DBLink.find(DBWhere, DBColumn)
-		// .limit(DBLimit);
-		DBCursor = DBLink.find(DBWhere, DBColumn)
+//		echo("DBWhere:"+DBWhere);
+//		echo("DBColumn:"+DBColumn);
+
+		dbCursor = DBLink.find(DBWhere, DBColumn)
 				.sort(DBSort)
 				.limit(DBLimit)
 				.skip(DBOffset);
-		//System.out.println(DBCursor);
-		if (DBCursor == null) {
+		if (dbCursor == null) {
 			return false;
 		}
 
+		try {
+			if(dbCursor.size()==0) {			
+				return false;			
+			}
+		} catch (Exception e) {
+			// TODO: handle exception			
+			ErrorMsg = e.getMessage().toString();
+			return false;
+		}
+		
 		return true;
 	}
 
-	public List<Map<String, Object>> GetValue() {
-		String key = null;
+	
+	public List<Map<String, Object>> GetValue() {		
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
-
-		if (ColList == null && ColList.size() == 0)
-			return null;
-
-		while (DBCursor.hasNext()) {
-			DBObject obj = DBCursor.next();
+		
+		while (dbCursor.hasNext()) {
+			DBObject obj = dbCursor.next();
 			Map<String, Object> ColMap = new HashMap<String, Object>();
-			for (int m = 0; m < ColList.size(); m++) {
-				key = ColList.get(m);
-				Object val = GetColValue(obj, key);
-				ColMap.put(key, val);
+			
+			for (String key:obj.keySet()) {	
+				ColMap.put(key, obj.get(key));
 			}
+									
 			list.add(ColMap);
 		}
 
 		return list;
 	}
+	
+	public List<String> GetJsonValue() {
+		List<String> list = new ArrayList<>();
 
-	private Object GetColValue(DBObject obj, String key) {
-		DBObject pobj = obj;
-		Set<String> keys = null;
-		String[] parts = key.split("\\.");
-
-		for (int j = 0; j < parts.length; j++) {
-			keys = pobj.keySet();
-			if (keys.size() == 0)
-				break;
-
-			if (keys.contains(parts[j])) {
-				if (j == parts.length - 1) {
-					return pobj.get(parts[j]);
-				}
-				pobj = (DBObject) pobj.get(parts[j]);
-			}
+		while (dbCursor.hasNext()) {
+			DBObject obj = dbCursor.next();					
+			list.add(JSON.serialize(obj));
 		}
 
-		return null;
-	}
-
-	public void SetWhere(String Col, String Operator, Object key) {
-		HashMap<String, Object> where = new HashMap<String, Object>();
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		
-		conditions.put(Operator, key);
-				
-		where.put(Col, conditions);
-		EditWhere(where);
-	}
-	
-	public void SetWhere(String Col, Map<String, Object> conditions ) {
-		HashMap<String, Object> where = new HashMap<String, Object>();				
-		where.put(Col, conditions);
-		EditWhere(where);
+		return list;
 	}
 	
 	public void ClearWhere() {
@@ -279,9 +219,6 @@ public class MGDB extends PObject {
 		}
 	}
 	
-	public void Print_r() {
-		System.out.println(DBWhere);
-	}
 	
 	public void DBEnd() {
 		if (DBColumn != null) {
@@ -293,10 +230,7 @@ public class MGDB extends PObject {
 		}
 		
 		ClearWhere();
-		
-		if (ColList != null) {
-			ColList.clear();
-		}
+
 	}
 
 	public int getDBOffset() {
@@ -310,6 +244,14 @@ public class MGDB extends PObject {
 	public Boolean WhereIsNull() {
 		if(DBWhere == null) return true;
 		else return false;
+	}
+
+	public String getErrorMsg() {
+		return ErrorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		ErrorMsg = errorMsg;
 	}
 	
 }

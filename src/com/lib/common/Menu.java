@@ -105,7 +105,12 @@ public class Menu extends BaseModule {
 	
 	private int isMenu(String lib) {
 		Injector injector = globale_config.injector;
-		Permission home = (Permission) injector.getInstance(Key.get(Permission.class, Names.named(lib)));
-		return home.getAction();
+		try {
+			Permission home = (Permission) injector.getInstance(Key.get(Permission.class, Names.named(lib)));
+			return home.getAction();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return -1;
+		}
 	}
 }

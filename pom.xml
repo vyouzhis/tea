@@ -207,7 +207,13 @@
 			<artifactId>jetbrick-template</artifactId>
 			<version>2.0.8</version>
 		</dependency>
-
+		<!-- html paser -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<!-- html paser -->
 	</dependencies>
 
 

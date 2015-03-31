@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,19 +27,25 @@ public class PObject {
 	protected Config uConfig = new Config(globale_config.UrlMap);
 	protected Config mgConfig = new Config(globale_config.Mongo);
 	protected Config mailConfig = new Config(globale_config.Mail);
-	
+
 	protected SessionAction SessAct = SessionAction.getInstance();
 	protected CookieAction cookieAct = CookieAction.getInstance();
 	protected PorG porg = PorG.getInstance();
-	
+
 	/**
 	 * @since echo
 	 * @param o
 	 */
 	public void echo(Object o) {
-		System.out.println(o);
+		if (stdClass != null) {
+			Logger log = Logger.getLogger(stdClass);
+			log.info(o.toString());
+		} else {
+			// System.out.println("stdClass:"+stdClass);
+			System.out.println(o);
+		}
 	}
-	
+
 	/**
 	 * @GetSubClassName tell SubClassName to mainClass
 	 * @param subClassname
@@ -48,7 +55,7 @@ public class PObject {
 	}
 
 	/**
-	 * @since slice pack name for . 
+	 * @since slice pack name for .
 	 * @param k
 	 * @return
 	 */
@@ -90,10 +97,10 @@ public class PObject {
 		Config mConfig = new Config(globale_config.Config);
 
 		SessAct.SetSession(mConfig.GetValue(globale_config.SessSalt), salt);
-				
+
 		return salt;
 	}
-	
+
 	/**
 	 * @since check the last salt
 	 * @param salt
@@ -106,7 +113,7 @@ public class PObject {
 
 		String sess_salt = SessAct.GetSession(mConfig
 				.GetValue(globale_config.SessSalt));
-		
+
 		if (sess_salt == null)
 			return false;
 		if (sess_salt.equals(salt)) {
@@ -119,7 +126,7 @@ public class PObject {
 	}
 
 	/**
-	 * @since find pack list 
+	 * @since find pack list
 	 * @param directoryName
 	 * @return List<String>
 	 */
@@ -129,7 +136,7 @@ public class PObject {
 		Map<String, List<String>> PackClassList;
 		UrlClassList ucl = UrlClassList.getInstance();
 		PackClassList = ucl.getPackClassList();
-		if(PackClassList==null){
+		if (PackClassList == null) {
 			PackClassList = new HashMap<String, List<String>>();
 		}
 		// get all the files from a directory
@@ -141,9 +148,9 @@ public class PObject {
 				String lib = file.getName().split("\\.")[0];
 				String index = directory.getName();
 				if (!index.equals("manager") && !lib.matches("(.*)_index")) {
-					
+
 					if (PackClassList.get(index) != null) {
-						if (!PackClassList.get(index).contains(lib) )
+						if (!PackClassList.get(index).contains(lib))
 							PackClassList.get(index).add(lib);
 					} else {
 						List<String> l = new ArrayList<String>();
@@ -157,13 +164,13 @@ public class PObject {
 			}
 		}
 		ucl.setPackClassList(PackClassList);
-		
+
 		return fl;
 	}
 
 	/**
 	 * @since fine url map
-	 * @return 
+	 * @return
 	 */
 	public List<String> PermUrlMap() {
 		Config mConfig = new Config(globale_config.Config);
@@ -174,7 +181,7 @@ public class PObject {
 
 		return pum;
 	}
-	
+
 	/**
 	 * @since find class pack
 	 * @param path
@@ -184,25 +191,26 @@ public class PObject {
 		File directory = new File(path);
 		File[] fList = directory.listFiles();
 		String[] pack = path.split("classes");
-		if(pack.length != 2)return;
+		if (pack.length != 2)
+			return;
 		String pn = pack[1].replace("/", ".");
 		pn = pn.replace("\\", ".");
-		
-		if(!pn.substring(pn.length()-1, pn.length()).equals(".")){
-			pn = pn+".";
+
+		if (!pn.substring(pn.length() - 1, pn.length()).equals(".")) {
+			pn = pn + ".";
 		}
 		pn = pn.substring(1);
-		
+
 		for (File file : fList) {
 			if (file.isFile()) {
-				String lib = file.getName().split("\\.")[0];				
-				ucl.setPackList(pn+lib);				
-			} else if (file.isDirectory()) {				
+				String lib = file.getName().split("\\.")[0];
+				ucl.setPackList(pn + lib);
+			} else if (file.isDirectory()) {
 				findPack(file.getAbsolutePath());
 			}
 		}
 	}
-	
+
 	/**
 	 * @since tell post man do something
 	 * @param ThreadName
@@ -226,16 +234,16 @@ public class PObject {
 			globale_config.RapidListQueue.notify();
 		}
 	}
-	
+
 	/**
 	 * @since time
 	 * @return
 	 */
 	public int time() {
 		TimeClass tc = TimeClass.getInstance();
-		return (int)tc.time();
+		return (int) tc.time();
 	}
-	
+
 	/**
 	 * @since thread id
 	 * @return
@@ -243,22 +251,23 @@ public class PObject {
 	public long myThreadId() {
 		return Thread.currentThread().getId();
 	}
-	
+
 	/**
 	 * @since check email
 	 * @param emailAddress
 	 * @return
 	 */
-	public  boolean validateEmailAddress(String emailAddress) {
-		 Pattern regexPattern;
-		 Matcher regMatcher;
-	    regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
-	    regMatcher   = regexPattern.matcher(emailAddress);
-	    if(regMatcher.matches()){
-	        return true;
-	    } else {
-	    return false;
-	    }
+	public boolean validateEmailAddress(String emailAddress) {
+		Pattern regexPattern;
+		Matcher regMatcher;
+		regexPattern = Pattern
+				.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+		regMatcher = regexPattern.matcher(emailAddress);
+		if (regMatcher.matches()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-		
+
 }
