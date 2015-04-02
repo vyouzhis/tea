@@ -128,6 +128,10 @@ public class Permission extends BaseTheme {
 	public void setAction(int action) {
 		Action = action;
 	}
+	
+	public void InAction() {
+		Action = 1;
+	}
 
 	public void Msg(String msg) {
 		UrlClassList ucl = UrlClassList.getInstance();
