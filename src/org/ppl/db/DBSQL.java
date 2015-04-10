@@ -97,7 +97,7 @@ public class DBSQL extends BaseLang {
 		return results;
 	}
 
-	public List<Map<String, Object>> query(String sql) throws SQLException {
+	private List<Map<String, Object>> query(String sql) throws SQLException {
 		List<Map<String, Object>> results = null;
 		long tid = myThreadId();
 		String clearSQL = sql;
@@ -144,7 +144,23 @@ public class DBSQL extends BaseLang {
 	}
 
 	public long update(String sql) throws SQLException {
-		long numRowsUpdated = 0;
+		return exec(sql);
+	}
+	
+	public long insert(String sql) throws SQLException {
+		long numRowsUpdated = -1;
+		exec(sql);
+		ResultSet rs = stmt.getGeneratedKeys();  
+	  		
+		if (rs.next()) {  		  
+			numRowsUpdated = rs.getLong(1);  		  
+		}  
+				
+		return numRowsUpdated;
+	}
+	
+	private long exec(String sql) throws SQLException{
+		long numRowsUpdated = -1;
 		long tid = myThreadId();
 		String clearSQL = sql;
 		if(myConfig.GetValue("database.driverClassName").equals("org.postgresql.Driver")){
@@ -160,7 +176,7 @@ public class DBSQL extends BaseLang {
 		stmt = ConDB.createStatement();
 		numRowsUpdated = stmt.executeUpdate(clearSQL,
 				Statement.RETURN_GENERATED_KEYS);
-
+		
 		return numRowsUpdated;
 	}
 

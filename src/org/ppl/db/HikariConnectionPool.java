@@ -83,10 +83,17 @@ public class HikariConnectionPool extends PObject {
 				}
 			}
 			long tid = myThreadId();
-			globale_config.GDB.put(tid, ConList.pop());
-
+			Connection con = ConList.pop();
+			try {
+				if(con.isClosed()){
+					con = ds.getConnection();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			globale_config.GDB.put(tid, con);
 		}
-	
 	}
 
 	public void free() {
