@@ -9,19 +9,10 @@ import com.google.inject.name.Names;
 
 public abstract class BaseLang extends PObject implements BaseLangInterface {
 	private String StdName=null;
-	
-	/**
-	 * @since module lang name
-	 * @param stdName
-	 */
+		
 	public void setStdName(String stdName) {
 		StdName = "_"+stdName;
 	}
-	
-	/**
-	 * @since get lang string 
-	 * @return 
-	 */
 	
 	@Override
 	public String _Lang(String key) {
@@ -42,22 +33,12 @@ public abstract class BaseLang extends PObject implements BaseLangInterface {
 		return val;
 	}
 
-	/**
-	 * @since commang lang
-	 * @param key
-	 * @return
-	 */
 	public String _CLang(String key) {
 		String stdName = "_common";
 		
 		return find(key, stdName);
 	}
 	
-	/**
-	 * @since privately-owned lang
-	 * @param key
-	 * @return
-	 */
 	public String _MLang(String key) {
 
 		if(StdName == null){
@@ -66,21 +47,21 @@ public abstract class BaseLang extends PObject implements BaseLangInterface {
 		return find(key, StdName);
 	}
 	
-	/**
-	 * @since from key find lang string 
-	 * @param key
-	 * @param stdsName
-	 * @return
-	 */
 	private String find(String key, String stdsName) {
 		//System.out.println("name:"+stdName+" key:"+key);
-		Injector injector = globale_config.injector;
-		LibLang libLan = (LibLang) injector.getInstance(Key.get(
-				LibLang.class, Names.named(stdsName)));
+		String lan = "";
 		
-		String lan = libLan._Lang(key);
-		if(lan==null) return "lang key:"+key+" is not exist!";
+		Injector injector = globale_config.injector;
+		try {
+			LibLang libLan = (LibLang) injector.getInstance(Key.get(
+					LibLang.class, Names.named(stdsName)));
+			lan = libLan._Lang(key);						
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		return lan;
+		
 	}
 	
 	

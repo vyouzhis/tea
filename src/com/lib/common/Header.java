@@ -18,4 +18,8 @@ public class Header extends BaseModule {
 		super.View();
 	}
 
+	public void SetTitle(String title) {
+		setRoot("TITLE", title);
+	}
+
 }

@@ -144,12 +144,12 @@ public class DBSQL extends BaseLang {
 	}
 
 	public long update(String sql) throws SQLException {
-		return exec(sql);
+		return exec(sql, true);
 	}
 	
 	public long insert(String sql) throws SQLException {
 		long numRowsUpdated = -1;
-		exec(sql);
+		exec(sql, true);
 		ResultSet rs = stmt.getGeneratedKeys();  
 	  		
 		if (rs.next()) {  		  
@@ -159,7 +159,11 @@ public class DBSQL extends BaseLang {
 		return numRowsUpdated;
 	}
 	
-	private long exec(String sql) throws SQLException{
+	public void dbcreate(String sql) throws SQLException{
+		exec(sql, false);
+	}
+	
+	private long exec(String sql, boolean ret) throws SQLException{
 		long numRowsUpdated = -1;
 		long tid = myThreadId();
 		String clearSQL = sql;
@@ -174,9 +178,12 @@ public class DBSQL extends BaseLang {
 		}
 		
 		stmt = ConDB.createStatement();
+		if(ret){
 		numRowsUpdated = stmt.executeUpdate(clearSQL,
 				Statement.RETURN_GENERATED_KEYS);
-		
+		}else{
+			stmt.executeUpdate(clearSQL);
+		}
 		return numRowsUpdated;
 	}
 
